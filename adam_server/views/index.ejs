@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<!--
+	Lens by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+-->
+<html>
+	<head>
+		<title><%=title%></title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-loading-0 is-loading-1 is-loading-2">
+
+		<!-- Main -->
+			<div id="main">
+
+				<!-- Header -->
+					<header id="header">
+						<h1><%=title%></h1>
+						<p><%=description%></p>
+					</header>
+
+				<!-- Thumbnail -->
+					<section id="thumbnails">
+                        <% for(var i=0; i<pictures.length; i++) {%>
+							<article>
+								<a class="thumbnail" href=<%="public/images/"+pictures[i].filename%> data-position="left center">
+									<img src=<%="public/images/"+pictures[i].filename%> alt="" /></a>
+								<h2><%=pictures[i].title%></h2>
+								<p><%=pictures[i].description%></p>
+							</article>
+                        <% } %>
+					</section>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<ul class="copyright">
+							<li>&copy;Codename Adam</li>
+						</ul>
+					</footer>
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>

@@ -1,0 +1,42 @@
+@import 'libs/vars';
+@import 'libs/functions';
+@import 'libs/mixins';
+@import 'libs/skel';
+
+/*
+	Lens by Pixelarity
+	pixelarity.com | hello@pixelarity.com
+	License: pixelarity.com/license
+*/
+
+/* Thumbnails */
+
+	#thumbnails {
+		&:after {
+			content: '';
+			display: block;
+			clear: both;
+		}
+
+		article {
+			float: left;
+		}
+	}
+
+/* Viewer */
+
+	#viewer {
+		.inner {
+			box-shadow: inset 0 0 9em 2em rgba(16,16,16,0.2);
+
+			&:before {
+				display: none;
+			}
+		}
+
+		.slide {
+			.caption {
+				background-color: rgba(16,16,16,0.5);
+			}
+		}
+	}
