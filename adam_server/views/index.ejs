@@ -1,56 +1,237 @@
 <!DOCTYPE HTML>
 <!--
-	Lens by Pixelarity
-	pixelarity.com | hello@pixelarity.com
-	License: pixelarity.com/license
+	Escape Velocity by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
 	<head>
-		<title><%=title%></title>
+		<title>Codename Adam</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
-		<!--[if lte IE 9]><link rel="stylesheet" href="assets/css/ie9.css" /><![endif]-->
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets_escape_velocity/css/main.css" />
 	</head>
-	<body class="is-loading-0 is-loading-1 is-loading-2">
+	<body class="homepage is-preload">
+		<div id="page-wrapper">
 
-		<!-- Main -->
-			<div id="main">
+			<!-- Header -->
+				<section id="header" class="wrapper">
 
-				<!-- Header -->
-					<header id="header">
-						<h1><%=title%></h1>
-						<p><%=description%></p>
-					</header>
+					<!-- Logo -->
+						<div id="logo">
+							<h1><a href="/">Codename Adam</a></h1>
+						</div>
 
-				<!-- Thumbnail -->
-					<section id="thumbnails">
-                        <% for(var i=0; i<pictures.length; i++) {%>
-							<article>
-								<a class="thumbnail" href=<%="public/images/"+pictures[i].filename%> data-position="left center">
-									<img src=<%="public/images/"+pictures[i].filename%> alt="" /></a>
-								<h2><%=pictures[i].title%></h2>
-								<p><%=pictures[i].description%></p>
-							</article>
-                        <% } %>
-					</section>
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li class="current"><a href="/">Home</a></li>
+								<li>
+									<a href="/menu">Menu</a>
+									<ul>
+										<li><a href="#">Most Popular</a></li>
+										<li><a href="#">Appetizers</a></li>
+										<li><a href="#">Entrees</a></li>
+										<li><a href="#">Drinks</a></li>
+										<li><a href="#">Desserts</a></li>
+									</ul>
+								</li>
+								<li><a href="/recommend-me">Recommend Me</a></li>
+								<li><a href="/cart">Cart</a></li>
+								<li><a href="/reserve">Reserve</a></li>
+								<li><a href="#">Your Profile</a></li>
+							</ul>
+						</nav>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<ul class="copyright">
-							<li>&copy;Codename Adam</li>
+				</section>
+
+			<!-- Intro -->
+				<section id="intro" class="wrapper style1">
+					<div class="title">About Us</div>
+					<div class="container">
+						<p class="style1">Welcome to Software Engineering (ECE 452) Group #3's website page!</p>
+						<p class="style1"><strong>Our solution to Restaurant Automation aims to help you... </strong><br>
+							<strong>Save Time:</strong> Make placing and fulfilling orders easier. Save more time for things that matter. <br>
+							<strong>Save Money:</strong> Business owners can hire less staff and help ease the workload of your employees. <br>
+							<strong>Save the Planet:</strong> Eliminate traditional menus and reduce paper waste.
+						</p>
+						<ul class="actions">
+							<li><a href="#main" class="button style3 large">Proceed</a></li>
 						</ul>
-					</footer>
-			</div>
+					</div>
+				</section>
+
+			<!-- Main -->
+				<section id="main" class="wrapper style2">
+					<div class="title">The Details</div>
+					<div class="container">
+
+						<!-- Image 
+							<a href="#" class="image featured">
+								<img src="../public/images/r3.jpeg" alt="" />
+							</a>
+						-->
+						<!-- Features -->
+							<section id="features">
+								<header class="style1">
+									<h2>Learn more about the Codename Adam Solution</h2>
+									<p>We provide an ecosystem of applications to make running your restaurant as seamless as possible.</p>
+								</header>
+								<div class="feature-list">
+									<div class="row">
+										<div class="col-6 col-12-medium">
+											<section>
+												<h3 class="icon fa-cutlery">Restaurant Website: Admin Console</h3>
+												<p>Through our website, restaurant owners can view how much revenue is generated, what the most popular dishes are, and what ingredients are consumed the most. Through the administrative console, owners can easily update the menu and change prices of various dishes.  
+												</p>
+											</section>
+										</div>
+										<div class="col-6 col-12-medium">
+											<section>
+												<h3 class="icon fa-line-chart">Restaurant Website: Ingredient Prediction</h3>
+												<p>Through our administrative console, you will also be able to use our valuable Ingredient Prediction system! This Ingredient Prediction system will help your restaurant business save money in the long run by employing statistical algorithms that use order history to generate predictions about ingredient consumption. Now you can buy the exact amount you'll need!
+												</p>
+											</section>
+										</div>
+										<div class="col-6 col-12-medium">
+											<section>
+												<h3 class="icon fa-coffee">Chef Application</h3>
+												<p>This Android application will help your chefs keep track of incoming and outgoing orders. They will be able to see details about each order and mark them complete as they finish cookinig them. 
+												</p>
+											</section>
+										</div>
+										<div class="col-6 col-12-medium">
+											<section>
+												<h3 class="icon fa-group">Customer Application</h3>
+												<p>This Android application will allow your customers to view the menu from their phones, make reservations and even use the Recommendation feature! This Recommendation feature generates meal recommendations after analyzing each customer's quiz answers and order history. 
+												</p>
+											</section>
+										</div>
+										<div class="col-6 col-12-medium">
+											<section>
+												<h3 class="icon fa-wrench">Table Application</h3>
+												<p>The table application is similar to the customer application, but it is meant to be used on tablets available at teach table at the restaurant. Although it doesn't allow customers to make reservations, it has a feature that allows them to request assistance from the waiting staff at the press of a button!
+												</p>
+											</section>
+										</div>
+										<div class="col-6 col-12-medium">
+											<section>
+												<h3 class="icon fa-gear">Waiter Application</h3>
+												<p>This application allows waiters to access the menu if customers have questions about any dishes. It also allows waiters to keep track of current and completed orders. Moreover, waiters can keep track of what customers requested assistance. 
+												</p>
+											</section>
+										</div>
+									</div>
+								</div>
+								<ul class="actions special">
+									<li><a href="#" class="button style1 large">Get Started</a></li>
+								</ul>
+							</section>
+
+					</div>
+				</section>
+
+			<!-- Footer -->
+				<section id="footer" class="wrapper">
+					<div class="title">Contact Information</div>
+					<div class="container">
+						<header class="style1">
+							<h2>Want to learn more information about how we automate our restaurant? <br>
+								Want us to cater at your next event?
+							</h2>
+							<p>
+								Feel free to contact us with any questions! We'd love to help out!
+							</p>
+						</header>
+						<div class="row">
+							<div class="col-6 col-12-medium">
+
+								<!-- Contact Form -->
+									<section>
+										<form method="post" action="#">
+											<div class="row gtr-50">
+												<div class="col-6 col-12-small">
+													<input type="text" name="name" id="contact-name" placeholder="Name" />
+												</div>
+												<div class="col-6 col-12-small">
+													<input type="text" name="email" id="contact-email" placeholder="Email" />
+												</div>
+												<div class="col-12">
+													<textarea name="message" id="contact-message" placeholder="Message" rows="4"></textarea>
+												</div>
+												<div class="col-12">
+													<ul class="actions">
+														<li><input type="submit" class="style1" value="Send" /></li>
+														<li><input type="reset" class="style2" value="Reset" /></li>
+													</ul>
+												</div>
+											</div>
+										</form>
+									</section>
+
+							</div>
+							<div class="col-6 col-12-medium">
+
+								<!-- Contact -->
+									<section class="feature-list small">
+										<div class="row">
+											<div class="col-6 col-12-small">
+												<section>
+													<h3 class="icon fa-home">Mailing Address</h3>
+													<p>
+														Codename Adam<br />
+														1234 Somewhere Road<br />
+														New Brunswick, NJ 08906
+													</p>
+												</section>
+											</div>
+											<div class="col-6 col-12-small">
+												<section>
+													<h3 class="icon fa-comment">Social</h3>
+													<p>
+														<a href="#">linkedin.com/CodenameAdam</a><br />
+														<a href="#">facebook.com/CodenameAdam</a>
+													</p>
+												</section>
+											</div>
+											<div class="col-6 col-12-small">
+												<section>
+													<h3 class="icon fa-envelope">Email</h3>
+													<p>
+														<a href="#">info@codenameadam.com</a>
+													</p>
+												</section>
+											</div>
+											<div class="col-6 col-12-small">
+												<section>
+													<h3 class="icon fa-phone">Phone</h3>
+													<p>
+														(555) 555-6789
+													</p>
+												</section>
+											</div>
+										</div>
+									</section>
+
+							</div>
+						</div>
+						<div id="copyright">
+							<ul>
+								<li>&copy; CodenameAdam Inc.</li><li>Design: <a href="http://html5up.net">HTML5 UP: Escape Velocity</a></li>
+							</ul>
+						</div>
+					</div>
+				</section>
+
+		</div>
 
 		<!-- Scripts -->
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+			<script src="assets_escape_velocity/js/jquery.min.js"></script>
+			<script src="assets_escape_velocity/js/jquery.dropotron.min.js"></script>
+			<script src="assets_escape_velocity/js/browser.min.js"></script>
+			<script src="assets_escape_velocity/js/breakpoints.min.js"></script>
+			<script src="assets_escape_velocity/js/util.js"></script>
+			<script src="assets_escape_velocity/js/main.js"></script>
 
 	</body>
 </html>

@@ -24,7 +24,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', api);
 app.use('/', website);
-app.use('/assets', express.static(__dirname+'/assets'));
+app.use('/assets_escape_velocity', express.static(__dirname+'/assets_escape_velocity'));
+app.use('/assets_phantom', express.static(__dirname+'/assets_phantom'))
 app.use('/public', express.static(__dirname+'/public'));
 
 
