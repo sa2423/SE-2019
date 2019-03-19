@@ -29,11 +29,11 @@
 								<li>
 									<a href="/menu">Menu</a>
 									<ul>
-										<li><a href="#">Most Popular</a></li>
-										<li><a href="#">Appetizers</a></li>
-										<li><a href="#">Entrees</a></li>
-										<li><a href="#">Drinks</a></li>
-										<li><a href="#">Desserts</a></li>
+										<li><a href="/popular-dishes">Most Popular</a></li>
+										<li><a href="/appetizers">Appetizers</a></li>
+										<li><a href="/entrees">Entrees</a></li>
+										<li><a href="/drinks">Drinks</a></li>
+										<li><a href="/desserts">Desserts</a></li>
 									</ul>
 								</li>
 								<li><a href="/recommend-me">Recommend Me</a></li>
@@ -56,17 +56,48 @@
 									<div class="row">
 										<div class="aln-center">
 											<section>
-												<h3>Reservation Information</h3>
+												<!-- RESERVATION FORM -->
 												<form method="post" action="#">
-													<div class="row gtr-50">
-														<div class="col-6 col-12-small">
-															<input type="text" name="name" id="contact-name" placeholder="Name" />
+													<div class="row">
+														<div class="col-6 col-12-medium">
+															<p>
+																<strong>Name:</strong>
+															</p>
 														</div>
-														<div class="col-6 col-12-small">
-															<input type="text" name="email" id="contact-email" placeholder="Email" />
+														<div class="col-6 col-12-medium">
+															<input type="text" name="name" id="reservation-name" placeholder="Name" />
 														</div>
-														<div class="col-12">
-															<textarea name="message" id="contact-message" placeholder="Address" rows="4"></textarea>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-6 col-12-medium">
+															<p>
+																<strong>Date:</strong>
+															</p>
+														</div>
+														<div class="col-6 col-12-medium">
+															<input type="date" name="date" id="reservation-date" value="2019-1-1" />
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-6 col-12-medium">
+															<p>
+																<strong>Time:</strong>
+															</p>
+														</div>
+														<div class="col-6 col-12-medium">
+															<input type="time" name="time" id="reservation-time" value="13:30" />
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-6 col-12-medium">
+															<p>
+																<strong>How many people are you reserving for?</strong>
+															</p>
+														</div>
+														<div class="col-6 col-12-medium">
+															<input type="text" name="numpeople" id="reservation-size" placeholder="#" />
 														</div>
 													</div>
 												</form>
