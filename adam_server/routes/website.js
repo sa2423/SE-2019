@@ -16,11 +16,11 @@ router.get('/recommend-me', function(req, res, next) {
 });
 
 router.get('/cart', function(req, res, next) {
-	res.json({name: "Work in Progress"}); 
+	res.render('cart'); 
 });
 
 router.get('/reserve', function(req, res, next) {
-	res.json({name: "Work in Progress"});
+	res.render('reserve');
 });
 
 module.exports = router;
