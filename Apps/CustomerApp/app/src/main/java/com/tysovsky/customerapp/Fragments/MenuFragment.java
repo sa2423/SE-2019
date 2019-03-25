@@ -16,6 +16,7 @@ import com.tysovsky.customerapp.Interfaces.NetworkResponseListener;
 import com.tysovsky.customerapp.MainActivity;
 import com.tysovsky.customerapp.Models.Menu;
 import com.tysovsky.customerapp.Models.MenuItem;
+import com.tysovsky.customerapp.Models.OrderItem;
 import com.tysovsky.customerapp.Network.NetworkManager;
 import com.tysovsky.customerapp.Network.RequestType;
 import com.tysovsky.customerapp.R;
@@ -27,13 +28,14 @@ public class MenuFragment extends Fragment implements NetworkResponseListener {
 
     private ListView menuListView;
     private MenuAdapter menuAdapter;
+    private Menu currentMenu = new Menu();
 
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
         menuListView = view.findViewById(R.id.menu_list_view);
-        menuAdapter = new MenuAdapter(getContext(), new Menu(new ArrayList<>()));
+        menuAdapter = new MenuAdapter(getContext(), currentMenu);
         menuListView.setAdapter(menuAdapter);
         menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -55,9 +57,16 @@ public class MenuFragment extends Fragment implements NetworkResponseListener {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        menuAdapter.clear();
-                        menuAdapter.addAll(((Menu)result).getItems());
-                        menuAdapter.notifyDataSetChanged();
+
+                        Menu retrievedMenu = (Menu)result;
+                        boolean menuChanged = !retrievedMenu.getItems().equals(currentMenu.getItems());
+
+                        if(menuChanged) {
+
+                            menuAdapter.clear();
+                            menuAdapter.addAll(((Menu) result).getItems());
+                            menuAdapter.notifyDataSetChanged();
+                        }
                     }
                 });
 

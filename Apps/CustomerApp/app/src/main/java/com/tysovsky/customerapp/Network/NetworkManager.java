@@ -1,8 +1,12 @@
 package com.tysovsky.customerapp.Network;
 
+import android.util.Log;
+
 import com.tysovsky.customerapp.Interfaces.NetworkResponseListener;
 import com.tysovsky.customerapp.Models.Menu;
 import com.tysovsky.customerapp.Models.MenuItem;
+import com.tysovsky.customerapp.Models.Order;
+import com.tysovsky.customerapp.Models.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,14 +49,19 @@ public class NetworkManager{
                     Menu menu = new Menu(new ArrayList<>());
                     JSONArray jMenu = new JSONArray(response.body().string());
                     for (int i = 0; i < jMenu.length(); i++){
-                        MenuItem mItem = new MenuItem();
-                        mItem.Id = jMenu.getJSONObject(i).getString("_id");
-                        mItem.Name = jMenu.getJSONObject(i).getString("name");
-                        mItem.Description = jMenu.getJSONObject(i).getString("description");
-                        mItem.Price = (float)jMenu.getJSONObject(i).getDouble("price");
-                        mItem.PhotoUrl = "http://ec2-52-39-140-122.us-west-2.compute.amazonaws.com/public/images/menu/"+ jMenu.getJSONObject(i).getString("photo_url");
+                        try {
+                            MenuItem mItem = new MenuItem();
+                            mItem.Id = jMenu.getJSONObject(i).getString("_id");
+                            mItem.Name = jMenu.getJSONObject(i).getString("title");
+                            mItem.Description = jMenu.getJSONObject(i).getString("description");
+                            mItem.Price = (float) jMenu.getJSONObject(i).getDouble("price");
+                            mItem.PhotoUrl = "http://ec2-52-39-140-122.us-west-2.compute.amazonaws.com/public/images/menu/" + jMenu.getJSONObject(i).getString("filename");
 
-                        menu.getItems().add(mItem);
+                            menu.getItems().add(mItem);
+                        }
+                        catch (Exception e){
+
+                        }
                     }
 
                     for (NetworkResponseListener listener: listeners) {
@@ -64,5 +73,36 @@ public class NetworkManager{
                 }
             }
         });
+    }
+
+    public void placeOrder(String jsonOrder){
+        httpClient.newCall(RequestProvider.placeOrderRequest(jsonOrder)).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String r = response.body().string();
+                Log.d("NetworkManager", r);
+            }
+        });
+    }
+
+    public void requestAssistance(User user){
+
+        httpClient.newCall(RequestProvider.requireAssistanceRequest(user.Id)).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
+
     }
 }

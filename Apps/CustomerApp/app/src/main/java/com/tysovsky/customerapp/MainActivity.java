@@ -15,10 +15,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.tysovsky.customerapp.Fragments.CartFragment;
 import com.tysovsky.customerapp.Fragments.MenuFragment;
 import com.tysovsky.customerapp.Fragments.MenuItemFragment;
 import com.tysovsky.customerapp.Interfaces.NetworkResponseListener;
+import com.tysovsky.customerapp.Models.Cart;
+import com.tysovsky.customerapp.Models.OrderItem;
+import com.tysovsky.customerapp.Models.User;
+import com.tysovsky.customerapp.Network.NetworkManager;
 import com.tysovsky.customerapp.Network.RequestType;
 
 public class MainActivity extends AppCompatActivity
@@ -26,7 +33,13 @@ public class MainActivity extends AppCompatActivity
 
     MenuFragment menuFragment = new MenuFragment();
     MenuItemFragment menuItemFragment = new MenuItemFragment();
+    CartFragment cartFragment = new CartFragment();
     FragmentManager fragmentManager;
+
+
+    //Hardcoding this for now
+    User user = new User("5c967e32d2e79f4afc43fdef");
+    Cart cart = new Cart(user);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +47,25 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        ImageButton btnAlert = toolbar.findViewById(R.id.btn_alert);
+        btnAlert.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                NetworkManager.getInstance().requestAssistance(user);
+            }
+        });
+
+        ImageButton btnCart = toolbar.findViewById(R.id.btn_cart);
+        btnCart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.main_container, cartFragment, CartFragment.TAG);
+                transaction.commit();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -54,10 +86,18 @@ public class MainActivity extends AppCompatActivity
             if(fragmentManager == null){
                 fragmentManager = getSupportFragmentManager();
             }
-            if(fragmentManager.findFragmentByTag(menuFragment.TAG) != null){
+            if(fragmentManager.findFragmentByTag(MenuFragment.TAG) != null){
                 menuFragment = (MenuFragment)fragmentManager.findFragmentByTag(MenuFragment.TAG);
             }
+            if(fragmentManager.findFragmentByTag(MenuItemFragment.TAG) != null){
+                menuItemFragment = (MenuItemFragment) fragmentManager.findFragmentByTag(MenuItemFragment.TAG);
+            }
+            if(fragmentManager.findFragmentByTag(CartFragment.TAG) != null){
+                cartFragment = (CartFragment) fragmentManager.findFragmentByTag(CartFragment.TAG);
+            }
         }
+
+        cartFragment.setCart(cart);
     }
 
     @Override
@@ -102,5 +142,15 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void OnNetworkResponseReceived(RequestType REQUEST_TYPE, Object result) {
 
+    }
+
+    public void addOrderToCart(OrderItem orderItem){
+        cart.addOrderItem(orderItem);
+        cartFragment.notifyCartUpdate();
+    }
+
+    public void clearCart(){
+        cart.clean();
+        cartFragment.notifyCartUpdate();
     }
 }

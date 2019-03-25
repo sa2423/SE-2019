@@ -6,4 +6,13 @@ public class MenuItem {
     public String Description;
     public float Price;
     public String PhotoUrl;
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj.getClass() != MenuItem.class){
+            return false;
+        }
+        return ((MenuItem)obj).Id == this.Id;
+    }
 }

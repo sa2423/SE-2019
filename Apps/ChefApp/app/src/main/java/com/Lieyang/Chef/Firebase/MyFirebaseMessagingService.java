@@ -17,9 +17,9 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(RemoteMessage remoteMessage) {
         //Displaying data in log
         //It is optional
-        Log.d(TAG, "Notification Message TITLE: " + remoteMessage.getNotification().getTitle());
-        Log.d(TAG, "Notification Message BODY: " + remoteMessage.getNotification().getBody());
-        Log.d(TAG, "Notification Message DATA: " + remoteMessage.getData().toString());
+        //Log.d(TAG, "Notification Message TITLE: " + remoteMessage.getNotification().getTitle());
+        //Log.d(TAG, "Notification Message BODY: " + remoteMessage.getNotification().getBody());
+        //Log.d(TAG, "Notification Message DATA: " + remoteMessage.getData().toString());
 
         NetworkManager.getInstance().getCurrentOrders();
     }

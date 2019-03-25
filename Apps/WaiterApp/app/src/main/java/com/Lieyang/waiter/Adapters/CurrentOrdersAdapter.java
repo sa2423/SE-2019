@@ -44,7 +44,7 @@ public class CurrentOrdersAdapter extends ArrayAdapter<Order> implements Network
             TextView orderDate = itemView.findViewById(R.id.current_order_date);
             TextView orderStaus = itemView.findViewById(R.id.current_order_status);
 
-            orderId.setText(currentOrder.id);
+            orderId.setText(currentOrder.id.substring(5));
             guestId.setText(currentOrder.userid);
             orderDate.setText(currentOrder.datetime);
 

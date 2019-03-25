@@ -11,8 +11,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
+import com.tysovsky.customerapp.Fragments.MenuFragment;
+import com.tysovsky.customerapp.MainActivity;
 import com.tysovsky.customerapp.Models.Menu;
 import com.tysovsky.customerapp.Models.MenuItem;
+import com.tysovsky.customerapp.Models.OrderItem;
 import com.tysovsky.customerapp.R;
 
 import java.text.DecimalFormat;
@@ -42,6 +45,7 @@ public class MenuAdapter extends ArrayAdapter<MenuItem> {
             @Override
             public void onClick(View view) {
                 Toast.makeText(getContext(), "Added to cart", Toast.LENGTH_SHORT).show();
+                ((MainActivity)getContext()).addOrderToCart(new OrderItem(currentItem));
             }
         });
 
@@ -49,6 +53,7 @@ public class MenuAdapter extends ArrayAdapter<MenuItem> {
         itemDescription.setText(currentItem.Description);
         DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(2);
+        df.setMinimumFractionDigits(2);
         itemPrice.setText("$"+df.format(currentItem.Price));
         Picasso.get().load(currentItem.PhotoUrl).into(itemPhoto);
 

@@ -1,5 +1,8 @@
 package com.Lieyang.waiter.Firebase;
 
+import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,15 +23,31 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService{
     public void onMessageReceived(RemoteMessage remoteMessage) {
         //Displaying data in log
         //It is optional
-        Log.d(TAG, "Notification Message TITLE: " + remoteMessage.getNotification().getTitle());
-        Log.d(TAG, "Notification Message BODY: " + remoteMessage.getNotification().getBody());
-        Log.d(TAG, "Notification Message DATA: " + remoteMessage.getData().toString());
 
-        String id = remoteMessage.getData().get("_id");
+        RemoteMessage.Notification notification = remoteMessage.getNotification();
+        Map<String, String> map = remoteMessage.getData();
 
-        NetworkManager.getInstance().getOrderInfo(id);
 
-        NetworkManager.getInstance().getCurrentOrders();
+        String type = remoteMessage.getData().get("type");
+
+        //Order status changed
+        if(type.equals("ORDER")){
+            String id = remoteMessage.getData().get("_id");
+            NetworkManager.getInstance().getOrderInfo(id);
+            NetworkManager.getInstance().getCurrentOrders();
+        }
+        //Asistance required
+        else{
+            String username = remoteMessage.getData().get("username");
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                public void run() {
+                    Toast.makeText(getApplicationContext(), "User " + username + " requires assistance!", Toast.LENGTH_LONG).show();
+                }
+            });
+
+
+        }
 
         //Toast.makeText(getApplicationContext(), "Order updated", Toast.LENGTH_LONG).show();
 

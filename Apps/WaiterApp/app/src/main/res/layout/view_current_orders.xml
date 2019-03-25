@@ -25,8 +25,9 @@
 
         <TextView
             android:id="@+id/current_order_number"
-            android:layout_width="wrap_content"
+            android:layout_width="40dp"
             android:layout_height="wrap_content"
+            android:lines="1"
             android:layout_marginTop="20dp"
             android:text="O_N"
             android:textSize="20dp"
