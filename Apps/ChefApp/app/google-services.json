@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "802496280286",
+    "firebase_url": "https://adam-d2382.firebaseio.com",
+    "project_id": "adam-d2382",
+    "storage_bucket": "adam-d2382.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:802496280286:android:c8c3f32df044bd6e",
+        "android_client_info": {
+          "package_name": "com.Lieyang.Chef"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "802496280286-2cv27sr7m2de30eo2hhknvkvi0u2hgc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAihyHM4EHkexs6G2Cgz_yK4VVnr4__y1M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:802496280286:android:441cf9bf03a57773",
+        "android_client_info": {
+          "package_name": "com.Lieyang.waiter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "802496280286-2cv27sr7m2de30eo2hhknvkvi0u2hgc8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAihyHM4EHkexs6G2Cgz_yK4VVnr4__y1M"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
