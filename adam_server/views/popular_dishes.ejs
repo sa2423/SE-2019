@@ -90,8 +90,12 @@
 													<h2 style="color:#FFFFFF;"><%=menuItems[i].title%></h2>
 													<p><%=menuItems[i].description%> <br>
 													$<%=menuItems[i].price%></p>
-													<button onClick="">Add</button>
-													<button onClick="">Remove</button>
+													<form action=<%="api/add-to-cart/"+menuItems[i]._id.toString()%> method="get">
+  														<button type="submit">Add</button>
+													</form> 
+													<form action=<%="api/remove-from-cart/"+menuItems[i]._id.toString()%> method="get">
+  														<button type="submit">Remove</button>
+													</form> 
 												</div>
 											</a>
 										</article>

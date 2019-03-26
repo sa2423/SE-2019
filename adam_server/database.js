@@ -4,22 +4,47 @@ var MongoClient = require('mongodb').MongoClient,
 
 var dbURL = "mongodb://localhost:27017/adam";
 var userCollection = 'users',
-    dishesCollection = 'dishes',
-    ordersCollection = 'orders';
+    dishesCollection = 'menu',
+    ordersCollection = 'orders',
+    assistanceRequestsCollection = "assistanceRequests",
+    cartCollection = 'cart';
 
+exports.insertOrder = function(order){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(ordersCollection);
+    
+                collection.insertOne(order, function(err, result){
+                    if(err)
+                        reject(err);
+                    else
+                        resolve(result);
+                });
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    })
+}
 
-exports.getUsers = function(callback){
+function getUserCart(cust_id, callback) {
     try{
         MongoClient.connect(dbURL, function(error, db){
 
             if(!error){
-                var collection = db.collection(userCollection);
+                var collection = db.collection(cartCollection);
 
-                collection.find().toArray(function(err, users){
+                collection.find({custID: cust_id}).toArray(function(err, userCart){
                     db.close();
 
                     if(!err){
-                        callback(users);
+                        callback(userCart);
                     }
                 });
             }
@@ -33,19 +58,109 @@ exports.getUsers = function(callback){
     }
 }
 
-exports.getUser = function(user_id, callback){
+exports.addToCart = function(cust_id, menuItem){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(cartCollection);
+                // conditional statement to determine how to add stuff to cart
+                getUserCart(cust_id, function(userCart){
+                    if (userCart.length != 0) {
+                        console.log(userCart);
+                        var currentDishes = userCart[0].dishes;
+                        currentDishes.push(menuItem);
+                        collection.updateOne({custID: cust_id},
+                            {'$set': {dishes: currentDishes}}, function(err, res){
+                                if(!err){
+                                resolve({success: true});
+                            }
+                            else{
+                                console.log(err);
+                                reject({status: false});
+                            }
+                        db.close();
+                        });
+                    }
+                    else {
+                        collection.insertOne({custID: cust_id, dishes: [menuItem]}, function(err, result){
+                        if(err)
+                            reject(err);
+                        else
+                            resolve(result);
+                    });
+                    }
+                })
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    })
+}
+
+// currently not handling empty carts - need to add functionality for that later
+exports.removeFromCart = function(cust_id, menuItem) {
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(cartCollection);
+                // conditional statement to determine how to remove stuff from cart 
+                getUserCart(cust_id, function(userCart){
+                    if (userCart.length != 0) {
+                        console.log(userCart);
+                        var currentDishes = userCart[0].dishes;
+                        var updatedDishes = [];
+                        // remove item from dishes array and update currentDishes array
+                        for(var i = 0; i < currentDishes.length; i++){
+                            if (currentDishes[i]._id+"" == menuItem._id+"") {
+                                continue;
+                            }
+                            else {
+                                updatedDishes.push(currentDishes[i]);
+                            }
+                        }
+                        collection.updateOne({custID: cust_id},
+                            {'$set': {dishes: updatedDishes}}, function(err, res){
+                                if(!err){
+                                resolve({success: true});
+                            }
+                            else{
+                                console.log(err);
+                                reject({status: false});
+                            }
+                        db.close();
+                        });
+                    }
+                })
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    })   
+}
+
+// gets a cart for a particular user 
+exports.getUserCart = function(cust_id, callback) {
     try{
-        user_id = ObjectID(user_id);
         MongoClient.connect(dbURL, function(error, db){
 
             if(!error){
-                var collection = db.collection(userCollection);
+                var collection = db.collection(cartCollection);
 
-                collection.find({_id: user_id}).toArray(function(err, users){
+                collection.find({custID: cust_id}).toArray(function(err, userCart){
                     db.close();
 
-                    if(!err && users.length > 0){
-                        callback(users[0]);
+                    if(!err){
+                        callback(userCart);
                     }
                 });
             }
@@ -59,6 +174,212 @@ exports.getUser = function(user_id, callback){
     }
 }
 
+
+exports.verifyUser = function(username, password){
+    return new Promise(function(resolve, reject){
+        
+    });
+}
+
+exports.getUsers = function(){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(userCollection);
+    
+                collection.find().toArray(function(err, users){
+                    db.close();
+    
+                    if(!err){
+                        resolve(users);
+                    }
+                });
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    });
+}
+
+exports.setOrderCompleted = function(orderId){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(ordersCollection);
+                collection.update({_id: ObjectID(orderId)}, {"$set": {completed: true}})
+                resolve();
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    });
+}
+
+exports.setOrderServed = function(orderId){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(ordersCollection);
+                collection.update({_id: orderId}, {"$set": {served: true}})
+                resolve();
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    });
+}
+
+exports.getAssistanceRequests = function(){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(assistanceRequestsCollection);
+    
+                collection.find().toArray(function(err, assistanceRequests){
+                    db.close();
+    
+                    if(!err){
+                        resolve(assistanceRequests);
+                    }
+                });
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    });
+}
+
+exports.setAssistanceRequestRemoved = function(tableId){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(assistanceRequestsCollection);
+                collection.remove({_id: tableId})
+                resolve();
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    });
+}
+
+exports.getUser = function(user_id){
+
+    return new Promise(function(resolve, reject){
+        try{
+            user_id = ObjectID(user_id);
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(userCollection);
+    
+                collection.find({_id: user_id}).toArray(function(err, users){
+                    db.close();
+    
+                    if(!err && users.length > 0){
+                        resolve(users[0]);
+                    }
+                });
+            })
+            .catch(function(error){
+                console.log('error - getUser(): ' + error);
+                reject(error);
+            });
+        }
+        catch(err){
+            console.log('error - getUser(): ' + err);
+            reject(null);
+        }
+    });
+}
+
+exports.getChefs = function(){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(userCollection);
+    
+                collection.find({name: 'chef'}).toArray(function(err, chefs){
+                    db.close();
+
+                    console.log(chefs)
+    
+                    if(!err){
+                        resolve(chefs);
+                    }
+                    else{
+                        reject(err);
+                    }
+                });
+            })
+            .catch(function(error){
+                console.log("error");
+                reject(error);
+            });
+        }
+        catch(err){
+            console.log("error 2");
+            reject(err);
+        }
+    });
+}
+
+exports.getWaiters = function(){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(userCollection);
+    
+                collection.find({name: 'waiter'}).toArray(function(err, waiters){
+                    db.close();
+
+                    console.log(waiters)
+    
+                    if(!err){
+                        resolve(waiters);
+                    }
+                    else{
+                        reject(err);
+                    }
+                });
+            })
+            .catch(function(error){
+                console.log("getWaiters error");
+                reject(error);
+            });
+        }
+        catch(err){
+            console.log("getWaiters error 2");
+            reject(err);
+        }
+    });
+}
 exports.getUserOrders = function(user_id, callback){
     try{
         MongoClient.connect(dbURL, function(error, db){
@@ -82,6 +403,8 @@ exports.getUserOrders = function(user_id, callback){
     }
 }
 
+
+
 exports.getOrders = function(callback){
     try{
         MongoClient.connect(dbURL, function(error, db){
@@ -104,6 +427,44 @@ exports.getOrders = function(callback){
         callback(null);
     }
 }
+
+exports.getOrder = function(order_id){
+    return new Promise(function(resolve, reject){
+        try{
+            console.log(order_id)
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(ordersCollection);
+    
+                collection.find({_id: ObjectID(order_id)}).toArray(function(err, orders){
+                    
+                    console.log(orders)
+                    if(!err){
+                        if(orders.length > 0)
+                            resolve(orders[0]);
+                        else{
+                            resolve(null);
+                        }
+                    }
+                    else{
+                        reject(err);
+                    }
+
+                    db.close();
+                });
+            })
+            .catch(function(error){
+                console.log("getOrder error: "+ error);
+                reject(error);
+            });
+        }
+        catch(err){
+            console.log("getOrder error 2");
+            reject(err);
+        }
+    });
+}
+
 
 exports.getDishes = function(callback){
     try{
@@ -179,31 +540,55 @@ exports.getDishOrders = function(dish_id, callback){
     }
 }
 
-exports.updateFirebaseToken = function(user_id, firebase_id, callback){
-    console.log(user_id);
-    MongoClient.connect(dbURL, function(error, db){
-        if(!error){
-            var collection = db.collection(userCollection);
+exports.updateFirebaseToken = function(user_id, firebase_id){
+    return new Promise(function(resolve, reject){
+        try{
+            console.log('updateFirebaseToken(): updating firebase');
+            exports.getUser(user_id)
+            .then(function(user){
+                console.log('user retrieved!');
+                console.log(user);
+                MongoClient.connect(dbURL, function(error, db){
+                    if(!error){
+                        var collection = db.collection(userCollection);
 
-            collection.updateOne({_id: new ObjectID(user_id)}, {$set: {'firebase_id': firebase_id}}, function(err, res){
+                        console.log('checking if array')
+                        if(!Array.isArray(user.firebaseTokens)){
+                            user.firebaseTokens = [user.firebaseTokens];
+                            console.log('is array!');
+                        }
 
-                
-                if(!err){
-                    callback({status: 'success'});
-                }
-                else{
-                    console.log(err);
-                    callback({status: err});
-                }
-
-                db.close();
-
-            });
-
+                        user.firebaseTokens.push(firebase_id);
+            
+                        collection.updateOne({_id: new ObjectID(user_id)},
+                        {$set: {firebaseTokens: user.firebaseTokens}},
+                        function(err, result){
+                            if(!err){
+                                resolve({success: true});
+                            }
+                            else{
+                                console.log(err);
+                                reject({status: false});
+                            }
+            
+                            db.close();
+            
+                        });
+                    }
+                    else{
+                        console.log(error);
+                        reject({status: false});
+                    }
+                });
+            })
+            .catch(function(err){
+                console.log('firebase error: ' + err);
+                reject(err);
+            })
+            
         }
-        else{
-            console.log(error);
-            callback({status: error});
+        catch(err){
+            reject(err);
         }
-    });
+    })
 }
