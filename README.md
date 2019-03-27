@@ -40,10 +40,16 @@ Node.js (10.11), npm (6.4.1), MongoDB (shell version 4.0.7), Android Studio
 
 ### Setting up Android Applications
 
-1. Install the ìAndroid Studioî and necessary Android SDK components.
+1. Install the ‚ÄúAndroid Studio‚Äù and necessary Android SDK components.
 
-2. Open the app project youíre interest in in Android Studio
+2. Open the app project you‚Äôre interest in in Android Studio
 
 3. Click build to compile the app
 
-4. Create a new virtual android device through AVD manager, or run on an actual device by enabling USB debugging in that deviceís settings and plugging it in via USB.
+4. Create a new virtual android device through AVD manager, or run on an actual device by enabling USB debugging in that device‚Äôs settings and plugging it in via USB.
+
+### Running Unit Tests
+
+1. Set up restaurant website and MongoDB via above instructions.
+
+2. Run `npm test`
