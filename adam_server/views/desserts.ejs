@@ -78,6 +78,7 @@
 									<h1>Desserts<br /></h1>
 								</header>
 								<section class="tiles">
+
 									<% for(var i = 0; i < menuItems.length; i++){ %>
 										<!-- DISPLAYS MENU USING TILES -->
 										<article class="style5">
@@ -89,13 +90,21 @@
 													<h2 style="color:#FFFFFF;"><%=menuItems[i].title%></h2>
 													<p><%=menuItems[i].description%> <br>
 													$<%=menuItems[i].price%></p>
-													<button onClick="">Add</button>
-													<button onClick="">Remove</button>
+
+													<!-- CART ICON APPEARS ONLY IF ITEM ALREADY IN CART -->
+													<% if (checkCart[i]== true) { %>
+													<p class="icon fa-cart-plus"></p>
+													<% } %>
+													
+													<form action=<%="api/add-to-cart/"+menuItems[i]._id.toString()%> method="get">
+  														<button type="submit">Add</button>
+													</form> 
 												</div>
 											</a>
 										</article>
 
 									<% } %>
+									
 								</section>
 							</div>
 						</div>

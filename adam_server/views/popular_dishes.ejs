@@ -90,11 +90,14 @@
 													<h2 style="color:#FFFFFF;"><%=menuItems[i].title%></h2>
 													<p><%=menuItems[i].description%> <br>
 													$<%=menuItems[i].price%></p>
+
+													<!-- CART ICON APPEARS ONLY IF ITEM ALREADY IN CART -->
+													<% if (checkCart[i]== true) { %>
+													<p class="icon fa-cart-plus"></p>
+													<% } %>
+
 													<form action=<%="api/add-to-cart/"+menuItems[i]._id.toString()%> method="get">
   														<button type="submit">Add</button>
-													</form> 
-													<form action=<%="api/remove-from-cart/"+menuItems[i]._id.toString()%> method="get">
-  														<button type="submit">Remove</button>
 													</form> 
 												</div>
 											</a>

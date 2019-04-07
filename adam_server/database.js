@@ -8,6 +8,7 @@ var userCollection = 'users',
     ordersCollection = 'orders',
     assistanceRequestsCollection = "assistanceRequests",
     cartCollection = 'cart';
+    reservationCollection = 'reservation';
 
 exports.insertOrder = function(order){
     return new Promise(function(resolve, reject){
@@ -17,6 +18,32 @@ exports.insertOrder = function(order){
                 var collection = db.collection(ordersCollection);
     
                 collection.insertOne(order, function(err, result){
+                    if(err)
+                        reject(err);
+                    else
+                        resolve(result);
+                });
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    })
+}
+
+
+// Jimmy and Alex - 4/7/19
+exports.insertReservation = function(reservation){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(reservationCollection);
+    
+                collection.insertOne(reservation, function(err, result){
                     if(err)
                         reject(err);
                     else
@@ -465,7 +492,7 @@ exports.getOrder = function(order_id){
     });
 }
 
-
+// gets all dishes 
 exports.getDishes = function(callback){
     try{
         MongoClient.connect(dbURL, function(error, db){
@@ -491,6 +518,33 @@ exports.getDishes = function(callback){
     }
 }
 
+// gets all dishes of a specific type (appetizer, entree, dessert, drink, etc)
+exports.getDishtypes = function(dishType, callback){
+    try{
+        MongoClient.connect(dbURL, function(error, db){
+
+            if(!error){
+                var collection = db.collection(dishesCollection);
+
+                collection.find({type: dishType}).toArray(function(err, dishes){
+                    db.close();
+
+                    if(!err){
+                        callback(dishes);
+                    }
+                });
+            }
+            else{
+                callback(null);
+            }
+        });
+    }
+    catch(err){
+        callback(null);
+    }
+}
+
+// gets one specific dish
 exports.getDish = function(dish_id, callback){
     try{
         dish_id = ObjectID(dish_id);
