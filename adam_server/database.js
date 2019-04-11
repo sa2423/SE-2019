@@ -18,7 +18,7 @@ exports.insertOrder = function(order){
                 var collection = db.collection(ordersCollection);
     
                 collection.insertOne(order, function(err, result){
-                    if(err)
+                    if(err) //
                         reject(err);
                     else
                         resolve(result);
@@ -173,7 +173,7 @@ exports.removeFromCart = function(cust_id, menuItem) {
             reject(err);
         }
     })   
-}
+} 
 
 // gets a cart for a particular user 
 exports.getUserCart = function(cust_id, callback) {
@@ -200,6 +200,25 @@ exports.getUserCart = function(cust_id, callback) {
         callback(null);
     }
 }
+
+
+exports.removeAllFromCart = function(cust_id) { //Removes all orders from an input customer, currently keeps customerID as ordering nothing since otherwise the website crashes
+    try{
+        MongoClient.connect(dbURL, function(error, db){
+            if(!error){
+                var collection = db.collection(cartCollection);
+
+                collection.update({custID: cust_id}, {$set: {dishes: []}}) //When we fix bug with null customerID, switch this to collectin.remove({custID: cust_id})
+                db.close();
+            }
+        });
+    }
+    catch(err){
+        console.log("Error on line ~220 of database.js");
+    }
+}
+
+
 
 
 exports.verifyUser = function(username, password){

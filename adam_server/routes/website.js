@@ -14,114 +14,52 @@ router.get('/', function (req, res, next) {
 });
 
 /* MENU AND SUBPAGES*/
-// CURRENTLY DOES NOT SUPPORT CART FUNCTIONALITY - NEED TO ADD 
+// Added Functionality to populate data by pulling from database, STILL needs cart functionality. Chris 4.9.2019
 router.get('/menu', function (req, res, next) {
-	// menu variables 
-	var pop_dishes = [{
-			title: "Spicy Chicken Rigatoni",
-			price: 18.75,
-			description: "Chicken breast, garlic, crushed red pepper and peas in spicy rosa sauce",
-			filename: "chicken_rigatoni.jpg"
-		},
-		{
-			title: "Stuffed Shells",
-			price: 14.95,
-			description: "Pasta shells filled with spicy Italian sausage, spinach, ricotta and Parmesan",
-			filename: "stuffed_shells.jpg"
-		},
-		{
-			title: "Arrabbiata Pizza",
-			price: 25.95,
-			description: "Spicy Italian sausage, pepperoni, caramelized red onions, Gorgonzola, mozzarella, provolone",
-			filename: "arrabbiata.jpg"
-		}
-	];
-	var appetizers = [{
-			title: "Stuffed Mushrooms",
-			price: 11.5,
-			description: "Mushrooms stuffed with spinach and feta",
-			filename: "stuffed_mushrooms.jpg"
-		},
-		{
-			title: "Sausage & Peppers",
-			price: 9.95,
-			description: "Organic sausages stuffed with caramelized peppers",
-			filename: "sausage_peppers.jpg"
-		},
-		{
-			title: "Spinach & Artichoke al Forno",
-			price: 11.5,
-			description: "Spinach & artichoke dip, piping hot and fresh from the oven!",
-			filename: "spinach_artichoke.jpg"
-		}
-	];
-	var entrees = [{
-			title: "Prime Ribeye",
-			price: 38.95,
-			description: "16 oz. Bone in, Crispy Vesuvio Potatoes, Chianti Onions",
-			filename: "prime_rib.jpg"
-		},
-		{
-			title: "Lighter Take Veal Marsala",
-			price: 29.5,
-			description: "Mushrooms & Marsala Sauce with Hand-Cut Fettuccine",
-			filename: "veal_marsala.jpg"
-		},
-		{
-			title: "Eggplant Parmesan",
-			price: 15.95,
-			description: "Mozzarella & Marinara Sauce with Spaghetti Pomodoro",
-			filename: "eggplant_parmesan.jpg"
-		}
-	];
-	var drinks = [{
-			title: "Cappuccino",
-			price: 3.00,
-			description: "Made from Double espresso and hot milk. Topped with foamed milk",
-			filename: "cappuccino.jpg"
-		},
-		{
-			title: "Hot Tea",
-			price: 3.00,
-			description: "English Breakfast Tea",
-			filename: "hot_tea.jpg"
-		},
-		{
-			title: "Flavored Iced Tea",
-			price: 3.00,
-			description: "Comes in raspberry and peach flavors",
-			filename: "flavored_iced_tea.jpg"
-		}
-	];
-	var desserts = [{
-			title: "Double Chocolate Brownie",
-			price: 8.25,
-			description: "Vanilla Bean Ice Cream, Fresh Strawberries, Hot Fudge",
-			filename: "double_choc_brownie.jpg"
-		},
-		{
-			title: "Tiramisu",
-			price: 8.25,
-			description: "Ladyfingers soaked in Espresso with Mascarpone Cheese",
-			filename: "tiramisu.jpg"
-		},
-		{
-			title: "Creme Brulee",
-			price: 8.25,
-			description: "Hint of Citrus, Caramelized Sugar, Fresh Berries",
-			filename: "creme_brulee.jpg"
-		}
-	];
+	var customerID = "5c967e32d2e79f4afc43fdef"; //hardcoded customer id 
+	// get cart from database 
+	db.getUserCart(customerID, function (userCart) {
+		var checkCart = [];
+		var cartItems = userCart[0].dishes;
+		var pop_dishes = []; //Are pop_dishes going to be a .type in database OR some other thing. I have it as .type for now (dishes.type)
+		var appetizers = []; var entrees = []; var drinks = []; var desserts = []; 	//populate pop_dishes, appetizers, entrees, drinks, and desserts for menu to parse.
 
-	// rendering page 
-	res.render('menu', {
-		pop_dishes,
-		appetizers,
-		entrees,
-		drinks,
-		desserts
+			db.getDishes(function (allDishes) { //apps is a list of appetizers 
+			var checkCart = [];
+			for (var i = 0; i < allDishes.length; i++) { 
+				checkCart.push(false);
+				for (var j = 0; j < cartItems.length; j++) {
+					if (allDishes[i].title == cartItems[j].title) {
+						checkCart[checkCart.length - 1] = true;
+						break;
+					}
+				}				
+				if (allDishes[i].type == "whatever_this_becomes!!") { //We can change allDishes[i].type to wherever we deem a dish to be "Popular"
+					pop_dishes.push(allDishes[i]);
+				}		
+
+				if (allDishes[i].type == "appetizers") { //A very simple way to populate our apps/entrees..ect
+					appetizers.push(allDishes[i]);
+				}	
+
+				if (allDishes[i].type == "entrees") {
+					entrees.push(allDishes[i]);
+				}	
+
+				if (allDishes[i].type == "desserts") {
+					desserts.push(allDishes[i]);
+				}	
+
+				if (allDishes[i].type == "drinks") {
+					drinks.push(allDishes[i]);
+				}					
+			}	
+		
+			res.render('menu', {pop_dishes, appetizers, entrees, drinks, desserts}); //Still needs to send check-cart to renderer. 
+		});
 	});
 });
+
 
 router.get('/popular-dishes', function (req, res, next) {
 	var customerID = "5c967e32d2e79f4afc43fdef"; //hardcoded customer id 
@@ -393,6 +331,7 @@ router.post('/submit-cart-website', function (req, res, next) {
 									}
 								};
 								var options = {
+									
 									priority: "high",
 									timeToLive: 60 * 60 * 24
 								};
