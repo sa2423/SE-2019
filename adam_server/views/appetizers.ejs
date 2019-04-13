@@ -80,23 +80,31 @@
 								<section class="tiles">
 
 									<% for(var i = 0; i < menuItems.length; i++){ %>
-											<!-- DISPLAYS MENU USING TILES -->
-											<article class="style5">
-												<span class="image">
-													<img src=<%="../public/images/menu/"+menuItems[i].filename%> alt="" style="width:auto;height:325px;"/>
-												</span>
-												<a href="#">
-													<div class="content style3">
-														<h2 style="color:#FFFFFF;"><%=menuItems[i].title%></h2>
-														<p><%=menuItems[i].description%> <br>
-														$<%=menuItems[i].price%></p>
-														<button onClick="">Add</button>
-														<button onClick="">Remove</button>
-													</div>
-												</a>
-											</article>
+										<!-- DISPLAYS MENU USING TILES -->
+										<article class="style5">
+											<span class="image">
+												<img src=<%="../public/images/menu/"+menuItems[i].filename%> alt="" style="width:auto;height:325px;"/>
+											</span>
+											<a href="#">
+												<div class="content style3">
+													<h2 style="color:#FFFFFF;"><%=menuItems[i].title%></h2>
+													<p><%=menuItems[i].description%> <br>
+													$<%=menuItems[i].price%></p>
 
-										<% } %>
+													<!-- CART ICON APPEARS ONLY IF ITEM ALREADY IN CART -->
+													<% if (checkCart[i]== true) { %>
+													<p class="icon fa-cart-plus"></p>
+													<% } %>
+													
+													<form action=<%="api/add-to-cart/"+menuItems[i]._id.toString()%> method="get">
+  														<button type="submit">Add</button>
+													</form> 
+												</div>
+											</a>
+										</article>
+
+									<% } %>
+										
 								</section>
 							</div>
 						</div>

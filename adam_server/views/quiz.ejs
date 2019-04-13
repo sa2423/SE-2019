@@ -47,49 +47,25 @@
 
 			<!-- Main -->
 				<section id="main" class="wrapper style3">
-					<div class="title">Your Cart</div>
+					<div class="title">Meal Recommendation Quiz</div>
 					<div class="container">
 
 						<!-- Features -->
 							<section id="features">
 								<div class="feature-list">
 									<div class="row">
-										<!-- CART INFORMATION -->
 										<div class="aln-center">
 											<section>
-												<h3>Order Information</h3>
-												<table>
-													<tr>
-														<th><strong>Dish</strong></th>
-														<th><strong>Subtotal</strong></th>
-														<th><strong>Modify?</strong></th>
-													</tr>
-													<%for(var i=0;i<cartItems.length;i++){ %>
-													<tr>
-														<th><%=cartItems[i].title%></th>
-														<th><%=cartItems[i].price%></th>
-														<th>
-															<form method="get" action=<%="api/remove-from-cart/"+cartItems[i]._id.toString()%>>
-																<div class="row gtr-50">
-																	<div class="aln-center">
-																		<button type="submit">Remove</button>
-																	</div>
-																</div>
-															</form>
-														</th>
-													</tr>
-													<%}%>
-												</table>
-												<strong>Total Cost: <%=totalPrice%></strong>
-											</section>
-										</div>
-										<div class="aln-center">
-											<section>
-												<h3>Payment Confirmation</h3>
-												<form method="post" action="/submit-cart-website">
+												<form method="post" action="#">
 													<div class="row gtr-50">
 														<div class="aln-center">
-															<button type="submit">Send Order</button>
+															<h2><strong>Question 1:</strong> </h2>
+														</div>
+													</div>
+													<br>
+													<div class="row gtr-50">
+														<div class="aln-center">
+															<button type="submit" class="style3">Submit Quiz</button>
 														</div>
 													</div>
 												</form>

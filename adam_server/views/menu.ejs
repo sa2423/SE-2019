@@ -79,6 +79,7 @@
 									<h1><a href="/popular-dishes">Most Popular Dishes</a><br /></h1>
 								</header>
 								<section class="tiles">
+
 									<% for(var i = 0; i < pop_dishes.length; i++){ %>
 										<!-- DISPLAYS MENU USING TILES -->
 										<article class="style5">
@@ -90,8 +91,7 @@
 													<h2 style="color:#FFFFFF;"><%=pop_dishes[i].title%></h2>
 													<p><%=pop_dishes[i].description%> <br>
 													$<%=pop_dishes[i].price%></p>
-													<button onClick="">Add</button>
-													<button onClick="">Remove</button>
+													<button onClick="addToCart();">Add</button>
 												</div>
 											</a>
 										</article>
@@ -100,18 +100,18 @@
 								</section>
 
 								<!-- DISPLAY 3 APPETIZERS -->
-								<!-- THIS DISPLAYS WEIRDLY IDK WHY -->
 								<header> 
 									<br>
 									<h1><a href="/appetizers">Appetizers</a><br /></h1>
 								</header>
 								<section class="tiles">
+									<!-- DISPLAYS MENU USING TILES -->
 									<% for(var i = 0; i < appetizers.length; i++){ %>
 										<!-- DISPLAYS MENU USING TILES -->
 										<article class="style5">
 											<span class="image">
 												<img src=<%="../public/images/menu/"+appetizers[i].filename%> alt="" style="width:auto;height:325px;"/>
-									
+											</span>
 											<a href="#">
 												<div class="content style3">
 													<h2 style="color:#FFFFFF;"><%=appetizers[i].title%></h2>
@@ -142,7 +142,7 @@
 												<div class="content style3">
 													<h2 style="color:#FFFFFF;"><%=entrees[i].title%></h2>
 													<p><%=entrees[i].description%> <br>
-													$<%entrees[i].price%></p>
+													$<%=entrees[i].price%></p>
 													<button onClick="">Add</button>
 													<button onClick="">Remove</button>
 												</div>
