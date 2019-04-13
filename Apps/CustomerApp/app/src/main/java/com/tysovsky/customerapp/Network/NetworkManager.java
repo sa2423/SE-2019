@@ -10,6 +10,7 @@ import com.tysovsky.customerapp.Models.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class NetworkManager{
     private static NetworkManager networkManager = new NetworkManager();
 
     private NetworkManager(){
-        httpClient = new OkHttpClient();
+        httpClient = new OkHttpClient.Builder().cookieJar(new PersistentCookieJar()).build();
     }
     public static NetworkManager getInstance(){
         return networkManager;
@@ -34,6 +35,61 @@ public class NetworkManager{
 
     public void addListener(NetworkResponseListener listener){
         listeners.add(listener);
+    }
+
+    public void login(String username, String password){
+        httpClient.newCall(RequestProvider.loginRequest(username, password)).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    JSONObject jsonObject = new JSONObject(response.body().string());
+                    boolean success = jsonObject.getBoolean("success");
+                    for (NetworkResponseListener listener: listeners) {
+                        listener.OnNetworkResponseReceived(RequestType.LOGIN, success);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void logout(){
+
+        httpClient.newCall(RequestProvider.logoutRequest()).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                ((PersistentCookieJar)httpClient.cookieJar()).clearAllCookies();
+                for (NetworkResponseListener listener: listeners) {
+                    listener.OnNetworkResponseReceived(RequestType.LOGOUT, null);
+                }
+            }
+        });
+    }
+
+    //Test method to make sure authentication works
+    public void secret(){
+        httpClient.newCall(RequestProvider.secretRequest()).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String res = response.body().string();
+            }
+        });
     }
 
     public void getMenu(){
@@ -105,4 +161,6 @@ public class NetworkManager{
         });
 
     }
+
+
 }

@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity
         }
 
         cartFragment.setCart(cart);
+
+        NetworkManager.getInstance().login("chef", "test");
     }
 
     @Override
