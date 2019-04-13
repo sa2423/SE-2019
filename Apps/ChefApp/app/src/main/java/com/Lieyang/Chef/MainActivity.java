@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity
     CompletedOrdersFragment mCompletedOrdersFragment = new CompletedOrdersFragment();
     CurrentOrdersFragment mCurrentOrdersFragment = new CurrentOrdersFragment();
     OrderDetailsFragment orderDetailsFragment = new OrderDetailsFragment();
-    
+
 
     FragmentManager fragmentManager;
 
