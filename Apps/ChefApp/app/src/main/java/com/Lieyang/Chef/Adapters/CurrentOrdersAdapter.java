@@ -1,6 +1,8 @@
 package com.Lieyang.Chef.Adapters;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,6 +30,7 @@ public class CurrentOrdersAdapter extends ArrayAdapter<Order> implements Network
     }
 
 
+
     @Override
     public View getView(int position, View itemView,  ViewGroup parent) {
 
@@ -53,14 +56,74 @@ public class CurrentOrdersAdapter extends ArrayAdapter<Order> implements Network
             completeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.d(TAG, "onClick: ");
                     NetworkManager.getInstance().completeOrder(currentOrder);
                 }
             });
 
 
 
+
+        /**************/
+
+
+        currentOrder.textView = itemView.findViewById(R.id.timer);
+        currentOrder.start = itemView.findViewById(R.id.start_button);
+        currentOrder.pause = itemView.findViewById(R.id.pause_button);
+        currentOrder.reset = itemView.findViewById(R.id.reset_button);
+
+        if (currentOrder.handler == null){
+            currentOrder.handler = new Handler();
+        }
+
+
+        currentOrder.start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                currentOrder.StartTime = SystemClock.uptimeMillis();
+                currentOrder.handler.postDelayed(currentOrder.runnable, 0);
+
+                currentOrder.reset.setEnabled(false);
+
+            }
+        });
+
+        currentOrder.pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                currentOrder.TimeBuff += currentOrder.MillisecondTime;
+
+                currentOrder.handler.removeCallbacks(currentOrder.runnable);
+
+                currentOrder.reset.setEnabled(true);
+
+            }
+        });
+
+        currentOrder.reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                currentOrder.MillisecondTime = 0L ;
+                currentOrder.StartTime = 0L ;
+                currentOrder.TimeBuff = 0L ;
+                currentOrder.UpdateTime = 0L ;
+                currentOrder.Seconds = 0 ;
+                currentOrder.Minutes = 0 ;
+                currentOrder.MilliSeconds = 0 ;
+
+                currentOrder.textView.setText("00:00:00");
+            }
+        });
+
+        /**************/
+
         return itemView;
     }
+
+
 
     @Override
     public void OnNetworkResponseReceived(RequestType REQUEST_TYPE, Object result) {

@@ -140,6 +140,7 @@ public class NetworkManager{
     }
 
     public void completeOrder(Order order){
+        Log.d(TAG, "onResponse: ");
         httpClient.newCall(RequestProvider.getCompleteOrderRequest(order.id)).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -152,7 +153,7 @@ public class NetworkManager{
                     JSONObject statusObj = new JSONObject(response.body().string());
                     boolean status = statusObj.getBoolean("success");
                     order.completed = status;
-
+                    Log.d(TAG, "onResponse: success");
                     for (NetworkResponseListener listener: listeners) {
                         listener.OnNetworkResponseReceived(RequestType.COMLETE_ORDER, order);
                     }
