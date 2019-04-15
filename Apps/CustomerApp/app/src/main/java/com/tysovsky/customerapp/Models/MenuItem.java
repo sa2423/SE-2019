@@ -6,6 +6,7 @@ public class MenuItem {
     public String Description;
     public float Price;
     public String PhotoUrl;
+    public String Type;
 
 
     @Override

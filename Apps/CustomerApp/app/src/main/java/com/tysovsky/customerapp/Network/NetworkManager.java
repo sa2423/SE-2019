@@ -1,5 +1,6 @@
 package com.tysovsky.customerapp.Network;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.tysovsky.customerapp.Interfaces.NetworkResponseListener;
@@ -48,9 +49,8 @@ public class NetworkManager{
             public void onResponse(Call call, Response response) throws IOException {
                 try {
                     JSONObject jsonObject = new JSONObject(response.body().string());
-                    boolean success = jsonObject.getBoolean("success");
                     for (NetworkResponseListener listener: listeners) {
-                        listener.OnNetworkResponseReceived(RequestType.LOGIN, success);
+                        listener.OnNetworkResponseReceived(RequestType.LOGIN, jsonObject);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -70,6 +70,7 @@ public class NetworkManager{
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 ((PersistentCookieJar)httpClient.cookieJar()).clearAllCookies();
+                User.deleteCurrentUser();
                 for (NetworkResponseListener listener: listeners) {
                     listener.OnNetworkResponseReceived(RequestType.LOGOUT, null);
                 }
@@ -112,7 +113,7 @@ public class NetworkManager{
                             mItem.Description = jMenu.getJSONObject(i).getString("description");
                             mItem.Price = (float) jMenu.getJSONObject(i).getDouble("price");
                             mItem.PhotoUrl = "http://ec2-52-39-140-122.us-west-2.compute.amazonaws.com/public/images/menu/" + jMenu.getJSONObject(i).getString("filename");
-
+                            mItem.Type = jMenu.getJSONObject(i).getString("type");
                             menu.getItems().add(mItem);
                         }
                         catch (Exception e){
@@ -120,6 +121,7 @@ public class NetworkManager{
                         }
                     }
 
+                    menu.sortByType();
                     for (NetworkResponseListener listener: listeners) {
                         listener.OnNetworkResponseReceived(RequestType.GET_MENU, menu);
                     }

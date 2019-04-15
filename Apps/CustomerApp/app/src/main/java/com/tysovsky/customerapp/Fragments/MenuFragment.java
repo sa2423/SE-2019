@@ -1,5 +1,7 @@
 package com.tysovsky.customerapp.Fragments;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +32,15 @@ public class MenuFragment extends Fragment implements NetworkResponseListener {
     private MenuAdapter menuAdapter;
     private Menu currentMenu = new Menu();
 
+    private Activity activity;
+
+    public MenuFragment(){}
+
+    @SuppressLint("ValidFragment")
+    public MenuFragment(Activity activity){
+        this.activity = activity;
+    }
+
     @Override
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
@@ -54,19 +65,16 @@ public class MenuFragment extends Fragment implements NetworkResponseListener {
     public void OnNetworkResponseReceived(RequestType REQUEST_TYPE, Object result) {
         switch (REQUEST_TYPE){
             case GET_MENU:
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+                activity.runOnUiThread(() -> {
 
-                        Menu retrievedMenu = (Menu)result;
-                        boolean menuChanged = !retrievedMenu.getItems().equals(currentMenu.getItems());
+                    Menu retrievedMenu = (Menu)result;
+                    boolean menuChanged = !retrievedMenu.getItems().equals(currentMenu.getItems());
 
-                        if(menuChanged) {
+                    if(menuChanged) {
 
-                            menuAdapter.clear();
-                            menuAdapter.addAll(((Menu) result).getItems());
-                            menuAdapter.notifyDataSetChanged();
-                        }
+                        menuAdapter.clear();
+                        menuAdapter.addAll(((Menu) result).getItems());
+                        menuAdapter.notifyDataSetChanged();
                     }
                 });
 
