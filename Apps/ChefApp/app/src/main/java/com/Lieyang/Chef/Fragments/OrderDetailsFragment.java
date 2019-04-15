@@ -1,6 +1,8 @@
 package com.Lieyang.Chef.Fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +25,15 @@ public class OrderDetailsFragment extends Fragment {
     public final static String TAG = "OrderDetailsFragment";
 
     public OrderOrderItemsAdapter adapter = null;
+
+
+    /*******/
+//    public static TextView textView ;
+//
+//    Button start, pause, reset;
+
+    /*******/
+
 
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
@@ -85,9 +96,89 @@ public class OrderDetailsFragment extends Fragment {
             });
         }
 
+//        /**************/
+//
+//
+//        order.textView = view.findViewById(R.id.textView);
+//        order.start = view.findViewById(R.id.button);
+//        order.pause = view.findViewById(R.id.button2);
+//        order.reset = view.findViewById(R.id.button3);
+//
+//        order.handler = new Handler();
+//
+////        order.runnable = new Runnable() {
+////
+////            public void run() {
+////
+////                order.MillisecondTime = SystemClock.uptimeMillis() - order.StartTime;
+////
+////                order.UpdateTime = order.TimeBuff + order.MillisecondTime;
+////
+////                order.Seconds = (int) (order.UpdateTime / 1000);
+////
+////                order.Minutes = order.Seconds / 60;
+////
+////                order.Seconds = order.Seconds % 60;
+////
+////                order.MilliSeconds = (int) (order.UpdateTime % 1000);
+////
+////                textView.setText("" + order.Minutes + ":"
+////                        + String.format("%02d", order.Seconds));
+////                if (order.handler == null){
+////                    order.handler = new Handler();
+////                }
+////                order.handler.postDelayed(this, 0);
+////            }
+////
+////        };
+//
+//        order.start.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                order.StartTime = SystemClock.uptimeMillis();
+//                order.handler.postDelayed(order.runnable, 0);
+//
+//                order.reset.setEnabled(false);
+//
+//            }
+//        });
+//
+//        order.pause.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                order.TimeBuff += order.MillisecondTime;
+//
+//                order.handler.removeCallbacks(order.runnable);
+//
+//                order.reset.setEnabled(true);
+//
+//            }
+//        });
+//
+//        order.reset.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                order.MillisecondTime = 0L ;
+//                order.StartTime = 0L ;
+//                order.TimeBuff = 0L ;
+//                order.UpdateTime = 0L ;
+//                order.Seconds = 0 ;
+//                order.Minutes = 0 ;
+//                order.MilliSeconds = 0 ;
+//
+//                order.textView.setText("00:00:00");
+//            }
+//        });
+//
+//        /**************/
 
         return view;
     }
+
+
 
     public void setCurrentOrder(Order order){
         this.order = order;

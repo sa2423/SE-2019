@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity
 //
 //    public static ArrayList<User> users = new ArrayList<>();
 //
-//    public static ArrayList<OrderItem> mMenuItems = new ArrayList<>();
+//    public static ArrayList<OrderItem> ms = new ArrayList<>();
 
 
     public ArrayList<Order> orders = new ArrayList<>();
