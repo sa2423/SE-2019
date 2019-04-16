@@ -121,7 +121,7 @@ public class NetworkManager{
                         }
                     }
 
-                    menu.sortByType();
+                    //menu.sortByType();
                     for (NetworkResponseListener listener: listeners) {
                         listener.OnNetworkResponseReceived(RequestType.GET_MENU, menu);
                     }

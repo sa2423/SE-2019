@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.tysovsky.customerapp.Adapters.MenuAdapter;
+import com.tysovsky.customerapp.Adapters.MenuGroupAdapter;
 import com.tysovsky.customerapp.Interfaces.NetworkResponseListener;
 import com.tysovsky.customerapp.MainActivity;
 import com.tysovsky.customerapp.Models.Menu;
@@ -30,7 +32,9 @@ public class MenuFragment extends Fragment implements NetworkResponseListener {
 
     private ListView menuListView;
     private MenuAdapter menuAdapter;
-    private Menu currentMenu = new Menu();
+    private Menu currentMenu = Menu.loadSavedMenu();
+
+    MenuGroupAdapter adapter;
 
     private Activity activity;
 
@@ -45,15 +49,15 @@ public class MenuFragment extends Fragment implements NetworkResponseListener {
     public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_menu, container, false);
 
-        menuListView = view.findViewById(R.id.menu_list_view);
-        menuAdapter = new MenuAdapter(getContext(), currentMenu);
-        menuListView.setAdapter(menuAdapter);
-        menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ((MainActivity)getContext()).loadMenuItemFragment((MenuItem)adapterView.getItemAtPosition(i));
-            }
+        ExpandableListView menuView = view.findViewById(R.id.menu_list_view);
+        adapter = new MenuGroupAdapter(getActivity(), currentMenu.getMenuTypes(), currentMenu.getMenuItems());
+        menuView.setAdapter(adapter);
+
+        menuView.setOnChildClickListener((parent, v, groupPosition, childPosition, id) -> {
+            ((MainActivity)getContext()).loadMenuItemFragment((MenuItem)adapter.getChild(groupPosition, childPosition));
+            return false;
         });
+        
 
         NetworkManager.getInstance().addListener(this);
         NetworkManager.getInstance().getMenu();
@@ -71,10 +75,10 @@ public class MenuFragment extends Fragment implements NetworkResponseListener {
                     boolean menuChanged = !retrievedMenu.getItems().equals(currentMenu.getItems());
 
                     if(menuChanged) {
-
-                        menuAdapter.clear();
-                        menuAdapter.addAll(((Menu) result).getItems());
-                        menuAdapter.notifyDataSetChanged();
+                        retrievedMenu.saveMenu();
+                        adapter.setMenuTypes(retrievedMenu.getMenuTypes());
+                        adapter.setMenuItems(retrievedMenu.getMenuItems());
+                        adapter.notifyDataSetChanged();
                     }
                 });
 
