@@ -19,6 +19,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.tysovsky.customerapp.Fragments.CartFragment;
+import com.tysovsky.customerapp.Fragments.LoginFragment;
 import com.tysovsky.customerapp.Fragments.MenuFragment;
 import com.tysovsky.customerapp.Fragments.MenuItemFragment;
 import com.tysovsky.customerapp.Interfaces.NetworkResponseListener;
@@ -28,23 +29,62 @@ import com.tysovsky.customerapp.Models.User;
 import com.tysovsky.customerapp.Network.NetworkManager;
 import com.tysovsky.customerapp.Network.RequestType;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, NetworkResponseListener {
 
-    MenuFragment menuFragment = new MenuFragment();
+    NavigationView navigationView;
+
+    MenuFragment menuFragment = new MenuFragment(this);
     MenuItemFragment menuItemFragment = new MenuItemFragment();
     CartFragment cartFragment = new CartFragment();
+    LoginFragment loginFragment = new LoginFragment();
     FragmentManager fragmentManager;
 
 
     //Hardcoding this for now
-    User user = new User("5c967e32d2e79f4afc43fdef");
+    User user = User.getCurrentUser();//new User("5c967e32d2e79f4afc43fdef");
     Cart cart = new Cart(user);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        setUpViews();
+
+        if(savedInstanceState == null){
+            fragmentManager = getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.main_container, menuFragment, MenuFragment.TAG);
+            transaction.commit();
+        }
+        else{
+            if(fragmentManager == null){
+                fragmentManager = getSupportFragmentManager();
+            }
+            if(fragmentManager.findFragmentByTag(MenuFragment.TAG) != null){
+                menuFragment = (MenuFragment)fragmentManager.findFragmentByTag(MenuFragment.TAG);
+            }
+            if(fragmentManager.findFragmentByTag(MenuItemFragment.TAG) != null){
+                menuItemFragment = (MenuItemFragment) fragmentManager.findFragmentByTag(MenuItemFragment.TAG);
+            }
+            if(fragmentManager.findFragmentByTag(CartFragment.TAG) != null){
+                cartFragment = (CartFragment) fragmentManager.findFragmentByTag(CartFragment.TAG);
+            }
+            if(fragmentManager.findFragmentByTag(LoginFragment.TAG) != null){
+                loginFragment = (LoginFragment) fragmentManager.findFragmentByTag(LoginFragment.TAG);
+            }
+        }
+
+        cartFragment.setCart(cart);
+
+        NetworkManager.getInstance().addListener(this);
+    }
+
+    public void setUpViews(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -73,34 +113,27 @@ public class MainActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        if(savedInstanceState == null){
-            fragmentManager = getSupportFragmentManager();
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.add(R.id.main_container, menuFragment, MenuFragment.TAG);
-            transaction.commit();
+        updateNavigationDrawer();
+    }
+
+    public void updateNavigationDrawer(){
+        //If user currently logged in, hide the login button, otherwise hide the logout button
+        if(user == null){
+            navigationView.getMenu().findItem(R.id.nav_login).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_logout).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_profile).setVisible(false);
         }
         else{
-            if(fragmentManager == null){
-                fragmentManager = getSupportFragmentManager();
-            }
-            if(fragmentManager.findFragmentByTag(MenuFragment.TAG) != null){
-                menuFragment = (MenuFragment)fragmentManager.findFragmentByTag(MenuFragment.TAG);
-            }
-            if(fragmentManager.findFragmentByTag(MenuItemFragment.TAG) != null){
-                menuItemFragment = (MenuItemFragment) fragmentManager.findFragmentByTag(MenuItemFragment.TAG);
-            }
-            if(fragmentManager.findFragmentByTag(CartFragment.TAG) != null){
-                cartFragment = (CartFragment) fragmentManager.findFragmentByTag(CartFragment.TAG);
-            }
+            navigationView.getMenu().findItem(R.id.nav_login).setVisible(false);
+            navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_profile).setVisible(true);
+            navigationView.getMenu().findItem(R.id.nav_profile).setTitle(user.FirstName + " " + user.LastName);
         }
-
-        cartFragment.setCart(cart);
-
-        //NetworkManager.getInstance().login("chef", "test");
     }
+
 
     @Override
     public void onBackPressed() {
@@ -128,6 +161,15 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.nav_menu) {
             // Handle the camera action
         }
+        else if(id == R.id.nav_login){
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.main_container, loginFragment, LoginFragment.TAG);
+            transaction.commit();
+        }
+
+        else if(id == R.id.nav_logout){
+            NetworkManager.getInstance().logout();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -143,7 +185,29 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void OnNetworkResponseReceived(RequestType REQUEST_TYPE, Object result) {
+        switch (REQUEST_TYPE){
+            case LOGIN:
+                JSONObject response = (JSONObject)result;
+                try {
+                    if(response.getBoolean("success")){
+                        user = User.fromJson(response.getString("user"));
+                        user.SaveUser();
+                        runOnUiThread(() -> updateNavigationDrawer());
 
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                break;
+
+            case LOGOUT:
+                user = null;
+                runOnUiThread(() -> {
+                    updateNavigationDrawer();
+                    onBackPressed();
+                });
+                break;
+        }
     }
 
     public void addOrderToCart(OrderItem orderItem){
