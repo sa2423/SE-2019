@@ -6,5 +6,7 @@ public enum RequestType {
     COMPLETE_ORDER,
     GET_REQUESTS,
     COMPLETE_REQUESTS,
-    ORDER_INFO
+    ORDER_INFO,
+    LOGIN,
+    LOGOUT
 }

@@ -30,6 +30,8 @@
             android:lines="1"
             android:layout_marginTop="20dp"
             android:text="O_N"
+            android:maxLines="1"
+            android:maxLength="10"
             android:textSize="20dp"
             android:textStyle="bold" />
 
@@ -64,7 +66,9 @@
                 android:paddingLeft="10dp"
                 android:text="1"
                 android:textSize="10dp"
-                tools:paddingRight="10dp" />
+                tools:paddingRight="10dp"
+                android:maxLines="1"
+                android:maxLength="10" />
         </LinearLayout>
 
         <LinearLayout
@@ -89,7 +93,9 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:text="01/23/2019"
-                android:textSize="10dp" />
+                android:textSize="10dp"
+                android:maxLines="1"
+                android:maxLength="10" />
         </LinearLayout>
 
 

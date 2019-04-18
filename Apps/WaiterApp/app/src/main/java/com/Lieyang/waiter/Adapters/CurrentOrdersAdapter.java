@@ -44,9 +44,9 @@ public class CurrentOrdersAdapter extends ArrayAdapter<Order> implements Network
             TextView orderDate = itemView.findViewById(R.id.current_order_date);
             TextView orderStaus = itemView.findViewById(R.id.current_order_status);
 
-            orderId.setText(currentOrder.id.substring(5));
-            guestId.setText(currentOrder.userid);
-            orderDate.setText(currentOrder.datetime);
+            orderId.setText(currentOrder.id);
+            guestId.setText(currentOrder.userid.substring(5));
+            orderDate.setText(currentOrder.datetime.substring(15));
 
             if (currentOrder.completed == false){
                 orderStaus.setText("In progress");

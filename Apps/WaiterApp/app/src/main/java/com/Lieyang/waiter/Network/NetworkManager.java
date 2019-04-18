@@ -42,6 +42,9 @@ public class NetworkManager{
             listeners.add(listener);
     }
 
+
+
+
     public void getCurrentOrders(){
         httpClient.newCall(RequestProvider.getCurrentOrdersRequest()).enqueue(new Callback() {
             @Override
