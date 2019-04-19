@@ -26,6 +26,9 @@
         <receiver android:name=".BroadcastReceivers.AccessPointBroadcastReceiver">
         </receiver>
 
+        <activity android:name=".arcsoft.sdk_demo.FaceRegisterActivity"></activity>
+        <activity android:name=".arcsoft.sdk_demo.FaceDetecterActivity"></activity>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -33,5 +36,14 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!---from face -->
+    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <!-- camera -->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- sdcard -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- wifi internet -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>
