@@ -1,36 +1,38 @@
 router.post('/editUser', function(req, res){
-		var user = req.body.user;
+        var user = req.body.user;
+        var set = req.body.set;
 
-		console.log(user);
+        console.log(user);
 
-		try {
-			user = JSON.parse(user);
+        try {
+            user = JSON.parse(user);
+            set = JSON.parse(set);
 
-			db.updateUser(user)
-			.then(function(result){
-				console.log('user updated');
-		
-			})
-			.catch(function(error){
-				console.log('error updating user: ' + error);
-				res.json(error);
-			});
-		} catch (e) {
-			return console.error(e);
-		}
+            db.updateUser(user, set)
+            .then(function(result){
+                console.log('user updated');
+        
+            })
+            .catch(function(error){
+                console.log('error updating user: ' + error);
+                res.json(error);
+            });
+        } catch (e) {
+            return console.error(e);
+        }
 
-	});
+    });
 
 
 
-exports.updateUser = function(user){
+exports.updateUser = function(user, set){
     return new Promise(function(resolve, reject){
         try{
             MongoClient.connect(dbURL)
             .then(function(db){
                 var collection = db.collection(usersCollection);
     
-                collection.updateOne(user, function(err, result){
+                collection.updateOne(user, set, function(err, result){
                     if(err) //
                         reject(err);
                     else
