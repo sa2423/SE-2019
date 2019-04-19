@@ -2,7 +2,9 @@ package com.tysovsky.customerapp.Network;
 
 import android.annotation.SuppressLint;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.tysovsky.customerapp.GlobalApplication;
 import com.tysovsky.customerapp.Interfaces.NetworkResponseListener;
 import com.tysovsky.customerapp.Models.Menu;
 import com.tysovsky.customerapp.Models.MenuItem;
@@ -158,6 +160,22 @@ public class NetworkManager{
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 String r = response.body().string();
+
+                try {
+                    JSONObject res = new JSONObject(r);
+                    if(res.getBoolean("success")){
+
+                        for (NetworkResponseListener listener :
+                                listeners) {
+                            listener.OnNetworkResponseReceived(RequestType.EDIT_PROFILE, null);
+                        }
+                    }
+                    else{
+                        handleErrors(res.getInt("error"));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 Log.d("NetworkManager", r);
             }
         });
@@ -179,5 +197,17 @@ public class NetworkManager{
 
     }
 
+    public void handleErrors(int err){
+        switch (err){
+            case NetworkErrors.NOT_LOGGED_IN:
+                ((PersistentCookieJar)httpClient.cookieJar()).clearAllCookies();
+                User.deleteCurrentUser();
+                for (NetworkResponseListener listener: listeners) {
+                    listener.OnNetworkResponseReceived(RequestType.LOGOUT, null);
+                }
+                break;
+        }
+
+    }
 
 }

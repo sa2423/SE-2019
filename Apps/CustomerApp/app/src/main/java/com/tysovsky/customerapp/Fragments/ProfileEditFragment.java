@@ -34,6 +34,9 @@ public class ProfileEditFragment extends Fragment {
         EditText userName = view.findViewById(R.id.user_name_EditTxt);
         EditText password = view.findViewById(R.id.password_EditTxt);
 
+        User user = User.getCurrentUser();
+        firstName.setText(user.FirstName);
+
 
         Button confirm_btn = view.findViewById(R.id.confirm_edit_btn);
 
@@ -55,18 +58,17 @@ public class ProfileEditFragment extends Fragment {
                 }
                 User.updateCurrentUser(UserId,UserName,FirstName,LastName);
 
-                String userJson = "{ _id: ObjectId(" + "\"" + UserId + "\")" + " }";
-                String setJson = "{ $set: { name: \"" + UserName + "\"" +
-                        ", first_name: " + "\"" + FirstName + "\"" +
-                        ", last_name: " + "\"" + LastName + "\"" +
-                        ", password: " + "\"" + Password + "\"} }";
+                String userJson = "{\"_id\": " + "\"" + UserId + "\"" + " }";
+                String setJson = "{ \"$set\": { \"name\": \"" + UserName + "\"" +
+                        ", \"first_name\": " + "\"" + FirstName + "\"" +
+                        ", \"last_name\": " + "\"" + LastName + "\"" +
+                        ", \"password\": " + "\"" + Password + "\"} }";
 
                 Log.d("json", userJson+", " + setJson);
 
                 NetworkManager.getInstance().EditProfile(userJson,setJson);
                 Toast.makeText(getContext(), "Profile Edited", Toast.LENGTH_LONG).show();
                 ((MainActivity)getContext()).updateNavigationDrawer();
-                ((MainActivity)getContext()).onBackPressed();
             }
         });
 

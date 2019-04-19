@@ -199,18 +199,24 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
+        try{
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            }
+            else if(fragmentManager.findFragmentByTag(MenuFragment.TAG) == null){
+                FragmentTransaction transaction = fragmentManager.beginTransaction();
+                transaction.replace(R.id.main_container, menuFragment, MenuFragment.TAG);
+                transaction.commit();
+            }
+            else {
+                super.onBackPressed();
+            }
         }
-        else if(fragmentManager.findFragmentByTag(MenuFragment.TAG) == null){
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.main_container, menuFragment, MenuFragment.TAG);
-            transaction.commit();
+        catch (Exception e){
+
         }
-        else {
-            super.onBackPressed();
-        }
+
 
     }
 
@@ -234,11 +240,6 @@ public class MainActivity extends AppCompatActivity
         else if(id == R.id.nav_logout){
             NetworkManager.getInstance().logout();
         }
-        else if(id == R.id.nav_profile){
-            WifiManager wifi=(WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-            wifi.getScanResults();
-        }
-
         else if (id == R.id.nav_profile){
             FragmentTransaction transaction = fragmentManager.beginTransaction();
             transaction.replace(R.id.main_container, profileFragment, ProfileFragment.TAG);
@@ -258,8 +259,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void showEditFragment(){
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.main_container, profileEditFragment, ProfileEditFragment.TAG);
         transaction.commit();
     }
@@ -290,6 +290,10 @@ public class MainActivity extends AppCompatActivity
                     updateNavigationDrawer();
                     onBackPressed();
                 });
+                break;
+
+            case EDIT_PROFILE:
+                onBackPressed();
                 break;
         }
     }
