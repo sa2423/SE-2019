@@ -20,7 +20,7 @@ public class User {
     public void SaveUser(){
         SharedPreferences sp = GlobalApplication.getAppContext().getSharedPreferences("user", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
-
+        deleteCurrentUser();
         editor.putString("Id", Id);
         editor.putString("Username", Username);
         editor.putString("FirstName", FirstName);
@@ -37,6 +37,7 @@ public class User {
         editor.remove("LastName");
         editor.apply();
     }
+
 
     public static User fromJson(String jsonString){
         try {
@@ -66,5 +67,18 @@ public class User {
         user.LastName = sp.getString("LastName", null);
         return user;
     }
+
+    public static void updateCurrentUser(String id, String username, String firstName, String lastName){
+        deleteCurrentUser();
+        SharedPreferences sp = GlobalApplication.getAppContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+
+        editor.putString("Id", id);
+        editor.putString("Username", username);
+        editor.putString("FirstName", firstName);
+        editor.putString("LastName", lastName);
+        editor.apply();
+    }
+
 
 }

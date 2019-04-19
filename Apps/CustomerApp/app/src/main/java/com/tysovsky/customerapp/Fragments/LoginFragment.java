@@ -12,6 +12,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.tysovsky.customerapp.Interfaces.NetworkResponseListener;
+import com.tysovsky.customerapp.MainActivity;
 import com.tysovsky.customerapp.Network.NetworkManager;
 import com.tysovsky.customerapp.Network.RequestType;
 import com.tysovsky.customerapp.R;
@@ -57,6 +58,7 @@ public class LoginFragment extends Fragment implements NetworkResponseListener {
             }
 
             NetworkManager.getInstance().login(username, password);
+
         });
 
 
@@ -78,6 +80,13 @@ public class LoginFragment extends Fragment implements NetworkResponseListener {
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
+                            }
+                        });
+                    } else{
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ((MainActivity)getContext()).onBackPressed();
                             }
                         });
                     }

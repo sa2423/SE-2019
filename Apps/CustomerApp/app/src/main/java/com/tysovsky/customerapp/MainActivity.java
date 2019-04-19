@@ -22,6 +22,8 @@ import com.tysovsky.customerapp.Fragments.CartFragment;
 import com.tysovsky.customerapp.Fragments.LoginFragment;
 import com.tysovsky.customerapp.Fragments.MenuFragment;
 import com.tysovsky.customerapp.Fragments.MenuItemFragment;
+import com.tysovsky.customerapp.Fragments.ProfileEditFragment;
+import com.tysovsky.customerapp.Fragments.ProfileFragment;
 import com.tysovsky.customerapp.Interfaces.NetworkResponseListener;
 import com.tysovsky.customerapp.Models.Cart;
 import com.tysovsky.customerapp.Models.OrderItem;
@@ -41,6 +43,9 @@ public class MainActivity extends AppCompatActivity
     MenuItemFragment menuItemFragment = new MenuItemFragment();
     CartFragment cartFragment = new CartFragment();
     LoginFragment loginFragment = new LoginFragment();
+    ProfileFragment profileFragment = new ProfileFragment();
+    ProfileEditFragment profileEditFragment = new ProfileEditFragment();
+
     FragmentManager fragmentManager;
 
 
@@ -77,6 +82,11 @@ public class MainActivity extends AppCompatActivity
             if(fragmentManager.findFragmentByTag(LoginFragment.TAG) != null){
                 loginFragment = (LoginFragment) fragmentManager.findFragmentByTag(LoginFragment.TAG);
             }
+            if(fragmentManager.findFragmentByTag(ProfileFragment.TAG) != null) {
+                profileFragment = (ProfileFragment) fragmentManager.findFragmentByTag(ProfileFragment.TAG);
+            }
+
+
         }
 
         cartFragment.setCart(cart);
@@ -127,6 +137,7 @@ public class MainActivity extends AppCompatActivity
             navigationView.getMenu().findItem(R.id.nav_profile).setVisible(false);
         }
         else{
+            user = User.getCurrentUser();
             navigationView.getMenu().findItem(R.id.nav_login).setVisible(false);
             navigationView.getMenu().findItem(R.id.nav_logout).setVisible(true);
             navigationView.getMenu().findItem(R.id.nav_profile).setVisible(true);
@@ -171,6 +182,12 @@ public class MainActivity extends AppCompatActivity
             NetworkManager.getInstance().logout();
         }
 
+        else if (id == R.id.nav_profile){
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.main_container, profileFragment, ProfileFragment.TAG);
+            transaction.commit();
+        }
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
@@ -180,6 +197,13 @@ public class MainActivity extends AppCompatActivity
         menuItemFragment.setCurrentMenuItem(item);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.main_container, menuItemFragment, MenuItemFragment.TAG);
+        transaction.commit();
+    }
+
+    public void showEditFragment(){
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.main_container, profileEditFragment, ProfileEditFragment.TAG);
         transaction.commit();
     }
 

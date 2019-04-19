@@ -78,6 +78,23 @@ public class RequestProvider {
         return request;
     }
 
+    public static Request editProfileRequest(String userJson, String setJson){
+        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "editUser").newBuilder();
+
+        RequestBody body = new FormBody.Builder()
+                .add("user", userJson)
+                .add("set", setJson)
+                .build();
+
+        Request request = new Request.Builder()
+                .url(urlBuilder.build())
+                .addHeader("Content-Type", "application/json")
+                .post(body)
+                .build();
+
+        return request;
+    }
+
     public static Request requireAssistanceRequest(String userId){
         HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "assistance").newBuilder();
 

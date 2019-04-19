@@ -148,6 +148,21 @@ public class NetworkManager{
         });
     }
 
+    public void EditProfile(String userJson, String setJson){
+        httpClient.newCall(RequestProvider.editProfileRequest(userJson, setJson)).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d("NetworkManager", "onFailure: ");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String r = response.body().string();
+                Log.d("NetworkManager", r);
+            }
+        });
+    }
+
     public void requestAssistance(User user){
 
         httpClient.newCall(RequestProvider.requireAssistanceRequest(user.Id)).enqueue(new Callback() {

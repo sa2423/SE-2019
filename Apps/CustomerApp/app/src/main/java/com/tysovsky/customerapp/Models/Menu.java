@@ -40,7 +40,7 @@ public class Menu {
             }
         }
 
-        types.sort((o1, o2) -> o1.compareTo(o2));
+//        types.sort((o1, o2) -> o1.compareTo(o2));
 
         return types;
     }
