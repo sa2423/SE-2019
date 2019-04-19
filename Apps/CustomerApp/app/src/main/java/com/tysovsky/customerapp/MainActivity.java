@@ -1,11 +1,19 @@
 package com.tysovsky.customerapp;
 
+import android.Manifest;
+import android.content.Context;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
+import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -18,6 +26,7 @@ import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.tysovsky.customerapp.BroadcastReceivers.AccessPointBroadcastReceiver;
 import com.tysovsky.customerapp.Fragments.CartFragment;
 import com.tysovsky.customerapp.Fragments.LoginFragment;
 import com.tysovsky.customerapp.Fragments.MenuFragment;
@@ -42,6 +51,8 @@ public class MainActivity extends AppCompatActivity
     CartFragment cartFragment = new CartFragment();
     LoginFragment loginFragment = new LoginFragment();
     FragmentManager fragmentManager;
+
+    AccessPointBroadcastReceiver wifiReceiver;
 
 
     //Hardcoding this for now
@@ -79,9 +90,33 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
+
+        requestPermissions();
+
         cartFragment.setCart(cart);
 
         NetworkManager.getInstance().addListener(this);
+
+
+        wifiReceiver = new AccessPointBroadcastReceiver();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        registerReceiver(
+                wifiReceiver,
+                new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
+        );
+
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterReceiver(wifiReceiver);
     }
 
     public void setUpViews(){
@@ -134,6 +169,22 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    public void requestPermissions(){
+        String[] PERMS_INITIAL={
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_WIFI_STATE,
+                Manifest.permission.CHANGE_WIFI_STATE
+        };
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(PERMS_INITIAL, 127);
+                // Get the result in onRequestPermissionsResult(int, String[], int[])
+            } else {
+                // Permission was granted, do your stuff here
+            }
+        }
+    }
 
     @Override
     public void onBackPressed() {
@@ -159,7 +210,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_menu) {
-            // Handle the camera action
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.replace(R.id.main_container, menuFragment, MenuFragment.TAG);
+            transaction.commit();
         }
         else if(id == R.id.nav_login){
             FragmentTransaction transaction = fragmentManager.beginTransaction();
@@ -169,6 +222,10 @@ public class MainActivity extends AppCompatActivity
 
         else if(id == R.id.nav_logout){
             NetworkManager.getInstance().logout();
+        }
+        else if(id == R.id.nav_profile){
+            WifiManager wifi=(WifiManager)getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+            wifi.getScanResults();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -192,7 +249,10 @@ public class MainActivity extends AppCompatActivity
                     if(response.getBoolean("success")){
                         user = User.fromJson(response.getString("user"));
                         user.SaveUser();
-                        runOnUiThread(() -> updateNavigationDrawer());
+                        runOnUiThread(() -> {
+                            updateNavigationDrawer();
+                            onBackPressed();
+                        });
 
                     }
                 } catch (JSONException e) {
@@ -214,6 +274,9 @@ public class MainActivity extends AppCompatActivity
         cart.addOrderItem(orderItem);
         cartFragment.notifyCartUpdate();
     }
+
+
+
 
     public void clearCart(){
         cart.clean();

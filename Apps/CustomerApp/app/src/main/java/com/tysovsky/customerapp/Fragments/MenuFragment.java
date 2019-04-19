@@ -57,7 +57,7 @@ public class MenuFragment extends Fragment implements NetworkResponseListener {
             ((MainActivity)getContext()).loadMenuItemFragment((MenuItem)adapter.getChild(groupPosition, childPosition));
             return false;
         });
-        
+
 
         NetworkManager.getInstance().addListener(this);
         NetworkManager.getInstance().getMenu();
