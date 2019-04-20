@@ -4,5 +4,6 @@ public enum RequestType {
     GET_MENU,
     PLACE_ORDER,
     LOGIN,
-    LOGOUT
+    LOGOUT,
+    EDIT_PROFILE
 }
