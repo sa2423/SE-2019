@@ -2,16 +2,9 @@ package com.tysovsky.customerapp.Network;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 import com.tysovsky.customerapp.GlobalApplication;
-import com.tysovsky.customerapp.MainActivity;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

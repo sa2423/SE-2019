@@ -1,12 +1,10 @@
 package com.tysovsky.customerapp.Network;
 
-import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.tysovsky.customerapp.Interfaces.NetworkResponseListener;
 import com.tysovsky.customerapp.Models.Menu;
 import com.tysovsky.customerapp.Models.MenuItem;
-import com.tysovsky.customerapp.Models.Order;
 import com.tysovsky.customerapp.Models.User;
 
 import org.json.JSONArray;
