@@ -36,7 +36,7 @@ import com.tysovsky.customerapp.Interfaces.NetworkResponseListener;
 import com.tysovsky.customerapp.Network.NetworkManager;
 import com.tysovsky.customerapp.Network.RequestType;
 import com.tysovsky.customerapp.R;
-import com.tysovsky.customerapp.arcsoft.sdk_demo.FaceApplication;
+
 import com.tysovsky.customerapp.arcsoft.sdk_demo.FaceDetecterActivity;
 import com.tysovsky.customerapp.arcsoft.sdk_demo.FaceRegisterActivity;
 
@@ -209,7 +209,7 @@ public class LoginFragment extends Fragment implements NetworkResponseListener {
         if (requestCode == REQUEST_CODE_IMAGE_OP && resultCode == getActivity().RESULT_OK) {
             Uri mPath = data.getData();
             String file = getPath(mPath);
-            Bitmap bmp = FaceApplication.decodeImage(file);
+            Bitmap bmp = GlobalApplication.decodeImage(file);
             if (bmp == null || bmp.getWidth() <= 0 || bmp.getHeight() <= 0 ) {
                 Log.e(TAG, "error");
             } else {
