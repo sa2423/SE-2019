@@ -145,58 +145,28 @@ public class LoginFragment extends Fragment implements NetworkResponseListener {
     }
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button button1 = (Button) getActivity().findViewById(R.id.button_1);
-        button1.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View paramView) {
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Please select register way")
-                        .setIcon(android.R.drawable.ic_dialog_info)
-                        .setItems(new String[]{"Choose a picture", "Take a photo"}, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case 1:
-                                        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                                        ContentValues values = new ContentValues(1);
-                                        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-                                        Uri uri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                                        setCaptureImage(uri);
-                                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                                        startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
-                                        break;
-                                    case 0:
-                                        Intent getImageByalbum = new Intent(Intent.ACTION_GET_CONTENT);
-                                        getImageByalbum.addCategory(Intent.CATEGORY_OPENABLE);
-                                        getImageByalbum.setType("image/jpeg");
-                                        startActivityForResult(getImageByalbum, REQUEST_CODE_IMAGE_OP);
-                                        break;
-                                    default:
-                                        ;
-                                }
-                            }
-                        })
-                        .show();
-            }
-        });
 
-        Button button2 = (Button) getActivity().findViewById(R.id.button_2);
-        button2.setOnClickListener(new OnClickListener() {
+        Button faceLogin = (Button) getActivity().findViewById(R.id.button_2);
+        faceLogin.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View paramView) {
-                if (((GlobalApplication)getActivity().getApplicationContext()).mFaceDB.mRegister.isEmpty()) {
+                FaceDB faceDB = ((GlobalApplication)getActivity().getApplicationContext()).mFaceDB;
+                faceDB.loadFaces();
+                if (faceDB.mRegister.isEmpty()) {
+
                     Toast.makeText(getActivity(), "No face registered yet", Toast.LENGTH_SHORT).show();
                 } else {
-                    new AlertDialog.Builder(getActivity())
-                            .setTitle("Please select camera")
-                            .setIcon(android.R.drawable.ic_dialog_info)
-                            .setItems(new String[]{"Back Camera", "Front Camera"}, new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    startDetector(which);
-                                }
-                            })
-                            .show();
+                    startDetector(1);
+//                    new AlertDialog.Builder(getActivity())
+//                            .setTitle("Please select camera")
+//                            .setIcon(android.R.drawable.ic_dialog_info)
+//                            .setItems(new String[]{"Back Camera", "Front Camera"}, new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    startDetector(which);
+//                                }
+//                            })
+//                            .show();
                 }
             }
         });

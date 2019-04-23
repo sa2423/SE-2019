@@ -40,6 +40,7 @@ import com.guo.android_extend.widget.ExtImageView;
 import com.guo.android_extend.widget.HListView;
 import com.tysovsky.customerapp.FaceDB;
 import com.tysovsky.customerapp.Fragments.LoginFragment;
+import com.tysovsky.customerapp.Models.User;
 import com.tysovsky.customerapp.R;
 
 import java.util.ArrayList;
@@ -294,8 +295,13 @@ public class FaceRegisterActivity extends Activity implements SurfaceHolder.Call
 								public void onClick(DialogInterface dialog, int which) {
 									dialog.dismiss();
 								}
-							})
-							.show();
+							});
+							//.show();
+                    FaceDB faceDB = ((GlobalApplication)getApplicationContext()).mFaceDB;
+					faceDB.addFace(User.getCurrentUser().Username, mAFR_FSDKFace, face);
+					//faceDB.
+
+					mRegisterViewAdapter.notifyDataSetChanged();
 				} else if(msg.arg1 == MSG_EVENT_NO_FEATURE ){
 					Toast.makeText(FaceRegisterActivity.this, "Unable to check the facial feature", Toast.LENGTH_SHORT).show();
 				} else if(msg.arg1 == MSG_EVENT_NO_FACE ){

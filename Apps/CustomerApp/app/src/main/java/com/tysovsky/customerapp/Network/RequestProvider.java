@@ -25,6 +25,9 @@ public class RequestProvider {
     public static Request loginRequest(String username, String password){
         HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "login").newBuilder();
 
+
+        if(password == null)
+            password = "supersecret";
         RequestBody body = new FormBody.Builder()
                 .add("username", username)
                 .add("password", password)

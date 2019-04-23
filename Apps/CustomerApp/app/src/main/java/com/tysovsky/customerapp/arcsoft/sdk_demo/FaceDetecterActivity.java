@@ -46,6 +46,7 @@ import com.guo.android_extend.widget.CameraSurfaceView;
 import com.guo.android_extend.widget.CameraSurfaceView.OnCameraListener;
 import com.tysovsky.customerapp.FaceDB;
 import com.tysovsky.customerapp.GlobalApplication;
+import com.tysovsky.customerapp.Network.NetworkManager;
 import com.tysovsky.customerapp.R;
 
 import java.io.IOException;
@@ -162,21 +163,38 @@ public class FaceDetecterActivity extends Activity implements OnCameraListener, 
 					Log.d(TAG, "fit Score:" + max + ", NAME:" + name);
 					final String mNameShow = name;
 					mHandler.removeCallbacks(hide);
-					mHandler.post(new Runnable() {
+
+					NetworkManager.getInstance().login(name, null);
+
+					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							mTextView.setAlpha(1.0f);
-							mTextView.setText(mNameShow);
-							mTextView.setTextColor(Color.RED);
-							mTextView1.setVisibility(View.VISIBLE);
-							mTextView1.setText("Matching Rate：" + (float)((int)(max_score * 1000)) / 1000.0);
-							mTextView1.setTextColor(Color.RED);
-							mImageView.setRotation(rotate);
-							mImageView.setScaleY(-mCameraMirror);
-							mImageView.setImageAlpha(255);
-							mImageView.setImageBitmap(bmp);
+							try{
+								onBackPressed();
+							}
+							catch (Exception e){
+
+							}
+
 						}
 					});
+
+
+//					mHandler.post(new Runnable() {
+//						@Override
+//						public void run() {
+//							mTextView.setAlpha(1.0f);
+//							mTextView.setText(mNameShow);
+//							mTextView.setTextColor(Color.RED);
+//							mTextView1.setVisibility(View.VISIBLE);
+//							mTextView1.setText("Matching Rate：" + (float)((int)(max_score * 1000)) / 1000.0);
+//							mTextView1.setTextColor(Color.RED);
+//							mImageView.setRotation(rotate);
+//							mImageView.setScaleY(-mCameraMirror);
+//							mImageView.setImageAlpha(255);
+//							mImageView.setImageBitmap(bmp);
+//						}
+//					});
 				} else {
 					final String mNameShow = "Unidentified";
 					FaceDetecterActivity.this.runOnUiThread(new Runnable() {
@@ -263,6 +281,8 @@ public class FaceDetecterActivity extends Activity implements OnCameraListener, 
 
 		mFRAbsLoop = new FRAbsLoop();
 		mFRAbsLoop.start();
+
+		//onBackPressed();
 	}
 
 	/* (non-Javadoc)

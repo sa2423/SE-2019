@@ -265,6 +265,7 @@ public class MainActivity extends AppCompatActivity
     public void OnNetworkResponseReceived(RequestType REQUEST_TYPE, Object result) {
         switch (REQUEST_TYPE){
             case LOGIN:
+
                 JSONObject response = (JSONObject)result;
                 try {
                     if(response.getBoolean("success")){
@@ -272,7 +273,9 @@ public class MainActivity extends AppCompatActivity
                         user.SaveUser();
                         runOnUiThread(() -> {
                             updateNavigationDrawer();
-                            onBackPressed();
+                            if (fragmentManager.findFragmentByTag(MenuFragment.TAG) == null){
+                                onBackPressed();
+                            }
                         });
 
                     }
