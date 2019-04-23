@@ -24,6 +24,10 @@ public class GlobalApplication extends Application {
     public void onCreate() {
         super.onCreate();
         appContext = getApplicationContext();
+        mFaceDB = new FaceDB(this.getExternalCacheDir().getPath());
+        mImage = null;
+        //((GlobalApplication)this.getActivity().getApplicationContext()).mFaceDB = new FaceDB(this.getActivity().getExternalCacheDir().getPath());
+        //((GlobalApplication)this.getActivity().getApplicationContext()).mImage = null;
 
     }
 
@@ -74,6 +78,8 @@ public class GlobalApplication extends Application {
         }
         return null;
     }
+
+
 
 
 
