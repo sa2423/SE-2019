@@ -58,6 +58,8 @@ public class MainActivity extends AppCompatActivity
     User user = User.getCurrentUser();//new User("5c967e32d2e79f4afc43fdef");
     Cart cart = new Cart(user);
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

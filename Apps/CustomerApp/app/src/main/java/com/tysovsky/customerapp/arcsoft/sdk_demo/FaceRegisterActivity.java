@@ -90,7 +90,7 @@ public class FaceRegisterActivity extends Activity implements SurfaceHolder.Call
 		mHListView.setOnItemClickListener(mRegisterViewAdapter);
 
 		mUIHandler = new UIHandler();
-		mBitmap = LoginFragment.decodeImage(mFilePath);
+		mBitmap = ((GlobalApplication)(FaceRegisterActivity.this.getApplicationContext())).decodeImage(mFilePath);
 		src.set(0,0,mBitmap.getWidth(),mBitmap.getHeight());
 		mSurfaceView = (SurfaceView)this.findViewById(R.id.surfaceView);
 		mSurfaceView.getHolder().addCallback(this);

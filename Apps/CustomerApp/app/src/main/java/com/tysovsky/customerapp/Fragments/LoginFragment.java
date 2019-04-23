@@ -8,8 +8,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -18,7 +16,6 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.media.ExifInterface;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -67,8 +64,7 @@ public class LoginFragment extends Fragment implements NetworkResponseListener {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        ((GlobalApplication)this.getActivity().getApplicationContext()).mFaceDB = new FaceDB(this.getActivity().getExternalCacheDir().getPath());
-        ((GlobalApplication)this.getActivity().getApplicationContext()).mImage = null;
+
 
 
         NetworkManager.getInstance().addListener(this);
@@ -100,85 +96,10 @@ public class LoginFragment extends Fragment implements NetworkResponseListener {
         return view;
     }
 
-    public void setCaptureImage(Uri uri) {
-        ((GlobalApplication)this.getActivity().getApplicationContext()).mImage = uri;
-    }
 
-    public Uri getCaptureImage() {
-        return ((GlobalApplication)this.getActivity().getApplicationContext()).mImage;
-    }
-
-    public static Bitmap decodeImage(String path) {
-        Bitmap res;
-        try {
-            ExifInterface exif = new ExifInterface(path);
-            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-
-            BitmapFactory.Options op = new BitmapFactory.Options();
-            op.inSampleSize = 1;
-            op.inJustDecodeBounds = false;
-            //op.inMutable = true;
-            res = BitmapFactory.decodeFile(path, op);
-            //rotate and scale.
-            Matrix matrix = new Matrix();
-
-            if (orientation == ExifInterface.ORIENTATION_ROTATE_90) {
-                matrix.postRotate(90);
-            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_180) {
-                matrix.postRotate(180);
-            } else if (orientation == ExifInterface.ORIENTATION_ROTATE_270) {
-                matrix.postRotate(270);
-            }
-
-            Bitmap temp = Bitmap.createBitmap(res, 0, 0, res.getWidth(), res.getHeight(), matrix, true);
-            Log.d("com.arcsoft", "check target Image:" + temp.getWidth() + "X" + temp.getHeight());
-
-            if (!temp.equals(res)) {
-                res.recycle();
-            }
-
-            return temp;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        Button button1 = (Button) getActivity().findViewById(R.id.button_1);
-        button1.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View paramView) {
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Please select register way")
-                        .setIcon(android.R.drawable.ic_dialog_info)
-                        .setItems(new String[]{"Choose a picture", "Take a photo"}, new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                switch (which) {
-                                    case 1:
-                                        Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                                        ContentValues values = new ContentValues(1);
-                                        values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
-                                        Uri uri = getActivity().getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
-                                        setCaptureImage(uri);
-                                        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
-                                        startActivityForResult(intent, REQUEST_CODE_IMAGE_CAMERA);
-                                        break;
-                                    case 0:
-                                        Intent getImageByalbum = new Intent(Intent.ACTION_GET_CONTENT);
-                                        getImageByalbum.addCategory(Intent.CATEGORY_OPENABLE);
-                                        getImageByalbum.setType("image/jpeg");
-                                        startActivityForResult(getImageByalbum, REQUEST_CODE_IMAGE_OP);
-                                        break;
-                                    default:
-                                        ;
-                                }
-                            }
-                        })
-                        .show();
-            }
-        });
+
 
         Button button2 = (Button) getActivity().findViewById(R.id.button_2);
         button2.setOnClickListener(new OnClickListener() {
@@ -233,7 +154,7 @@ public class LoginFragment extends Fragment implements NetworkResponseListener {
     }
 
 
-    private String getPath(Uri uri) {
+    public String getPath(Uri uri) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (DocumentsContract.isDocumentUri(this.getActivity().getApplicationContext(), uri)) {
                 // ExternalStorageProvider
@@ -354,14 +275,14 @@ public class LoginFragment extends Fragment implements NetworkResponseListener {
 
 
     private void startRegister(Bitmap mBitmap, String file) {
-        Intent it = new Intent(this.getContext(), FaceRegisterActivity.class);
+        Intent it = new Intent(getActivity().getApplicationContext(), FaceRegisterActivity.class);
         Bundle bundle = new Bundle();
         bundle.putString("imagePath", file);
         it.putExtras(bundle);
         startActivityForResult(it, REQUEST_CODE_OP);
     }
     private void startDetector(int camera) {
-        Intent it = new Intent(this.getContext(), FaceDetecterActivity.class);
+        Intent it = new Intent(getActivity().getApplicationContext(), FaceDetecterActivity.class);
         it.putExtra("Camera", camera);
         startActivityForResult(it, REQUEST_CODE_OP);
     }

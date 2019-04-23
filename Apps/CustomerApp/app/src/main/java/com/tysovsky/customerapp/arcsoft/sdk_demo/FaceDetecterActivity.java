@@ -1,6 +1,8 @@
 package com.tysovsky.customerapp.arcsoft.sdk_demo;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -46,7 +48,13 @@ import com.guo.android_extend.widget.CameraSurfaceView;
 import com.guo.android_extend.widget.CameraSurfaceView.OnCameraListener;
 import com.tysovsky.customerapp.FaceDB;
 import com.tysovsky.customerapp.GlobalApplication;
+import com.tysovsky.customerapp.Interfaces.NetworkResponseListener;
+import com.tysovsky.customerapp.Network.NetworkManager;
+import com.tysovsky.customerapp.Network.RequestType;
 import com.tysovsky.customerapp.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -56,7 +64,7 @@ import java.util.List;
  * Created by gqj3375 on 2017/4/28.
  */
 
-public class FaceDetecterActivity extends Activity implements OnCameraListener, View.OnTouchListener, Camera.AutoFocusCallback, View.OnClickListener {
+public class FaceDetecterActivity extends Activity implements OnCameraListener, View.OnTouchListener, Camera.AutoFocusCallback, View.OnClickListener, NetworkResponseListener {
 	private final String TAG = this.getClass().getSimpleName();
 
 	private int mWidth, mHeight, mFormat;
@@ -83,6 +91,11 @@ public class FaceDetecterActivity extends Activity implements OnCameraListener, 
 	Handler mHandler;
 	boolean isPostted = false;
 
+	//add alert dialog
+	boolean isRec = false;
+
+
+
 	Runnable hide = new Runnable() {
 		@Override
 		public void run() {
@@ -103,6 +116,8 @@ public class FaceDetecterActivity extends Activity implements OnCameraListener, 
 		
 		@Override
 		public void setup() {
+
+
 			AFR_FSDKError error = engine.AFR_FSDK_InitialEngine(FaceDB.appid, FaceDB.fr_key);
 			Log.d(TAG, "AFR_FSDK_InitialEngine = " + error.getCode());
 			error = engine.AFR_FSDK_GetVersion(version);
@@ -158,6 +173,7 @@ public class FaceDetecterActivity extends Activity implements OnCameraListener, 
 
 				if (max > 0.6f) {
 					//fr success.
+
 					final float max_score = max;
 					Log.d(TAG, "fit Score:" + max + ", NAME:" + name);
 					final String mNameShow = name;
@@ -175,6 +191,28 @@ public class FaceDetecterActivity extends Activity implements OnCameraListener, 
 							mImageView.setScaleY(-mCameraMirror);
 							mImageView.setImageAlpha(255);
 							mImageView.setImageBitmap(bmp);
+							if (isRec == false){
+								new AlertDialog.Builder(FaceDetecterActivity.this)
+										.setTitle("Facial Login Successful")
+										.setIcon(android.R.drawable.ic_dialog_info)
+										.setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+												NetworkManager.getInstance().addListener(FaceDetecterActivity.this);
+												NetworkManager.getInstance().login(mNameShow,"test");
+
+
+											}
+										})
+										.show();
+								isRec = true;
+
+							}
+
+
+
+
+
 						}
 					});
 				} else {
@@ -403,6 +441,16 @@ public class FaceDetecterActivity extends Activity implements OnCameraListener, 
 			mSurfaceView.resetCamera();
 			mGLSurfaceView.setRenderConfig(mCameraRotate, mCameraMirror);
 			mGLSurfaceView.getGLES2Render().setViewDisplay(mCameraMirror, mCameraRotate);
+		}
+	}
+
+	//from login
+	public void OnNetworkResponseReceived(RequestType REQUEST_TYPE, Object result){
+		switch (REQUEST_TYPE){
+			case LOGIN:
+				JSONObject response = (JSONObject)result;
+
+				break;
 		}
 	}
 
