@@ -1,3 +1,7 @@
+/**
+ * Created by Lieyang Chen
+ * Model for aa list of all assistance requests
+ */
 package com.Lieyang.waiter.Models;
 
 import java.util.ArrayList;

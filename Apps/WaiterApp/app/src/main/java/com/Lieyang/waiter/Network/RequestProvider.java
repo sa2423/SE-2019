@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi. Edited by Lieyang Chen
+ * This class creates requests for NetworkManager
+ */
 package com.Lieyang.waiter.Network;
 
 import okhttp3.FormBody;

@@ -1,3 +1,7 @@
+/**
+ Created by Lieyang Chen
+ This is a fragment for the view that shows the restaurant's menu
+ **/
 package com.Lieyang.waiter.Fragments;
 
 import android.os.Bundle;

@@ -1,3 +1,7 @@
+/**
+ * Created by Lieyang Chen
+ * Model for a list of all completed orders
+ */
 package com.Lieyang.waiter.Models;
 
 import java.util.ArrayList;

@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi
+ * Serializable cookie. This class is used by PersistentCookieJar to turn a cookie to string before its saved to storage
+ */
 package com.Lieyang.waiter.Network;
 import android.util.Log;
 

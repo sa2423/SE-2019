@@ -1,3 +1,7 @@
+/**
+ Created by Lieyang Chen
+ This is a fragment for the view that is displayed when the app is first open
+ **/
 package com.Lieyang.waiter.Fragments;
 
 import android.os.Bundle;

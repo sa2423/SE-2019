@@ -1,3 +1,8 @@
+/**
+ * Created by Taras Tysovskyi
+ * Class that's invoked when firebase is instantiated and the app gets its own unique firebase token
+ * This token is then sent to the server
+ */
 package com.Lieyang.waiter.Firebase;
 
 import android.content.SharedPreferences;

@@ -1,3 +1,7 @@
+/**
+ Created by Lieyang Chen
+ This is an adapter to the list of all orders
+ **/
 package com.Lieyang.waiter.Adapters;
 
 import android.content.Context;

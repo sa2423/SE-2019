@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi
+ * Class that listens for new firebase messages
+ */
 package com.Lieyang.waiter.Firebase;
 
 import android.content.Context;

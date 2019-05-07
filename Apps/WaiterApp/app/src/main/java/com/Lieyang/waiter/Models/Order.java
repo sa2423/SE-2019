@@ -1,3 +1,7 @@
+/**
+ * Created by Lieyang Chen
+ * Model for a placed order
+ */
 package com.Lieyang.waiter.Models;
 
 import java.util.ArrayList;

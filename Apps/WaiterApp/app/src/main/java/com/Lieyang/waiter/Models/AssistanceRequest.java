@@ -1,3 +1,7 @@
+/**
+ * Created by Lieyang Chen
+ * Model for an assistance request
+ */
 package com.Lieyang.waiter.Models;
 
 public class AssistanceRequest {

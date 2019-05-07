@@ -1,3 +1,7 @@
+/**
+ Created by Lieyang Chen
+ This is a fragment for the view that shows the list of completed orders
+ **/
 package com.Lieyang.waiter.Fragments;
 
 import android.content.Context;

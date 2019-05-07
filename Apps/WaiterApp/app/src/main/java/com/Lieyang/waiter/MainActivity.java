@@ -1,3 +1,8 @@
+/**
+ * Created by Lieyang Chen
+ * This is the main activity that handles displaying most fragments
+ * It sets up the navigation drawer and toolbar menu, and handles the cleanup necessary for switching fragments
+ */
 package com.Lieyang.waiter;
 
 import android.os.Bundle;

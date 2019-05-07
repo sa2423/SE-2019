@@ -1,3 +1,8 @@
+/**
+ * Created by Taras Tysovskyi
+ * Class to save cookies in network manager to storage and retrieving them from storage when the app is loaded
+ * This allows us to keep the user logged in between the app restarts
+ */
 package com.Lieyang.waiter.Network;
 
 import android.content.Context;

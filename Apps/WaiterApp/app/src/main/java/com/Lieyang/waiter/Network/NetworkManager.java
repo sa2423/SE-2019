@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi. Edited by Lieyang Chen
+ * The class responsible for making network requests to the server and receiving and parsing responses
+ */
 package com.Lieyang.waiter.Network;
 
 import android.util.Log;
