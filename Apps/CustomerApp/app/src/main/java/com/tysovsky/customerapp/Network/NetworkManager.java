@@ -82,20 +82,6 @@ public class NetworkManager{
         });
     }
 
-    //Test method to make sure authentication works
-    public void secret(){
-        httpClient.newCall(RequestProvider.secretRequest()).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                String res = response.body().string();
-            }
-        });
-    }
 
     public void getMenu(){
         httpClient.newCall(RequestProvider.getMenuRequest()).enqueue(new Callback() {
