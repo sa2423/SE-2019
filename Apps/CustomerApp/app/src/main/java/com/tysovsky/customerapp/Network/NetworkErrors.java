@@ -1,3 +1,8 @@
+/*
+Created by Taras Tysovskyi
+This file contains the list of possible Network Errors the NetworkManager can return
+ */
+
 package com.tysovsky.customerapp.Network;
 
 public class NetworkErrors {

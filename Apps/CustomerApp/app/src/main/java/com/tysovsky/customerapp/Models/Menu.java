@@ -1,3 +1,8 @@
+/**
+ * Created by Taras Tysovskyi
+ * This is the model for the Menu
+ * It contains a list of MenuItems and a set of methods to manipulate it
+ */
 package com.tysovsky.customerapp.Models;
 
 import android.annotation.SuppressLint;

@@ -1,3 +1,8 @@
+/**
+ * Created by Taras Tysovskyi
+ * Fragment for detailed dish view
+ * Contains a field into which the user can type the order details and a button to add the current dish to cart
+ */
 package com.tysovsky.customerapp.Fragments;
 
 import android.os.Bundle;
@@ -8,16 +13,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 import com.truizlop.fabreveallayout.FABRevealLayout;
 import com.truizlop.fabreveallayout.OnRevealChangeListener;
-import com.tysovsky.customerapp.Adapters.MenuAdapter;
 import com.tysovsky.customerapp.MainActivity;
 import com.tysovsky.customerapp.Models.MenuItem;
 import com.tysovsky.customerapp.Models.OrderItem;
-import com.tysovsky.customerapp.Network.NetworkManager;
 import com.tysovsky.customerapp.R;
 
 import java.text.DecimalFormat;

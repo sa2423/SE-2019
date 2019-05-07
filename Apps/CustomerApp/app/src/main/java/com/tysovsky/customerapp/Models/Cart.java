@@ -1,3 +1,8 @@
+/**
+ * Create by Taras Tysovskyi
+ * This is the model for the Cart
+ * It contains a list of OrderItems and the user to whom this cart belongs
+ */
 package com.tysovsky.customerapp.Models;
 
 import java.util.ArrayList;

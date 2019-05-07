@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi
+ * This is the model for MenuItem - a single item on restaurant's menu
+ */
 package com.tysovsky.customerapp.Models;
 
 import org.json.JSONException;

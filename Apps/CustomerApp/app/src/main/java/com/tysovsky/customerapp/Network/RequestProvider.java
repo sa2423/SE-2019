@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi
+ * This class creates requests for NetworkManager
+ */
 package com.tysovsky.customerapp.Network;
 
 import okhttp3.FormBody;
@@ -9,18 +13,6 @@ public class RequestProvider {
 
     public static final String BASE_URL = "http://ec2-52-39-140-122.us-west-2.compute.amazonaws.com/api/";
 
-
-    //Test endpoint, just to make sure authentication is working
-    public static Request secretRequest(){
-        HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "secret").newBuilder();
-
-        Request request = new Request.Builder()
-                .url(urlBuilder.build())
-                .addHeader("Content-Type", "application/json")
-                .get()
-                .build();
-        return request;
-    }
 
     public static Request loginRequest(String username, String password){
         HttpUrl.Builder urlBuilder = HttpUrl.parse(BASE_URL + "login").newBuilder();

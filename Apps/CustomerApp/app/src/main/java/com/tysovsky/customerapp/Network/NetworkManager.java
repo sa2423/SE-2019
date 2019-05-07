@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi
+ * The class responsible for making network requests to the server and receiving and parsing responses
+ */
 package com.tysovsky.customerapp.Network;
 
 import android.util.Log;

@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi
+ * This is the fragment that shows the cart view. It contains a list view of OrderItems user has added to the cart and a button to place an order
+ */
 package com.tysovsky.customerapp.Fragments;
 
 import android.os.Bundle;

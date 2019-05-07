@@ -1,4 +1,10 @@
-package com.tysovsky.customerapp.arcsoft.sdk_demo;
+/**
+ * Created by Hongpeng Zhang
+ * Activity to detect and recognize faces in the camera stream.
+ * Used for facial login
+ */
+
+package com.tysovsky.customerapp.FaceLogin;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -53,9 +59,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by gqj3375 on 2017/4/28.
- */
 
 public class FaceDetecterActivity extends Activity implements OnCameraListener, View.OnTouchListener, Camera.AutoFocusCallback, View.OnClickListener {
 	private final String TAG = this.getClass().getSimpleName();

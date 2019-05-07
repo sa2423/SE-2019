@@ -1,3 +1,8 @@
+/**
+Created by Taras Tysovskyi
+This is a broadcast receiver that is called when a list of SSID is retrieved. This is used to determine
+if the customer is inside a restaurant my looking for a specific SSID
+ **/
 package com.tysovsky.customerapp.BroadcastReceivers;
 
 import android.content.BroadcastReceiver;

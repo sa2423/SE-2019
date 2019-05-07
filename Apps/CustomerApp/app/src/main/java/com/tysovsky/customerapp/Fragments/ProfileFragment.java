@@ -1,3 +1,8 @@
+/**
+ * Created Taras Tysovskyi
+ * Fragment that display the user profile info
+ * Aso contains a button that launches FaceRegisterActivity to register a face for further use in face login
+ */
 package com.tysovsky.customerapp.Fragments;
 
 import android.app.AlertDialog;
@@ -25,17 +30,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.tysovsky.customerapp.FaceDB;
 import com.tysovsky.customerapp.GlobalApplication;
 import com.tysovsky.customerapp.MainActivity;
 import com.tysovsky.customerapp.R;
 import com.tysovsky.customerapp.Models.User;
-import com.tysovsky.customerapp.arcsoft.sdk_demo.FaceDetecterActivity;
-import com.tysovsky.customerapp.arcsoft.sdk_demo.FaceRegisterActivity;
+import com.tysovsky.customerapp.FaceLogin.FaceDetecterActivity;
+import com.tysovsky.customerapp.FaceLogin.FaceRegisterActivity;
 
 public class ProfileFragment extends Fragment {
 

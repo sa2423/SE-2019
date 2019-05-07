@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi
+ * Model for the user. Contains methods to save and retrieve use data to and from storage
+ */
 package com.tysovsky.customerapp.Models;
 
 import android.content.Context;

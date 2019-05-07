@@ -39,8 +39,8 @@
 
         <receiver android:name=".BroadcastReceivers.AccessPointBroadcastReceiver"></receiver>
 
-        <activity android:name=".arcsoft.sdk_demo.FaceRegisterActivity" />
-        <activity android:name=".arcsoft.sdk_demo.FaceDetecterActivity" />
+        <activity android:name=".FaceLogin.FaceRegisterActivity" />
+        <activity android:name=".FaceLogin.FaceDetecterActivity" />
     </application>
 
 </manifest>

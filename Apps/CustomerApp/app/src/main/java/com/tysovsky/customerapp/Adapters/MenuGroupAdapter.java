@@ -1,3 +1,7 @@
+/**
+Created by Taras Tysovskyi
+This is an adapter to populate menu list view with MenuItems
+ **/
 package com.tysovsky.customerapp.Adapters;
 
 import android.content.Context;
@@ -122,9 +126,6 @@ public class MenuGroupAdapter extends BaseExpandableListAdapter {
         df.setMinimumFractionDigits(2);
         itemPrice.setText("$"+df.format(currentItem.Price));
         Picasso.get().load(currentItem.PhotoUrl).into(itemPhoto);
-
-
-
 
 
         return itemView;

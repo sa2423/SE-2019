@@ -1,3 +1,8 @@
+/**
+ * Created by Taras Tysovskyi
+ * This is the main activity that handles displaying most fragments, such MenuFragment, LoginFragment, CartFragment and more
+ * It sets up the navigation drawer and toolbar menu, and handles the cleanup necessary for switching fragments
+ */
 package com.tysovsky.customerapp;
 
 import android.Manifest;

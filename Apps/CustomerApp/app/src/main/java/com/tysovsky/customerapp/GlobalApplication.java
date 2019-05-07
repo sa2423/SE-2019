@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi. Edited by Hongpeng Zhang
+ * This class serves to instantiate some global objects and provide global Context from anywhere with getAppContext() method
+ */
 package com.tysovsky.customerapp;
 
 import android.app.Application;

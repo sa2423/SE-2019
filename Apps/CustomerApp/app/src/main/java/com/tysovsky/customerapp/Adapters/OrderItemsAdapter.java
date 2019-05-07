@@ -1,3 +1,7 @@
+/**
+Created by Taras Tysovskyi
+This is an adapter to populate the list of orders in the cart with OrderItems
+ **/
 package com.tysovsky.customerapp.Adapters;
 
 import android.content.Context;

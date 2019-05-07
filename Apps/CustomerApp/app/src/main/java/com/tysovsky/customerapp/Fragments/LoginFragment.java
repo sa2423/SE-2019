@@ -1,10 +1,11 @@
+/**
+ * Created by Taras Tysovskyi
+ * Fragment to display the login screen. Also contains a button to launch face login
+ */
 package com.tysovsky.customerapp.Fragments;
 
-import android.app.AlertDialog;
 import android.content.ContentUris;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -37,8 +38,8 @@ import com.tysovsky.customerapp.Network.NetworkManager;
 import com.tysovsky.customerapp.Network.RequestType;
 import com.tysovsky.customerapp.R;
 
-import com.tysovsky.customerapp.arcsoft.sdk_demo.FaceDetecterActivity;
-import com.tysovsky.customerapp.arcsoft.sdk_demo.FaceRegisterActivity;
+import com.tysovsky.customerapp.FaceLogin.FaceDetecterActivity;
+import com.tysovsky.customerapp.FaceLogin.FaceRegisterActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;

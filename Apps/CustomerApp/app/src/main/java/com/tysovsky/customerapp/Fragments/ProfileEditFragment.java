@@ -1,3 +1,7 @@
+/**
+ * Created by Lieyang Chen
+ * Fragment for the view to edit user info
+ */
 package com.tysovsky.customerapp.Fragments;
 
 import android.os.Bundle;

@@ -1,4 +1,8 @@
-package com.tysovsky.customerapp.arcsoft.sdk_demo;
+/**
+ * Created by Hongpeng Zhang.
+ * Activity to register faces to be used later with face login
+ */
+package com.tysovsky.customerapp.FaceLogin;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -39,7 +43,6 @@ import com.guo.android_extend.image.ImageConverter;
 import com.guo.android_extend.widget.ExtImageView;
 import com.guo.android_extend.widget.HListView;
 import com.tysovsky.customerapp.FaceDB;
-import com.tysovsky.customerapp.Fragments.LoginFragment;
 import com.tysovsky.customerapp.Models.User;
 import com.tysovsky.customerapp.R;
 

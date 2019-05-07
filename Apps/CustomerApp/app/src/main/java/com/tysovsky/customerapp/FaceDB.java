@@ -1,3 +1,7 @@
+/**
+ * Created by Hongpeng Zhang.
+ * This class stores the list of faces that can be used to login with facial recognition
+ */
 package com.tysovsky.customerapp;
 
 import android.graphics.Bitmap;
@@ -21,9 +25,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by gqj3375 on 2017/7/11.
- */
 
 public class FaceDB {
 	private final String TAG = this.getClass().toString();
