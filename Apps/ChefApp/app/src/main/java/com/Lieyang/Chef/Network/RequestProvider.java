@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi
+ * This class creates requests for NetworkManager
+ */
 package com.Lieyang.Chef.Network;
 
 import okhttp3.HttpUrl;

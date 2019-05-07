@@ -1,3 +1,7 @@
+/**
+ * Created by Lieyang Chen
+ * Model for an list of all current orders
+ */
 package com.Lieyang.Chef.Models;
 
 import java.util.ArrayList;

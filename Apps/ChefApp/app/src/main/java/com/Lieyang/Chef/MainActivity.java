@@ -1,3 +1,7 @@
+/**
+ Created by Lieyang Chen
+ This is a fragment for the view that shows the details for a particular order
+ */
 package com.Lieyang.Chef;
 
 import android.os.Bundle;

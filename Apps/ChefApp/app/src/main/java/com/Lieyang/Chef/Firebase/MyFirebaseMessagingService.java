@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi
+ * Class that listens for new firebase messages
+ */
 package com.Lieyang.Chef.Firebase;
 
 import android.util.Log;

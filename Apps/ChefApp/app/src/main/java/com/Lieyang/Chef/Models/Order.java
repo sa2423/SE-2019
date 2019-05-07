@@ -1,3 +1,7 @@
+/**
+ * Created by Lieyang Chen
+ * Model for a placed order
+ */
 package com.Lieyang.Chef.Models;
 
 import android.os.Handler;

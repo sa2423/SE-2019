@@ -1,3 +1,7 @@
+/**
+ Created by Lieyang Chen
+ This is an adapter to the list of completed orders
+ **/
 package com.Lieyang.Chef.Adapters;
 
 import android.content.Context;

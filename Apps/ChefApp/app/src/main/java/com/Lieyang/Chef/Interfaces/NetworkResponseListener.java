@@ -1,3 +1,7 @@
+/**
+ * Created by Taras Tysovskyi.
+ * Interface to be implemented by every class that wants to listen to network events
+ */
 package com.Lieyang.Chef.Interfaces;
 
 import com.Lieyang.Chef.Network.RequestType;

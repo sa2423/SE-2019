@@ -1,3 +1,7 @@
+/**
+ Created by Lieyang Chen
+ This is a fragment for the view that shows the list of current orders
+ **/
 package com.Lieyang.Chef.Fragments;
 
 import android.content.Context;
