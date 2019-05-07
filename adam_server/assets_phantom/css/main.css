@@ -66,10 +66,12 @@ input::-moz-focus-inner {
 }
 
 input, select, textarea {
+	/*
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	-ms-appearance: none;
 	appearance: none;
+	*/
 }
 
 /* Basic */
@@ -2192,16 +2194,13 @@ input, select, textarea {
 		min-height: 3.75em;
 	}
 
+
 	input[type="checkbox"],
 	input[type="radio"] {
-		-moz-appearance: none;
-		-webkit-appearance: none;
-		-ms-appearance: none;
-		appearance: none;
 		display: block;
 		float: left;
 		margin-right: -2em;
-		opacity: 0;
+		opacity: 1;
 		width: 1em;
 		z-index: -1;
 	}
@@ -2265,6 +2264,7 @@ input, select, textarea {
 	input[type="radio"] + label:before {
 		border-radius: 100%;
 	}
+
 
 /* Box */
 

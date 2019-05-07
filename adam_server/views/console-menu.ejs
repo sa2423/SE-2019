@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	
+	<%- include head.ejs %>
+
+		<body class="is-preload">
+			<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Main -->
+				<section id="main" class="wrapper style3">
+					<div class="title">Manage Menu</div>
+					<div class="container">
+						<div class="feature-list">
+                            <div class="row">
+                                <div class="col-12 aln-center">
+                                    <div class="row">
+                                        <div class="col-2">
+                                            <strong>Menu Item</strong>
+                                        </div>
+                                        <div class="col-2" align="center"></div>
+                                        <div class="col-2" align="center">
+                                            <strong>Price</strong>
+                                        </div>
+                                    </div><br>
+                                    <% for(var i = 0; i < dishes.length; i++){ %>
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <%=dishes[i].title %>
+                                        </div>
+                                        <div class="col-2" align="center">
+                                            $<%=dishes[i].price.toFixed(2) %>
+                                        </div>
+                                        <div class="col-3" align="center">
+                                            <form method="get" action="/editItem">
+                                                <input type="hidden" name="id" id="<%=dishes[i]._id + '-id'%>" value="<%=dishes[i]._id %>">
+                                                <button class="style2" type="submit">Edit</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-3" align="center">
+                                            <form method="post" action=<%="/removeItem/" + dishes[i]._id %>>
+                                                <input type="hidden" name="id" id="<%=dishes[i]._id + '-id'%>" value="<%=dishes[i]._id %>">
+                                                <button class="style2" type="submit">Remove</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                    <div class="row">
+                                        <div class="col-12" align="center">
+                                            <form method="get" action="/addItem">
+                                                <button class="style3" type="submit">Add Item</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</section>
+			</div>
+
+			<!-- PHANTOM Scripts -->
+			<script src="assets_phantom/js/jquery.min.js"></script>
+			<script src="assets_phantom/js/browser.min.js"></script>
+			<script src="assets_phantom/js/breakpoints.min.js"></script>
+			<script src="assets_phantom/js/util.js"></script>
+			<script src="assets_phantom/js/main.js"></script>
+
+		</body>
+</html>

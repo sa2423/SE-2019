@@ -1,0 +1,112 @@
+<!DOCTYPE HTML>
+<!--
+	Escape Velocity by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<%- include head.ejs %>
+	<style>
+	img {
+	  border: 1px solid #ddd;
+	  border-radius: 4px;
+	  padding: 5px;
+	  width: 150px;
+	}
+
+	img:hover {
+	  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+	}
+	</style>
+		<body>
+			<!-- Main -->
+				<section id="main" class="wrapper style3">
+					<div class="title">Your Profile</div>
+					<div class="container">
+						<div class="col-6 col-12-medium">
+							
+						</div>
+						
+						<!-- Features -->
+							<section id="features">
+								<div class="feature-list">
+									<div class="row">
+										<div class="aln-center">
+											<section>
+												<!-- RESERVATION FORM -->
+												<form method="post" action="/submit-profile">
+
+													<section class="tiles">
+
+															<!-- DISPLAYS photo USING TILES -->
+															<article class="style5">
+																
+																<a href="../public/images/r1.jpg">
+																	<span class="image">
+																		<img src="../public/images/r1.jpg" alt="" style="width:auto;height:300px;"/>
+																	</span>
+																</a>
+															</article>	
+													</section>
+
+													<div class="row">
+														<div class="col-6 col-12-medium">
+															<p>
+																<strong>Name:</strong>
+															</p>
+														</div>
+														<div class="col-6 col-12-small">
+															<input type="text" name="lastname" id="user_last_name" placeholder="Last Name" value = "<%=user.last_name%>" />
+														
+															<input type="text" name="firstname" id="user_first_name" placeholder="First Name" value = "<%=user.first_name%>"/>
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-6 col-12-medium">
+															<p>
+																<strong>Username:</strong>
+															</p>
+														</div>
+														<div class="col-6 col-12-medium">
+															<input type="text" name="username" id="profile_username" placeholder="Customer" value = "<%=profile_username%>"/>
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="col-6 col-12-medium">
+															<p>
+																<strong>Password:</strong>
+															</p>
+														</div>
+														<div class="col-6 col-12-medium">
+															<input type="password" name="pwd" id="user_pwd" value="<%=user_pwd %>" />
+														</div>
+													</div>
+													<div class="col-12" align="center">
+														<button  type="submit">Update Profile</button>
+													</div>
+
+													
+												</form>
+											</section>
+										</div>
+									</div>
+								</div>
+							</section>
+
+					</div>
+				</section>
+
+		</div>
+
+		<!-- Scripts -->
+			<script src="assets_escape_velocity/js/jquery.min.js"></script>
+			<script src="assets_escape_velocity/js/jquery.dropotron.min.js"></script>
+			<script src="assets_escape_velocity/js/browser.min.js"></script>
+			<script src="assets_escape_velocity/js/breakpoints.min.js"></script>
+			<script src="assets_escape_velocity/js/util.js"></script>
+			<script src="assets_escape_velocity/js/main.js"></script>
+
+	</body>
+</html>

@@ -1,49 +1,7 @@
-<!DOCTYPE HTML>
-<!--
-	Escape Velocity by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
-<html>
-	<head>
-		<title>Codename Adam</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets_escape_velocity/css/main.css" />
-	</head>
+	<%- include head.ejs %>
+
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
-
-			<!-- Header -->
-				<section id="header" class="wrapper">
-
-					<!-- Logo -->
-						<div id="logo">
-							<h1><a href="/">Codename Adam</a></h1>
-						</div>
-
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li class="current"><a href="/">Home</a></li>
-								<li>
-									<a href="/menu">Menu</a>
-									<ul>
-										<li><a href="/popular-dishes">Most Popular</a></li>
-										<li><a href="/appetizers">Appetizers</a></li>
-										<li><a href="/entrees">Entrees</a></li>
-										<li><a href="/drinks">Drinks</a></li>
-										<li><a href="/desserts">Desserts</a></li>
-									</ul>
-								</li>
-								<li><a href="/recommend-me">Recommend Me</a></li>
-								<li><a href="/cart">Cart</a></li>
-								<li><a href="/reserve">Reserve</a></li>
-								<li><a href="#">Your Profile</a></li>
-							</ul>
-						</nav>
-
-				</section>
 
 			<!-- Main -->
 				<section id="main" class="wrapper style3">
@@ -54,31 +12,111 @@
 							<section id="features">
 								<div class="feature-list">
 									<div class="row">
-										<div class="aln-center">
+										<div class="col-12 aln-center">
 											<section>
-												<form method="post" action="#">
-													<div class="row gtr-50">
-														<div class="aln-center">
-															<h2><strong>Question 1:</strong> </h2>
+												<form method="post" action=<%="/api/submit-rec-quiz/"+customerID.toString()%>>
+													<div class="row">
+														<div class="row">
+															<p>
+																<strong>Question 1: </strong>
+																What types of food that you normally like to eat? 
+															</p>
+														</div>
+														<br>
+														<div class="col-4">
+															<!-- OPTION 1 -->
+															<label><input type = "radio" name = "taste" id = "tasteSavory" value = "savory" checked = "checked" /> Savory </label>
+            												<!-- OPTION 2 -->
+          													<label><input type = "radio" name = "taste" id = "tasteSweet" value = "sweet" /> Sweet </label>
+          													<!-- OPTION 3 -->
+          													<label><input type = "radio" name = "taste" id = "tasteSpicy" value = "spicy" /> Spicy </label>
 														</div>
 													</div>
 													<br>
-													<div class="row gtr-50">
-														<div class="aln-center">
-															<button type="submit" class="style3">Submit Quiz</button>
+													<div class="row">
+														<div class="row">
+															<p>
+																<strong>Question 2: </strong>
+																What types of meat do you like to eat the most? Are you vegetarian? 
+															</p>
+														</div>
+														<div class="col-4">
+															<!-- OPTION 1 -->
+															<label><input type = "radio" name = "meat" id = "meat1" value = "vegetarian" checked = "checked" /> I'm vegetarian. </label>
+            												<!-- OPTION 2 -->
+          													<label><input type = "radio" name = "meat" id = "meat2" value = "redMeat" /> Red Meat </label>
+          													<!-- OPTION 3 -->
+          													<label><input type = "radio" name = "meat" id = "meat3" value = "whiteMeat" /> White Meat </label>
+          													<!-- OPTION 4 -->
+          													<label><input type = "radio" name = "meat" id = "meat4" value = "seafood" /> Seafood </label>
 														</div>
 													</div>
-												</form>
-											</section>
+													<br>
+													<div class="row">
+														<div class="row">
+															<p>
+																<strong>Question 3:</strong>
+																Do you want to indulge or eat on the healthier side? 
+															</p>
+														</div>
+														<div class="col-4">
+															<!-- OPTION 1 -->
+															<label><input type = "radio" name = "health" id = "healthy" value = "healthy" checked = "checked" /> I want to eat healthy today. </label>
+            												<!-- OPTION 2 -->
+          													<label><input type = "radio" name = "health" id = "notHealthy" value = "unhealthy" /> I want to indulge. </label>
+														</div>
+													</div>
+													<br>
+													<div class="row">
+														<div class="row">
+															<p>
+																<strong>Question 4:</strong>
+																Which one of these foods sounds the most appealing to you? 
+															</p>
+														</div>
+														<div class="col-4">
+															<!-- OPTION 1 -->
+															<label><input type = "radio" name = "carbs" id = "noCarbs" value = "noCarbs" checked = "checked" /> A fruit salad. </label>
+            												<!-- OPTION 2 -->
+          													<label><input type = "radio" name = "carbs" id = "someCarbs" value = "someCarbs" /> Lentils with Quinoa. </label>
+          													<!-- OPTION 3 -->
+          													<label><input type = "radio" name = "carbs" id = "lotsCarbs" value = "lotsCarbs" /> Pasta stacked with parmesan cheese. </label>
+														</div>
+													</div>													
+													<br>
+													<div class="row">
+														<div class="row">
+															<p>
+																<strong>Question 5:</strong>
+																How about some drinks? 
+															</p>
+														</div>
+														<div class="col-4">
+															<!-- OPTION 1 -->
+															<label><input type = "radio" name = "drinks" id = "water" value = "water" checked = "checked" /> Just water, please. </label>
+            												<!-- OPTION 2 -->
+          													<label><input type = "radio" name = "drinks" id = "caffeine" value = "caffeine" /> I need some tea/coffee. </label>
+          													<!-- OPTION 3 -->
+          													<label><input type = "radio" name = "drinks" id = "fountain" value = "fountain" /> A fountain drink </label>
+														</div>
+													</div>	
+													<br>
+													<div class="row">
+														<div class="row">
+															<div class="col-12" align="center">
+																<button type="submit">Submit Quiz</button>
+															</div>
+														</div>
+													</div>
+											</form>
+										</section>
 										</div>
 									</div>
 								</div>
 							</section>
-
+						</div>
+					</section>
 					</div>
-				</section>
-
-		</div>
 
 		<!-- Scripts -->
 			<script src="assets_escape_velocity/js/jquery.min.js"></script>

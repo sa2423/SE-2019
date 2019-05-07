@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	
+	<%- include head.ejs %>
+
+		<body class="is-preload">
+			<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Main -->
+				<section id="main" class="wrapper style3">
+                    <% if(newItem){ %>
+                    <div class="title">Add Item</div>
+                    <% } else { %>
+                    <div class="title">Edit Item</div>
+                    <% } %>
+					<div class="container">
+						<div class="feature-list">
+                            <div class="row">
+                                <div class="col-12 aln-center">
+                                    <% if(newItem){ %>
+                                    <form action="/api/addItem" method="post" id="menu-item">
+                                    <% } else { %>
+                                    <form action="/api/editItem" method="post" id="menu-item">
+                                    <% } %>
+                                        <input type="hidden" name="id" id="<%=dish._id + '-id'%>" value="<%=dish._id %>">   
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <strong>Item Name:</strong>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="text" name="name" value="<%=dish.title %>">
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <strong>Price:</strong>
+                                            </div>
+                                            <div class="col-8">
+                                                <input type="number" name="price" min="0" step="0.01" value="<%=dish.price %>">
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <strong>Description:</strong>
+                                            </div>
+                                            <div class="col-8">
+                                                <textarea name="description" form="menu-item"><%=dish.description %></textarea>
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <strong>Type:</strong>
+                                            </div>
+                                            <div class="col-8">
+                                                <select name="type" id="item-type">
+                                                    <option selected disabled hidden>Select an item type</option>
+                                                    <option value="entrees">Entree</option>
+                                                    <option value="appetizers">Appetizer</option>
+                                                    <option value="desserts">Dessert</option>
+                                                    <option value="drinks">Drink</option>
+                                                </select>
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <strong>Flavor:</strong>
+                                            </div>
+                                            <div class="col-8">
+                                                <select name="flavor" id="item-flavor">
+                                                    <option selected disabled hidden>Select a flavor</option>
+                                                    <option value="Spicy">Spicy</option>
+                                                    <option value="Sweet">Sweet</option>
+                                                    <option value="Savory">Savory</option>
+                                                </select>
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <strong>Carb Content:</strong>
+                                            </div>
+                                            <div class="col-8">
+                                                <select name="carbContent" id="item-carbs">
+                                                    <option selected disabled hidden>Select carbohydrate level</option>
+                                                    <option value="None">None</option>
+                                                    <option value="Some">Some</option>
+                                                    <option value="Lots">Lots</option>
+                                                </select>
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <strong>Meat:</strong>
+                                            </div>
+                                            <div class="col-8">
+                                                <select name="meat" id="item-meat">
+                                                    <option selected disabled hidden>Select meat type</option>
+                                                    <option value="Vegetarian">Vegetarian</option>
+                                                    <option value="Red Meat">Red Meat</option>
+                                                    <option value="White Meat">White Meat</option>
+                                                    <option value="Seafood">Seafood</option>
+                                                </select>
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <strong>Healthy:</strong>
+                                            </div>
+                                            <div class="col-8">
+                                                <select name="healthy" id="item-healthy">
+                                                    <option selected disabled hidden>Select healthiness</option>
+                                                    <option value="Yes">Yes</option>
+                                                    <option value="No">No</option>
+                                                </select>
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <div class="col-2"></div>
+                                            <div class="col-4" align="center">
+                                                <button class="style3" type="submit" style="display: inline-block;">Submit</button>
+                                            </div>
+                                            <div class="col-4" align="center">
+                                                <button class="style2" type="button" onclick=window.location.href='/console-menu'>Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</section>
+            </div>
+            
+            <script>
+                $(document).ready(function() {
+                    $("#item-type option[value='<%-dish.type %>']").prop('selected', true);
+                    $("#item-flavor option[value='<%-dish.flavor %>']").prop('selected', true);
+                    $("#item-carbs option[value='<%-dish.carbContent %>']").prop('selected', true);
+                    $("#item-meat option[value='<%-dish.meat %>']").prop('selected', true);
+                    $("#item-healthy option[value='<%-dish.healthy %>']").prop('selected', true);
+                });
+            </script>
+
+			<!-- PHANTOM Scripts -->
+			<script src="assets_phantom/js/jquery.min.js"></script>
+			<script src="assets_phantom/js/browser.min.js"></script>
+			<script src="assets_phantom/js/breakpoints.min.js"></script>
+			<script src="assets_phantom/js/util.js"></script>
+			<script src="assets_phantom/js/main.js"></script>
+
+		</body>
+</html>

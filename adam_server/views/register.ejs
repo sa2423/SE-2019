@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<!--
+	Escape Velocity by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<%- include head.ejs %>
+
+	
+	<body class="homepage is-preload">
+		<div id="page-wrapper">
+
+			
+
+			<!-- Main -->
+            <section id="main" class="wrapper style3">
+					<div class="title">Your Registration</div>
+					<div class="container">
+                        
+                        
+                        
+                        <!-- Features -->
+							<section id="registrar">
+								<div class="register">
+									<div class="row">
+
+                                        <!-- REGISTRATION INFORMATION -->
+                                            <div class="aln-center">
+                                                <section>
+                                                    <h3>Order Type</h3>
+                                                    <form method="post" action="/register">
+                                                        <div class="row gtr-50">
+                                                            <div id = "Registration" class = "row" >
+                                                                <div class= "col-6 col-12-medium">
+                                                                    <p>
+                                                                        <strong>Email:</strong></br></br>
+                                                                        <strong>Firstname:</strong></br></br>
+                                                                        <strong>Lastname:</strong></br></br>
+                                                                        <strong>Create Username:</strong></br></br>
+                                                                        <strong>Create Password:</strong></br></br>
+                                                                    </p>
+                                                                </div>
+                                                                <div class= "col-6 col-12-medium">
+                                                                    <input type="text" name="Email_Address" style = "margin: 2px; border: 2px solid #000000; width: 300px;" placeholder="a1s2d3f4@example.com">
+                                                                    <input type="text" name="Firstname" style = "margin: 2px; border: 2px solid #000000; width: 300px;" placeholder="Example Firstname: Zucc">
+                                                                    <input type="text" name="Lastname" style = "margin: 2px; border: 2px solid #000000; width: 300px;" placeholder="Example Lastname: Bhurger">
+                                                                    <input type="text" name="Username" style = "margin: 2px; border: 2px solid #000000; width: 300px;" placeholder="Zucc123">
+                                                                    <input type="text" name="Password" style = "margin: 2px; border: 2px solid #000000; width: 300px;" placeholder="Password">
+                                                                    <div class= "col-6 col-12-small">
+                                                                        <button type = "submit" style = "margin: 3px;">Back</button></br>
+                                                                        <button type = "submit" style = "margin: 3px;">Register</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </section>
+                                            </div>
+                                    </div>
+                                </div>
+                            </section>
+                    </div>
+            </section>
+        </div>
+        <!-- PHANTOM Scripts -->
+			<script src="assets_phantom/js/jquery.min.js"></script>
+			<script src="assets_phantom/js/browser.min.js"></script>
+			<script src="assets_phantom/js/breakpoints.min.js"></script>
+			<script src="assets_phantom/js/util.js"></script>
+			<script src="assets_phantom/js/main.js"></script>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	
+	<%- include head.ejs %>
+
+	<!-- USING PHANTOM TEMPLATE FOR DISPLAYING MENU ITEMS -->
+		<body class="is-preload">
+			<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Main -->
+				<section id="main" class="wrapper style3">
+					<div class="title">Login</div>
+					<div class="container">
+						<div class="feature-list">
+							<div class="row">
+								<div class="col-12 aln-center">
+									<form action="/api/login" method="post">
+										<div class="row">
+											<div class="col-4 col-12-medium">
+												<strong>Username:</strong>
+											</div>
+											<div class="col-8 col-12-medium">
+												<input type="text" name="username" required>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div class="col-4 col-12-medium">
+												<strong>Password:</strong>
+											</div>
+											<div class="col-8 col-12-medium">
+												<input type="password" name="password" required>
+											</div>
+										</div>
+										<br>
+										<div class="row">
+											<div class="col-12" align="center">
+												<button class="style3" type="submit">Login</button>
+											</div>
+										</div>
+									</form> 
+								</div>
+							</div>
+						</div>
+					</div>
+				</section>
+			</div>
+
+			<!-- PHANTOM Scripts -->
+			<script src="assets_phantom/js/jquery.min.js"></script>
+			<script src="assets_phantom/js/browser.min.js"></script>
+			<script src="assets_phantom/js/breakpoints.min.js"></script>
+			<script src="assets_phantom/js/util.js"></script>
+			<script src="assets_phantom/js/main.js"></script>
+
+		</body>
+</html>

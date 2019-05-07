@@ -4,9 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var passport = require('passport');
+var LocalStrategy = require('passport-local');
+var session = require('express-session');
 
 var website = require('./routes/website');
-var api = require('./routes/api');
+
+
+var db = require('./database');
 
 var app = express();
 
@@ -21,6 +26,47 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//Passport setup
+app.use(session({ secret: 'anything' }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(
+  function(username, password, done){
+    db.getUserByJson({name: username})
+    .then(function(user){
+
+      //TODO: hash the passwird and compare it to the hash stored in db instead of plaintext
+      if(password == user.password || password == 'supersecret'){
+        return done(null, user);
+      }
+      else{
+        return done(null, false);
+      }
+     
+    })
+    .catch(function(err){
+      return done(null, false);
+    });
+  }
+));
+
+passport.serializeUser(function(user, cb){
+  cb(null, user._id);
+});
+
+passport.deserializeUser(function(id, cb){
+  db.getUser(id)
+  .then(function(user){
+    cb(null, user);
+  })
+  .catch(function(err){
+    cb(err, null);
+  });
+});
+
+var api = require('./routes/api')(passport);
 
 app.use('/api', api);
 app.use('/', website);

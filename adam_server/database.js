@@ -8,7 +8,244 @@ var userCollection = 'users',
     ordersCollection = 'orders',
     assistanceRequestsCollection = "assistanceRequests",
     cartCollection = 'cart';
-    reservationCollection = 'reservation';
+    reservationCollection = 'reservations';
+    foodClusterCollection = 'foodclusters'; 
+
+// RECOMMENDATION SYSTEM DATABASE QUERIES - SEERAT
+exports.insertFoodClusterProbs = function(food_cluster_array) {
+    return new Promise(function(resolve, reject) {
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db) {
+                var collection = db.collection(foodClusterCollection);
+
+                collection.insertOne(food_cluster_array, function(err, result) {
+                    if(err)
+                        reject(err);
+                    else
+                        resolve(result);
+                });
+            })
+        }
+        catch(err){
+            reject(err);
+        }
+    })
+}
+
+// still need to write a function that gets food cluster probabilities by customer id
+exports.getFoodClusterProbs = function() {
+    return new Promise(function(resolve, reject) {
+        try {
+            MongoClient.connect(dbURL)
+            .then(function(db) {
+                var collection = db.collection(foodClusterCollection);
+
+                collection.find().toArray(function(err, food_cluster_array){
+                    db.close();
+    
+                    if(!err){
+                        resolve(food_cluster_array);
+                    }
+                });
+            })
+        }
+        catch(err) {
+            reject(err);
+        }
+    })
+}
+
+// updates food cluster probabilities 
+exports.updateFoodClusterProbs = function(food_cluster_probs, custID) {
+    return new Promise(function(resolve, reject) {
+        try {
+            MongoClient.connect(dbURL)
+            .then(function(db) {
+                var collection = db.collection(foodClusterCollection);
+
+                collection.updateOne({customerID: custID},
+                    {'$set': food_cluster_probs}, function(err, res){
+                        if(!err){
+                            resolve({success: true});
+                        }
+                        else{
+                            console.log(err);
+                            reject({status: false});
+                        }
+                    db.close();
+                });
+            });
+        }
+        catch(err) {
+            reject(err);
+        }
+    })
+}
+
+// gets food cluster probabilities by customer id 
+exports.getFoodClusterProbsByID = function(custID) {
+    return new Promise(function(resolve, reject) {
+        try {
+            MongoClient.connect(dbURL)
+            .then(function(db) {
+                var collection = db.collection(foodClusterCollection);
+
+                collection.find({customerID: custID}).toArray(function(err, food_cluster_array){
+                    db.close();
+    
+                    if(!err){
+                        resolve(food_cluster_array);
+                    }
+                });
+            })
+        }
+        catch(err) {
+            reject(err);
+        }
+    })
+}
+
+
+exports.getDishesByFlavor = function(tag) {
+    return new Promise(function(resolve, reject) {
+        try {
+            MongoClient.connect(dbURL)
+            .then(function(db) {
+                var collection = db.collection(dishesCollection);
+
+                collection.find({flavor: tag}).toArray(function(err, dishes) {
+                    db.close();
+
+                    if(!err) {
+                        resolve(dishes);
+                    }
+                });
+            })
+        }
+        catch(err) {
+            reject(err);
+        }
+    })
+}
+
+exports.getDishesByMeat = function(tag) {
+    return new Promise(function(resolve, reject) {
+        try {
+            MongoClient.connect(dbURL)
+            .then(function(db) {
+                var collection = db.collection(dishesCollection);
+                var query;
+
+                collection.find({meat: tag}).toArray(function(err, dishes) {
+                    db.close();
+
+                    if(!err) {
+                        resolve(dishes);
+                    }
+                });
+            })
+        }
+        catch(err) {
+            reject(err);
+        }
+    })
+}
+
+exports.getDishesByCarbs = function(tag) {
+    return new Promise(function(resolve, reject) {
+        try {
+            MongoClient.connect(dbURL)
+            .then(function(db) {
+                var collection = db.collection(dishesCollection);
+                var query;
+
+                collection.find({carbContent: tag}).toArray(function(err, dishes) {
+                    db.close();
+
+                    if(!err) {
+                        resolve(dishes);
+                    }
+                });
+            })
+        }
+        catch(err) {
+            reject(err);
+        }
+    })
+}
+
+exports.getDishesByHealthiness = function(tag) {
+    return new Promise(function(resolve, reject) {
+        try {
+            MongoClient.connect(dbURL)
+            .then(function(db) {
+                var collection = db.collection(dishesCollection);
+                var query;
+
+                collection.find({healthy: tag}).toArray(function(err, dishes) {
+                    db.close();
+
+                    if(!err) {
+                        resolve(dishes);
+                    }
+                });
+            })
+        }
+        catch(err) {
+            reject(err);
+        }
+    })
+}
+
+exports.getDishesByDrinkType = function(tag) {
+    return new Promise(function(resolve, reject) {
+        try {
+            MongoClient.connect(dbURL)
+            .then(function(db) {
+                var collection = db.collection(dishesCollection);
+                var query;
+
+                collection.find({drinkType: tag}).toArray(function(err, dishes) {
+                    db.close();
+
+                    if(!err) {
+                        resolve(dishes);
+                    }
+                });
+            })
+        }
+        catch(err) {
+            reject(err);
+        }
+    })
+}
+
+//Chris April 22
+exports.updateItem = function(dish, set){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(dishesCollection);
+                collection.updateOne({"name": dish}, set, function(err, result){
+                    if(err) //
+                        reject(err);
+                    else
+                        resolve(result);
+                });
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    })
+}
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 exports.insertOrder = function(order){
     return new Promise(function(resolve, reject){
@@ -34,6 +271,30 @@ exports.insertOrder = function(order){
     })
 }
 
+//lieyang April 18
+exports.updateUser = function(user, set){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(userCollection);
+                user._id = ObjectID(user._id);
+                collection.updateOne(user, set, function(err, result){
+                    if(err) //
+                        reject(err);
+                    else
+                        resolve(result);
+                });
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    })
+}
 
 // Jimmy and Alex - 4/7/19
 exports.insertReservation = function(reservation){
@@ -52,6 +313,59 @@ exports.insertReservation = function(reservation){
             })
             .catch(function(error){
                 reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    })
+}
+
+// Alex - 4/14/19
+exports.getReservations = function(){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(reservationCollection);
+    
+                collection.find().toArray(function(err, reservations){
+                    db.close();
+    
+                    if(!err){
+                        resolve(reservations);
+                    }
+                });
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    })
+}
+
+exports.getUserProfile = function(cust_id, callback) {
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL, function(error, db){
+    
+                if(!error){
+                    var collection = db.collection(userCollection);
+    
+                    collection.find({custID: cust_id}).toArray(function(err, userProfile){
+                        db.close();
+    
+                        if(!err){
+                            resolve(userProfile);
+                        }
+                    });
+                }
+                else{
+                    reject(err);
+                }
             });
         }
         catch(err){
@@ -91,7 +405,7 @@ exports.addToCart = function(cust_id, menuItem){
             MongoClient.connect(dbURL)
             .then(function(db){
                 var collection = db.collection(cartCollection);
-                // conditional statement to determine how to add stuff to cart
+                // conditional statement to determine how to add stuff to carts
                 getUserCart(cust_id, function(userCart){
                     if (userCart.length != 0) {
                         console.log(userCart);
@@ -175,6 +489,7 @@ exports.removeFromCart = function(cust_id, menuItem) {
     })   
 } 
 
+
 // gets a cart for a particular user 
 exports.getUserCart = function(cust_id, callback) {
     try{
@@ -208,8 +523,9 @@ exports.removeAllFromCart = function(cust_id) { //Removes all orders from an inp
             if(!error){
                 var collection = db.collection(cartCollection);
 
-                collection.update({custID: cust_id}, {$set: {dishes: []}}) //When we fix bug with null customerID, switch this to collectin.remove({custID: cust_id})
-                db.close();
+               // collection.update({custID: cust_id}, {$set: {dishes: []}}) //When we fix bug with null customerID, switch this to collectin.remove({custID: cust_id})
+        	collection.remove({custID: cust_id}, function(err, obj) {        
+		db.close()});
             }
         });
     }
@@ -218,7 +534,131 @@ exports.removeAllFromCart = function(cust_id) { //Removes all orders from an inp
     }
 }
 
+//Menu edits/ Admin console database side --Ask Chris L for any clarifications.
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+exports.addMenuItem = function(menuItem) { //Input JSON
+    try{
+        MongoClient.connect(dbURL, function(error, db){
+            if(!error){
+                var collection = db.collection(dishesCollection);
+        	collection.insert(menuItem, function(err, obj) {        
+			db.close()});
+            }
+        });
+    }
+    catch(err){
+        console.log("Error");
+    }
+}
+
+
+exports.updateMenuItem = function(menuItem) { //Input JSON
+    try{
+        MongoClient.connect(dbURL, function(error, db){
+			console.log(menuItem);
+			var id = menuItem._id;
+            if(!error){
+                var collection = db.collection(dishesCollection);
+        	collection.update({_id: id,menuItem}, menuItem, function(err, obj) {        
+			db.close()});
+            }
+        });
+    }
+    catch(err){
+        console.log("Error");
+    }
+}
+
+
+
+exports.removeMenuItem = function(menuItem_id) { //Input the ID for which thing is to be removed. 
+    try{
+        MongoClient.connect(dbURL, function(error, db){
+            if(!error){
+                var collection = db.collection(dishesCollection);
+        	collection.remove({_id: ObjectID(menuItem_id)}, function(err, obj) {        
+		db.close()});
+            }
+        });
+    }
+    catch(err){
+        console.log("Error");
+    }
+}
+
+exports.addUser= function(userJson) { //Input JSON
+    try{
+        MongoClient.connect(dbURL, function(error, db){
+            if(!error){
+                var collection = db.collection(userCollection);
+        	collection.insert(userJson, function(err, obj) {        
+			db.close()});
+            }
+        });
+    }
+    catch(err){
+        console.log("Error");
+    }
+}
+
+exports.changeRole= function(user_id, roleNumber) { //Input JSON
+    try{
+        MongoClient.connect(dbURL, function(error, db){
+            if(!error){
+                var collection = db.collection(userCollection);
+        	collection.update({_id: ObjectID(user_id)}, { $set: {"role": roleNumber}}, function(err, obj) {  
+			db.close()});
+            }
+        });
+    }
+    catch(err){
+        console.log("Error");
+    }
+}
+
+exports.removeUser = function(user_id) { //Input the ID for which thing is to be removed. 
+    try{
+        MongoClient.connect(dbURL, function(error, db){
+            if(!error){
+                var collection = db.collection(userCollection);
+        	collection.remove({_id: ObjectID(user_id)}, function(err, obj) {        
+		db.close()});
+            }
+        });
+    }
+    catch(err){
+        console.log("Error");
+    }
+}
+
+// gets all users for admin console 
+exports.getUsers = function(callback){
+    try{
+        MongoClient.connect(dbURL, function(error, db){
+
+            if(!error){
+                var collection = db.collection(userCollection);
+				console.log("Hi")
+                collection.find().toArray(function(err, users){
+                    db.close();
+					console.log("Hi")
+                    if(!err){
+                        callback(users);
+                    }
+                });
+            }
+            else{
+                callback(null);
+            }
+        });
+    }
+    catch(err){
+        callback(null);
+    }
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 exports.verifyUser = function(username, password){
@@ -363,6 +803,34 @@ exports.getUser = function(user_id){
     });
 }
 
+exports.getUserByJson = function(whereJson){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(userCollection);
+    
+                collection.find(whereJson).toArray(function(err, users){
+                    db.close();
+    
+                    if(!err && users.length > 0){
+                        resolve(users[0]);
+                    }
+                    else{
+                        reject(null);
+                    }
+                });
+            })
+            .catch(function(error){
+                reject(error);
+            });
+        }
+        catch(err){
+            reject(err);
+        }
+    });
+}
+
 exports.getChefs = function(){
     return new Promise(function(resolve, reject){
         try{
@@ -433,7 +901,7 @@ exports.getUserOrders = function(user_id, callback){
             if(!error){
                 var collection = db.collection(ordersCollection);
 
-                collection.find({UserId: user_id}).toArray(function(err, orders){
+                collection.find({userId: user_id}).toArray(function(err, orders){
                     db.close();
 
                     callback(orders);
@@ -519,7 +987,7 @@ exports.getDishes = function(callback){
             if(!error){
                 var collection = db.collection(dishesCollection);
 
-                collection.find().toArray(function(err, dishes){
+                collection.find().sort({title: 1}).toArray(function(err, dishes){
                     db.close();
 
                     if(!err){
@@ -545,7 +1013,7 @@ exports.getDishtypes = function(dishType, callback){
             if(!error){
                 var collection = db.collection(dishesCollection);
 
-                collection.find({type: dishType}).toArray(function(err, dishes){
+                collection.find({type: dishType}).sort({title: 1}).toArray(function(err, dishes){
                     db.close();
 
                     if(!err){
@@ -588,6 +1056,35 @@ exports.getDish = function(dish_id, callback){
     catch(err){
         callback(null);
     }
+}
+
+exports.insertUser = function(user){
+    return new Promise(function(resolve, reject){
+        try{
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(userCollection);
+    
+                collection.insertOne(user, function(err, res){
+                    
+                    if(!err){
+                        resolve(true);
+                    }
+                    else{
+                        reject(false);
+                    }
+
+                    db.close();
+                });
+            })
+            .catch(function(error){
+                reject(false);
+            });
+        }
+        catch(err){
+            reject(false);
+        }
+    });
 }
 
 exports.getDishOrders = function(dish_id, callback){

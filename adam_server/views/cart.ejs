@@ -5,103 +5,195 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>Codename Adam</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets_escape_velocity/css/main.css" />
-	</head>
+	<%- include head.ejs %>
+
+	
 	<body class="homepage is-preload">
 		<div id="page-wrapper">
-
-			<!-- Header -->
-				<section id="header" class="wrapper">
-
-					<!-- Logo -->
-						<div id="logo">
-							<h1><a href="/">Codename Adam</a></h1>
-						</div>
-
-					<!-- Nav -->
-						<nav id="nav">
-							<ul>
-								<li class="current"><a href="/">Home</a></li>
-								<li>
-									<a href="/menu">Menu</a>
-									<ul>
-										<li><a href="/popular-dishes">Most Popular</a></li>
-										<li><a href="/appetizers">Appetizers</a></li>
-										<li><a href="/entrees">Entrees</a></li>
-										<li><a href="/drinks">Drinks</a></li>
-										<li><a href="/desserts">Desserts</a></li>
-									</ul>
-								</li>
-								<li><a href="/recommend-me">Recommend Me</a></li>
-								<li><a href="/cart">Cart</a></li>
-								<li><a href="/reserve">Reserve</a></li>
-								<li><a href="#">Your Profile</a></li>
-							</ul>
-						</nav>
-
-				</section>
-
 			<!-- Main -->
 				<section id="main" class="wrapper style3">
 					<div class="title">Your Cart</div>
 					<div class="container">
-
 						<!-- Features -->
 							<section id="features">
 								<div class="feature-list">
-									<div class="row">
-										<!-- CART INFORMATION -->
-										<div class="aln-center">
-											<section>
-												<h3>Order Information</h3>
-												<table>
-													<tr>
-														<th><strong>Dish</strong></th>
-														<th><strong>Subtotal</strong></th>
-														<th><strong>Modify?</strong></th>
-													</tr>
-													<%for(var i=0;i<cartItems.length;i++){ %>
-													<tr>
-														<th><%=cartItems[i].title%></th>
-														<th><%=cartItems[i].price%></th>
-														<th>
-															<form method="get" action=<%="api/remove-from-cart/"+cartItems[i]._id.toString()%>>
-																<div class="row gtr-50">
-																	<div class="aln-center">
-																		<button type="submit">Remove</button>
-																	</div>
-																</div>
-															</form>
-														</th>
-													</tr>
-													<%}%>
-												</table>
-												<strong>Total Cost: <%=totalPrice%></strong>
-											</section>
+									<div class="col-12 aln-center">
+										<div class="row">
+											<div class="col-3">
+												<strong>Dish</strong>
+											</div>
+											<div class="col-3">
+												<strong>Count</strong>
+											</div>
+											<div class="col-3">
+												<strong>Price</strong>
+											</div>
 										</div>
-										<div class="aln-center">
-											<section>
-												<h3>Payment Confirmation</h3>
-												<form method="post" action="/submit-cart-website">
-													<div class="row gtr-50">
-														<div class="aln-center">
-															<button type="submit">Send Order</button>
-														</div>
+										<%if (cartItems.length == 0){ %>
+											<div class="row">
+												<div class="col-12" align="center">
+													<i>The cart is empty.</i>
+												</div>
+											</div>
+										<%}%>
+
+										<%for(var i=0;i<cartItems.length;i++){ %>
+											<div class="row">
+												<div class="col-3">
+													<%=cartItems[i].title%>
+												</div>
+												<div class="col-3">
+													1
+												</div>
+												<div class="col-3">
+													$<%=cartItems[i].price%>
+												</div>
+												<div class="col-3">
+													<form method="get" action=<%="api/remove-from-cart/"+cartItems[i]._id.toString()%>>
+														<button class="style2" type="submit">Remove</button>
+													</form>
+												</div>
+											</div>
+										<%}%>
+										<strong>Total Cost: $<%=totalPrice%></strong>
+										<br><br>
+										<form method="post" action="/submit-cart-website">
+											<div class="row">
+												<div class="col-4">
+													<strong>Order Type:</strong>
+												</div>
+												<div class="col-8">
+													<select id="orderType" onchange="deliveryTog()">
+														<option value = "pickup">Pickup</option>
+														<option value = "delivery">Delivery</option>
+													</select>
+												</div>
+											</div>
+											<br>
+											<div id = "deliveryTrue" style = "display: none;">
+												<div class="row">
+													<div class="col-4">
+														<strong>Street Address:</strong>
 													</div>
-												</form>
-											</section>
-										</div>
+													<div class="col-8">
+														<input type="text" name="number & street/drive" placeholder="12 Example Street" >
+													</div>
+												</div><br>
+												<div class="row">
+													<div class="col-4">
+														<strong>City/Township:</strong>
+													</div>
+													<div class="col-8">
+														<input type="text" name="City/ Town" placeholder="Hypotheticalville" >
+													</div>
+												</div><br>
+												<div class="row">
+													<div class="col-4">
+														<strong>Zip/Postal:</strong>
+													</div>
+													<div class="col-8">
+														<input type="text" name="Zip/PostalCode" placeholder="12345-6789" >
+													</div>
+												</div><br>
+												<div class="row">
+													<div class="col-4">
+														<strong>Country:</strong>
+													</div>
+													<div class="col-8">
+														<select id = "Country" onchange = "stateProvince()">
+															<option value="US">United States</option>
+															<option value="CA">Canada</option>
+														</select>
+													</div>
+												</div><br>
+												<div class="row">
+													<div class="col-4">
+														<strong>State/Province:</strong>
+													</div>
+													<div class="col-8">
+														<select id = "fiftystates">
+															<option value="AL">Alabama</option>
+															<option value="AK">Alaska</option>
+															<option value="AZ">Arizona</option>
+															<option value="AR">Arkansas</option>
+															<option value="CA">California</option>
+															<option value="CO">Colorado</option>
+															<option value="CT">Connecticut</option>
+															<option value="DE">Delaware</option>
+															<option value="DC">District Of Columbia</option>
+															<option value="FL">Florida</option>
+															<option value="GA">Georgia</option>
+															<option value="HI">Hawaii</option>
+															<option value="ID">Idaho</option>
+															<option value="IL">Illinois</option>
+															<option value="IN">Indiana</option>
+															<option value="IA">Iowa</option>
+															<option value="KS">Kansas</option>
+															<option value="KY">Kentucky</option>
+															<option value="LA">Louisiana</option>
+															<option value="ME">Maine</option>
+															<option value="MD">Maryland</option>
+															<option value="MA">Massachusetts</option>
+															<option value="MI">Michigan</option>
+															<option value="MN">Minnesota</option>
+															<option value="MS">Mississippi</option>
+															<option value="MO">Missouri</option>
+															<option value="MT">Montana</option>
+															<option value="NE">Nebraska</option>
+															<option value="NV">Nevada</option>
+															<option value="NH">New Hampshire</option>
+															<option value="NJ">New Jersey</option>
+															<option value="NM">New Mexico</option>
+															<option value="NY">New York</option>
+															<option value="NC">North Carolina</option>
+															<option value="ND">North Dakota</option>
+															<option value="OH">Ohio</option>
+															<option value="OK">Oklahoma</option>
+															<option value="OR">Oregon</option>
+															<option value="PA">Pennsylvania</option>
+															<option value="RI">Rhode Island</option>
+															<option value="SC">South Carolina</option>
+															<option value="SD">South Dakota</option>
+															<option value="TN">Tennessee</option>
+															<option value="TX">Texas</option>
+															<option value="UT">Utah</option>
+															<option value="VT">Vermont</option>
+															<option value="VA">Virginia</option>
+															<option value="WA">Washington</option>
+															<option value="WV">West Virginia</option>
+															<option value="WI">Wisconsin</option>
+															<option value="WY">Wyoming</option>
+														</select>
+														<select id = "thirteenprovinces" style = "display: none;">
+															<option value="AB">Alberta</option>
+															<option value="BC">British Columbia</option>
+															<option value="MB">Manitoba</option>
+															<option value="NB">New Brunswick</option>
+															<option value="NL">Newfoundland and Labrador</option>
+															<option value="NS">Nova Scotia</option>
+															<option value="ON">Ontario</option>
+															<option value="PE">Prince Edward Island</option>
+															<option value="QC">Quebec</option>
+															<option value="SK">Saskatchewan</option>
+															<option value="NT">Northwest Territories</option>
+															<option value="NU">Nunavut</option>
+															<option value="YT">Yukon</option>
+														</select>
+													</div>
+												</div><br>
+											</div>
+											<br>
+											<div class="row">
+												<div class="col-12" align="center">
+													<button class="style3" type="submit">Submit Order</button>
+												</div>
+											</div>
+										</form>
 									</div>
 								</div>
 							</section>
-
 					</div>
 				</section>
-
 		</div>
 
 		<!-- Scripts -->
@@ -111,6 +203,35 @@
 			<script src="assets_escape_velocity/js/breakpoints.min.js"></script>
 			<script src="assets_escape_velocity/js/util.js"></script>
 			<script src="assets_escape_velocity/js/main.js"></script>
+			<script>
+				function deliveryTog(){
+					var x = document.getElementById("deliveryTrue");
+					var y = document.getElementById("orderType");
+					if (y.value == "pickup"){
+					x.style.display = "none";
+					x.disabled = true;
+					}else{
+					x.style.display = "inherit";
+					x.disabled = false;
+					}
+				}
+				function stateProvince(){
+					var a = document.getElementById("Country");
+					var b = document.getElementById("fiftystates");
+					var c = document.getElementById("thirteenprovinces");
+					if (a.value == "CA"){
+						b.style.display = "none";
+						b.disabled = true;
+						c.style.display = "inherit";
+						c.disabled = false;
+					}else{
+						b.style.display = "inherit";
+						b.disabled = false;
+						c.style.display = "none";
+						c.disabled = true;
+					}
+				}
+			</script>
 
 	</body>
 </html>

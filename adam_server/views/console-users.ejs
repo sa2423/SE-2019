@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	
+	<%- include head.ejs %>
+
+		<body class="is-preload">
+			<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Main -->
+				<section id="main" class="wrapper style3">
+					<div class="title">Manage Users</div>
+					<div class="container">
+						<div class="feature-list">
+                            <div class="row">
+                                <div class="col-12 aln-center">
+                                    <div class="row">
+                                        <div class="col-2" align="center">
+                                            <strong>Username</strong>
+                                        </div>
+                                        <div class="col-2" align="center">
+                                            <strong>First Name</strong>
+                                        </div>
+                                        <div class="col-2" align="center">
+                                            <strong>Last Name</strong>
+                                        </div>
+                                        <div class="col-2" align="center">
+                                            <strong>Role</strong>
+                                        </div>
+                                        <div class="col-4" align="center"></div>
+                                    </div><br>
+                                    <% for(var i = 0; i < users.length; i++){ %>
+                                    <form method="post" action="/api/updateUser">
+                                        <div class="row">
+                                            <input type="hidden" name="id" id="<%=users[i]._id + '-id'%>" value="<%=users[i]._id %>">
+                                            <div class="col-2" align="center">
+                                                <input type="text" name="name" id="<%=users[i]._id + '-name'%>" value="<%=users[i].name %>">
+                                            </div>
+                                            <div class="col-2" align="center">
+                                                <input type="text" name="first_name" id="<%=users[i]._id + '-fname'%>" value="<%=users[i].first_name %>">
+                                            </div>
+                                            <div class="col-2" align="center">
+                                                <input type="text" name="last_name" id="<%=users[i]._id + '-lname'%>" value="<%=users[i].last_name %>">
+                                            </div>
+                                            <div class="col-2" align="center">
+                                                <input type="number" name="role" id="<%=users[i]._id + '-role'%>" value="<%=users[i].role %>" min="1" max="3">
+                                            </div>
+                                            <div class="col-4" align="center">
+                                                <button class="style2" type="submit">Update User</strong>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <% } %>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</section>
+			</div>
+
+			<!-- PHANTOM Scripts -->
+			<script src="assets_phantom/js/jquery.min.js"></script>
+			<script src="assets_phantom/js/browser.min.js"></script>
+			<script src="assets_phantom/js/breakpoints.min.js"></script>
+			<script src="assets_phantom/js/util.js"></script>
+			<script src="assets_phantom/js/main.js"></script>
+
+		</body>
+</html>

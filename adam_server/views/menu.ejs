@@ -5,64 +5,7 @@
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 -->
 <html>
-	<head>
-		<title>Adam Menu</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<!--
-		<link rel="stylesheet" href="assets_phantom/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets_phantom/css/noscript.css" /></noscript>
-		-->
-	</head>
-
-	<!-- USING ESCAPE VELOCITY TEMPLATE FOR LOGO AND NAVBAR--> 
-	<link rel="stylesheet" href="assets_escape_velocity/css/main.css" />
-		<body class="homepage is-preload">
-			<div id="page-wrapper">
-
-				<!-- Header -->
-					<section id="header" class="wrapper">
-
-						<!-- Logo -->
-							<div id="logo">
-								<h1><a href="/">Codename Adam</a></h1>
-							</div>
-
-						<!-- Nav -->
-							<nav id="nav">
-								<ul>
-									<li class="current"><a href="/">Home</a></li>
-									<li>
-										<a href="/menu">Menu</a>
-										<ul>
-											<li><a href="/popular-dishes">Most Popular</a></li>
-											<li><a href="/appetizers">Appetizers</a></li>
-											<li><a href="/entrees">Entrees</a></li>
-											<li><a href="/drinks">Drinks</a></li>
-											<li><a href="/desserts">Desserts</a></li>
-										</ul>
-									</li>
-									<li><a href="/recommend-me">Recommend Me</a></li>
-									<li><a href="/cart">Cart</a></li>
-									<li><a href="/reserve">Reserve</a></li>
-									<li><a href="#">Your Profile</a></li>
-								</ul>
-							</nav>
-
-					</section>
-			</div>
-
-			<!-- Scripts -->
-				<script src="assets_escape_velocity/js/jquery.min.js"></script>
-				<script src="assets_escape_velocity/js/jquery.dropotron.min.js"></script>
-				<script src="assets_escape_velocity/js/browser.min.js"></script>
-				<script src="assets_escape_velocity/js/breakpoints.min.js"></script>
-				<script src="assets_escape_velocity/js/util.js"></script>
-				<script src="assets_escape_velocity/js/main.js"></script>
-
-		</body>
-
-
+	<%- include head.ejs %>
 	<!-- USING PHANTOM TEMPLATE FOR DISPLAYING MENU ITEMS -->
 	<link rel="stylesheet" href="assets_phantom/css/main.css" />
 	<noscript><link rel="stylesheet" href="assets_phantom/css/noscript.css" /></noscript>
@@ -73,31 +16,6 @@
 					<!-- Main -->
 						<div id="main">
 							<div class="inner">
-								<!-- DISPLAY 3 POPULAR DISHES-->
-								<header> 
-									<br>
-									<h1><a href="/popular-dishes">Most Popular Dishes</a><br /></h1>
-								</header>
-								<section class="tiles">
-
-									<% for(var i = 0; i < pop_dishes.length; i++){ %>
-										<!-- DISPLAYS MENU USING TILES -->
-										<article class="style5">
-											<span class="image">
-												<img src=<%="../public/images/menu/"+pop_dishes[i].filename%> alt="" style="width:auto;height:325px;"/>
-											</span>
-											<a href="#">
-												<div class="content style3">
-													<h2 style="color:#FFFFFF;"><%=pop_dishes[i].title%></h2>
-													<p><%=pop_dishes[i].description%> <br>
-													$<%=pop_dishes[i].price%></p>
-													<button onClick="addToCart();">Add</button>
-												</div>
-											</a>
-										</article>
-
-									<% } %>
-								</section>
 
 								<!-- DISPLAY 3 APPETIZERS -->
 								<header> 
@@ -106,7 +24,7 @@
 								</header>
 								<section class="tiles">
 									<!-- DISPLAYS MENU USING TILES -->
-									<% for(var i = 0; i < appetizers.length; i++){ %>
+									<% for(var i = 0; i < 3; i++){ %>
 										<!-- DISPLAYS MENU USING TILES -->
 										<article class="style5">
 											<span class="image">
@@ -117,8 +35,15 @@
 													<h2 style="color:#FFFFFF;"><%=appetizers[i].title%></h2>
 													<p><%=appetizers[i].description%> <br>
 													$<%=appetizers[i].price%></p>
-													<button onClick="">Add</button>
-													<button onClick="">Remove</button>
+
+													<!-- CART ICON APPEARS ONLY IF ITEM ALREADY IN CART -->
+													<% if (checkCartApps[i]== true) { %>
+													<p class="icon fa-cart-plus"></p>
+													<% } %>
+
+													<form action=<%="api/add-to-cart/"+appetizers[i]._id.toString()%> method="get">
+  														<button type="submit">Add</button>
+													</form> 											
 												</div>
 											</a>
 										</article>
@@ -132,7 +57,7 @@
 									<h1><a href="/entrees">Entrees</a><br /></h1>
 								</header>
 								<section class="tiles">
-									<% for(var i = 0; i < entrees.length; i++){ %>
+									<% for(var i = 0; i < 3; i++){ %>
 										<!-- DISPLAYS MENU USING TILES -->
 										<article class="style5">
 											<span class="image">
@@ -143,8 +68,15 @@
 													<h2 style="color:#FFFFFF;"><%=entrees[i].title%></h2>
 													<p><%=entrees[i].description%> <br>
 													$<%=entrees[i].price%></p>
-													<button onClick="">Add</button>
-													<button onClick="">Remove</button>
+
+													<!-- CART ICON APPEARS ONLY IF ITEM ALREADY IN CART -->
+													<% if (checkCartEntrees[i]== true) { %>
+													<p class="icon fa-cart-plus"></p>
+													<% } %>
+
+													<form action=<%="api/add-to-cart/"+entrees[i]._id.toString()%> method="get">
+  														<button type="submit">Add</button>
+													</form> 
 												</div>
 											</a>
 										</article>
@@ -158,7 +90,7 @@
 									<h1><a href="/desserts">Desserts</a><br /></h1>
 								</header>
 								<section class="tiles">
-									<% for(var i = 0; i < desserts.length; i++){ %>
+									<% for(var i = 0; i < 3; i++){ %>
 										<!-- DISPLAYS MENU USING TILES -->
 										<article class="style5">
 											<span class="image">
@@ -169,8 +101,15 @@
 													<h2 style="color:#FFFFFF;"><%=desserts[i].title%></h2>
 													<p><%=desserts[i].description%> <br>
 													$<%=desserts[i].price%></p>
-													<button onClick="">Add</button>
-													<button onClick="">Remove</button>
+
+													<!-- CART ICON APPEARS ONLY IF ITEM ALREADY IN CART -->
+													<% if (checkCartDesserts[i]== true) { %>
+													<p class="icon fa-cart-plus"></p>
+													<% } %>
+
+													<form action=<%="api/add-to-cart/"+desserts[i]._id.toString()%> method="get">
+  														<button type="submit">Add</button>
+													</form> 
 												</div>
 											</a>
 										</article>
@@ -184,7 +123,7 @@
 									<h1><a href="/drinks">Drinks</a><br /></h1>
 								</header>
 								<section class="tiles">
-									<% for(var i = 0; i < drinks.length; i++){ %>
+									<% for(var i = 0; i < 3; i++){ %>
 										<!-- DISPLAYS MENU USING TILES -->
 										<article class="style5">
 											<span class="image">
@@ -195,8 +134,15 @@
 													<h2 style="color:#FFFFFF;"><%=drinks[i].title%></h2>
 													<p><%=drinks[i].description%> <br>
 													$<%=drinks[i].price%></p>
-													<button onClick="">Add</button>
-													<button onClick="">Remove</button>
+
+													<!-- CART ICON APPEARS ONLY IF ITEM ALREADY IN CART -->
+													<% if (checkCartDrinks[i]== true) { %>
+													<p class="icon fa-cart-plus"></p>
+													<% } %>
+
+													<form action=<%="api/add-to-cart/"+drinks[i]._id.toString()%> method="get">
+  														<button type="submit">Add</button>
+													</form> 
 												</div>
 											</a>
 										</article>

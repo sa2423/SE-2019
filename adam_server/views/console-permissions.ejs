@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	
+	<%- include head.ejs %>
+
+	<!-- USING PHANTOM TEMPLATE FOR DISPLAYING MENU ITEMS -->
+		<body class="is-preload">
+			<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Main -->
+				<section id="main" class="wrapper style3">
+					<div class="title">Admin Console</div>
+					<div class="container">
+						<div class="feature-list">
+                            <div class="row">
+                                <div class="col-12 aln-center">
+                                    <div class="row">
+                                        <div class="col-6" align="center">
+                                            <button class="style3" onclick="window.location.href = '/console/menu';">Edit Menu</button> 
+                                        </div>
+                                        <div class="col-6" align="center">
+                                            <button class="style3" onclick="window.location.href = '/console/users';">Edit Users</button> 
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <div class="col-6" align="center">
+                                            <button class="style3" onclick="window.location.href = '/console/stats';">View Stats</button> 
+                                        </div>
+                                        <div class="col-6" align="center">
+                                            <button class="style3" onclick="window.location.href = '/console/trends';">View Trends</button> 
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
+                                        <div class="col-6" align="center">
+                                            <button class="style3" onclick="window.location.href = '/console/permissions';">Permissions</button> 
+                                        </div>
+                                        <div class="col-6" align="center">
+                                            <button class="style3" onclick="window.location.href = '/console/manage';">Manage</button> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</section>
+			</div>
+
+			<!-- PHANTOM Scripts -->
+			<script src="assets_phantom/js/jquery.min.js"></script>
+			<script src="assets_phantom/js/browser.min.js"></script>
+			<script src="assets_phantom/js/breakpoints.min.js"></script>
+			<script src="assets_phantom/js/util.js"></script>
+			<script src="assets_phantom/js/main.js"></script>
+
+		</body>
+</html>

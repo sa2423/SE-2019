@@ -1,0 +1,94 @@
+<!DOCTYPE HTML>
+<!--
+	Phantom by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	
+    <%- include head.ejs %>
+    
+    <!-- PHANTOM Scripts -->
+    <script src="assets_phantom/js/jquery.min.js"></script>
+    <script src="assets_phantom/js/browser.min.js"></script>
+    <script src="assets_phantom/js/breakpoints.min.js"></script>
+    <script src="assets_phantom/js/util.js"></script>
+    <script src="assets_phantom/js/main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+
+	<!-- USING PHANTOM TEMPLATE FOR DISPLAYING MENU ITEMS -->
+		<body class="is-preload">
+			<!-- Wrapper -->
+			<div id="wrapper">
+				<!-- Main -->
+				<section id="main" class="wrapper style3">
+					<div class="title">Statistics</div>
+					<div class="container">
+						<div class="feature-list">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div align="center">
+                                        <canvas id="revenue"></canvas>
+                                    </div>                                    
+                                </div>
+                            </div>
+						</div>
+					</div>
+				</section>
+            </div>
+            
+            <script>
+                var orders = <%-JSON.stringify(orders) %>;
+                var result = {}
+                for (var i in orders) {
+                    var d = new Date(orders[i].date_placed)
+                    var date = (d.getMonth()+1).toString() + "/" + d.getDate().toString() + "/" + d.getFullYear().toString()
+                    for (var j in orders[i].orderItems) {
+                        if (result[date] == undefined) {
+                            result[date] = 0
+                        }
+                        result[date] += orders[i].orderItems[j].price
+                    }
+                }
+
+                var labels = Object.keys(result).map(function(key) {
+                    return new Date(key);
+                });
+
+                var data = Object.keys(result).map(function(key) {
+                    return result[key];
+                });
+
+                var ctx = document.getElementById('revenue').getContext('2d');
+                var myChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: '',
+                            data: data,
+                            lineTension: 0
+                        }]
+                    },
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Daily Revenue'
+                        },
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            xAxes: [{
+                                type: 'time',
+                                time: {
+                                    unit: 'day'
+                                }
+                            }]
+                        }
+                    }
+                });
+            </script>
+		</body>
+</html>

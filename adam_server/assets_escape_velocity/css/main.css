@@ -66,10 +66,12 @@ input::-moz-focus-inner {
 }
 
 input, select, textarea {
+	/*
 	-moz-appearance: none;
 	-webkit-appearance: none;
 	-ms-appearance: none;
 	appearance: none;
+	*/
 }
 
 /* Basic */
@@ -1517,6 +1519,8 @@ input, select, textarea {
 	form input[type="text"],
 	form input[type="email"],
 	form input[type="password"],
+	form input[type="number"],
+	form input[type="date"],
 	form select,
 	form textarea {
 		-moz-transition: all .25s ease-in-out;
@@ -1536,6 +1540,8 @@ input, select, textarea {
 		form input[type="text"]:focus,
 		form input[type="email"]:focus,
 		form input[type="password"]:focus,
+		form input[type="number"]:focus,
+		form input[type="date"]:focus,
 		form select:focus,
 		form textarea:focus {
 			background: #f8f8f8;
@@ -2275,6 +2281,8 @@ input, select, textarea {
 		#footer form input[type="text"],
 		#footer form input[type="email"],
 		#footer form input[type="password"],
+		#footer form input[type="number"],
+		#footer form input[type="date"],
 		#footer form select,
 		#footer form textarea {
 			background: #ccc;
@@ -2284,6 +2292,8 @@ input, select, textarea {
 			#footer form input[type="text"]:focus,
 			#footer form input[type="email"]:focus,
 			#footer form input[type="password"]:focus,
+			#footer form input[type="number"]:focus,
+			#footer form input[type="date"]:focus,
 			#footer form select:focus,
 			#footer form textarea:focus {
 				background: #fff;

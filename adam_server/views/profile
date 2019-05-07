@@ -30,7 +30,7 @@
 											<% } %>
 											<% if(success == "false"){ %>
 												<div class="col-12" align="center" id="reservation-status">
-													<button class="style1" disabled>Reservation Failed</button><br><br>
+													<button class="style3" disabled>Reservation Failed</button><br><br>
 												</div>
 											<% } %>
 											<div class="row">
@@ -81,7 +81,7 @@
 											<br>
 											<div class="row">
 												<div class="col-12" align="center">
-													<button class="style3" type="submit">Submit Reservation</button>
+													<button type="submit">Submit Reservation</button>
 												</div>
 											</div>
 										</form>
