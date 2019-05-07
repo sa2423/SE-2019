@@ -5,11 +5,9 @@ var app = express();
 var MongoClient = require('mongodb').MongoClient,
     ObjectID = require('mongodb').ObjectID,
     ISODate = require('mongodb').ISODate;
-//var Cart = require('../models/cart.js');
-//var FileReader = require('filereader')
-//var filereader = new FileReader();
-
 var firebase = require("firebase-admin");
+
+// Taras, Seerat, Chris Lombardi, Alex, and Jimmy all worked on this, tested it and debugged it. 
 	
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -126,10 +124,6 @@ router.post('/register', function (req, res, next) {
 		res.redirect('/register');
 	});
 });
-
-// router.get('/profile', function(req, res, next) {
-// 	res.render('profile');
-// });
 
 router.get('/profile', function (req, res, next) {
     if(req.user){
@@ -388,7 +382,6 @@ function checkCurrentCart(array, custID, callback) {
 }
 
 /* RECOMMEND ME UPDATED BY SEERAT 4/21 */
-/* NEED TO ACCOUNT FOR ALREADY IN CART FUNCTIONALITY */
 router.get('/recommend-me', function (req, res, next) {
 	if(req.user)
 	{	
@@ -745,7 +738,7 @@ router.get('/reserve', function (req, res, next) {
 	}
 });
 
-// Jimmy - 4/7/19 - still need to redirect to homepage once entered into database
+// Jimmy - 4/7/19 
 router.post('/submit-reservation',function(req,res,next){ 
 
 	var reservation = req.body;

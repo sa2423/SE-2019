@@ -13,6 +13,7 @@ module.exports = function(passport){
 		databaseURL: "https://adam-d2382.firebaseio.com"
 	});
 		
+// Taras, Seerat, Chris Lombardi, Lieyang, and Alex wrote the code, tested it and debugged it
 		
 	router.get('/secret', function(req, res){
 		if(req.user){
@@ -277,10 +278,10 @@ module.exports = function(passport){
 		
 	});
 
-	//ADD ITEMS TO CART COLLECTION - CURRENTLY DOES NOT CHECK FOR DUPLICATES
+	//ADD ITEMS TO CART COLLECTION 
 	router.get('/add-to-cart/:id', function(req, res){
 		if(req.user){
-			var customerID =  req.user._id;//"5c967e32d2e79f4afc43fdef"; //hardcoded customer id 
+			var customerID =  req.user._id; 
 			var menuItemID = req.params.id;
 			db.getDish(menuItemID, function(dish){
 				db.addToCart(customerID,dish).then(function(result){
@@ -300,7 +301,7 @@ module.exports = function(passport){
 	});
 
 
-	//REMOVE ITEMS FROM CART COLLECTION - CURRENTLY DOES NOT CHECK FOR EMPTY CART 
+	//REMOVE ITEMS FROM CART COLLECTION 
 	router.get('/remove-from-cart/:id', function(req, res){
 		var customerID;
 		if(req.user){

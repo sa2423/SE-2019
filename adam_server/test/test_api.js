@@ -1,6 +1,8 @@
 var expect  = require('chai').expect;
 var request = require('request');
 
+// Alex wrote all the unit tests
+
 var base_url = 'http://52.39.140.122/api/';
 
 describe('Endpoints Status Tests', function(){

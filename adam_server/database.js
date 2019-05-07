@@ -11,6 +11,9 @@ var userCollection = 'users',
     reservationCollection = 'reservations';
     foodClusterCollection = 'foodclusters'; 
 
+// Seerat, Taras, Lieyang, Alex, Jimmy, and Chris Lombardi all worked on this
+// They wrote the code, tested it, and debugged it
+
 // RECOMMENDATION SYSTEM DATABASE QUERIES - SEERAT
 exports.insertFoodClusterProbs = function(food_cluster_array) {
     return new Promise(function(resolve, reject) {
@@ -33,7 +36,7 @@ exports.insertFoodClusterProbs = function(food_cluster_array) {
     })
 }
 
-// still need to write a function that gets food cluster probabilities by customer id
+// gets food cluster probabilities for all customers 
 exports.getFoodClusterProbs = function() {
     return new Promise(function(resolve, reject) {
         try {
@@ -443,7 +446,6 @@ exports.addToCart = function(cust_id, menuItem){
     })
 }
 
-// currently not handling empty carts - need to add functionality for that later
 exports.removeFromCart = function(cust_id, menuItem) {
     return new Promise(function(resolve, reject){
         try{

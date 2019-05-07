@@ -8,6 +8,8 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local');
 var session = require('express-session');
 
+// Taras and Seerat worked on this 
+
 var website = require('./routes/website');
 
 
