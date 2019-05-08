@@ -1,8 +1,6 @@
 var expect  = require('chai').expect;
 var request = require('request');
 
-// Alex wrote all the unit tests
-
 var base_url = 'http://52.39.140.122/api/';
 
 describe('Endpoints Status Tests', function(){
@@ -22,6 +20,13 @@ describe('Endpoints Status Tests', function(){
     });
 
     it('should return status code 200 from /orders endpoint', function(done){
+        request.get(base_url + 'orders', function(err, response, body){
+            expect(response.statusCode).to.equal(200);
+            done();
+        });
+    });
+
+    it('should return status code 200 from /cart endpoint', function(done){
         request.get(base_url + 'orders', function(err, response, body){
             expect(response.statusCode).to.equal(200);
             done();
@@ -66,7 +71,7 @@ describe('Orders Database Tests', function(){
         });
     });
     
-    /*it('should successfully place order', function(done){
+    it('should successfully place order', function(done){
 		var d = new Date();
 		var timestamp = d.toDateString() + d.toTimeString();
 
@@ -83,7 +88,7 @@ describe('Orders Database Tests', function(){
             expect(response.statusCode).to.equal(200);
             done();
         });
-    });*/
+    });
 
     it('should successfully place order', function(done){
 		var d = new Date();
@@ -164,6 +169,284 @@ describe('Orders Database Tests', function(){
     });
 });
 
+describe('Admin Console Menu Tests', function(){
+
+	beforeEach(() => { //Before each test we empty the database
+        return new Promise(function(resolve){
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(dishesCollection);
+    
+                collection.remove({})
+                resolve()
+            })
+        })});
+
+	it('should return get no items from empty dishes collection', function(done){
+        request.get(base_url + 'menu', function(err, response, body){
+            expect(response.body).to.equal('[]');
+            done();
+        });
+    });
+
+    it('should successfully create menu item', function(done){
+
+    	var options = {
+    		method: 'POST',
+    		uri: base_url + 'addItem',
+    		body: {
+    			user_id: "5c967e32d2e79f4afc43fdef",
+    			timestamp: "..."
+    		},
+    		json: true
+    	};
+
+        request(options, function(err, response, body){
+            expect(response.statusCode).to.equal(200);
+            done();
+        });
+    });
+
+    it('should successfully get menu item from /menu after creating item', function(done){
+            
+        var options = {
+    		method: 'POST',
+    		uri: base_url + 'addItem',
+    		body: {
+    			user_id: "5c967e32d2e79f4afc43fdef",
+    			timestamp: "..."
+    		},
+    		json: true
+    	};
+
+        request(options, function(err, response, body){
+            expect(response.statusCode).to.equal(200);
+            request.get(base_url + 'menu', function(err, response, body){
+	            expect(response.body).to.not.equal('[]');
+	            done();
+	        });
+        });
+    });
+
+    it('should successfully remove menu item after creating item', function(done){
+            
+        var options = {
+    		method: 'POST',
+    		uri: base_url + 'addItem',
+    		body: {
+    			user_id: "5c967e32d2e79f4afc43fdef",
+    			timestamp: "..."
+    		},
+    		json: true
+        };
+        
+        var options2 = {
+    		method: 'POST',
+    		uri: base_url + 'removeItem',
+    		body: {
+    			id_: "5c967e32d2e79f4afc43fdef",
+    			timestamp: "..."
+    		},
+    		json: true
+    	};
+
+        request(options, function(err, response, body){
+            expect(response.statusCode).to.equal(200);
+            request.get(base_url + 'menu', function(err, response, body){
+	            expect(response.body).to.not.equal('[]');
+	            done();
+	        });
+        });
+    });
+});
+
+describe('Admin Console User Tests', function(){
+
+    beforeEach(() => { //Before each test we empty the database
+        return new Promise(function(resolve){
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(userCollection);
+    
+                collection.remove({})
+                resolve()
+            })
+        })});
+
+    it('should return get no users from empty users collection', function(done){
+        request.get(base_url + 'users', function(err, response, body){
+            expect(response.body).to.equal('[]');
+            done();
+        });
+    });
+
+    it('should successfully create new users', function(done){
+
+        var options = {
+            method: 'POST',
+            uri: base_url + 'addUser',
+            body: {
+                user_id: "5c967e32d2e79f4afc43fdef",
+                timestamp: "..."
+            },
+            json: true
+        };
+
+        request(options, function(err, response, body){
+            expect(response.statusCode).to.equal(200);
+            done();
+        });
+    });
+
+    it('should successfully get user from /users after creating new user', function(done){
+            
+        var options = {
+            method: 'POST',
+            uri: base_url + 'addUser',
+            body: {
+                user_id: "5c967e32d2e79f4afc43fdef",
+                timestamp: "..."
+            },
+            json: true
+        };
+
+        request(options, function(err, response, body){
+            expect(response.statusCode).to.equal(200);
+            request.get(base_url + 'users', function(err, response, body){
+                expect(response.body).to.not.equal('[]');
+                done();
+            });
+        });
+    });
+
+    it('should successfully remove user after creating user', function(done){
+            
+        var options = {
+            method: 'POST',
+            uri: base_url + 'addUser',
+            body: {
+                user_id: "5c967e32d2e79f4afc43fdef",
+                timestamp: "..."
+            },
+            json: true
+        };
+        
+        var options2 = {
+            method: 'POST',
+            uri: base_url + 'removeUser',
+            body: {
+                user_id: "5c967e32d2e79f4afc43fdef",
+                timestamp: "..."
+            },
+            json: true
+        };
+
+        request(options, function(err, response, body){
+            expect(response.statusCode).to.equal(200);
+            request.get(base_url + 'users', function(err, response, body){
+                expect(response.body).to.not.equal('[]');
+                done();
+            });
+        });
+    });
+});
+
+describe('Cart Tests', function(){
+
+	beforeEach(() => { //Before each test we empty the database
+        return new Promise(function(resolve){
+            MongoClient.connect(dbURL)
+            .then(function(db){
+                var collection = db.collection(cartCollection);
+    
+                collection.remove({})
+                resolve()
+            })
+        })});
+
+	it('should return get no items from empty cart collection', function(done){
+        request.get(base_url + 'cart', function(err, response, body){
+            expect(response.body).to.equal('[]');
+            done();
+        });
+    });
+
+    it('should successfully add to cart', function(done){
+
+    	var options = {
+    		method: 'POST',
+    		uri: base_url + 'addCart',
+    		body: {
+    			user_id: "5c967e32d2e79f4afc43fdef",
+    			timestamp: "..."
+    		},
+    		json: true
+    	};
+
+        request(options, function(err, response, body){
+            expect(response.statusCode).to.equal(200);
+            done();
+        });
+    });
+
+    it('should successfully get new item from /cart after adding cart item', function(done){
+            
+        var options = {
+    		method: 'POST',
+    		uri: base_url + 'addCart',
+    		body: {
+    			user_id: "5c967e32d2e79f4afc43fdef",
+    			timestamp: "..."
+    		},
+    		json: true
+    	};
+
+        request(options, function(err, response, body){
+            expect(response.statusCode).to.equal(200);
+            request.get(base_url + 'cart', function(err, response, body){
+	            expect(response.body).to.not.equal('[]');
+	            done();
+	        });
+        });
+    });
+
+    it('should successfully remove item from cart', function(done){
+		
+		var options = {
+    		method: 'POST',
+    		uri: base_url + 'addCart',
+    		body: {
+    			user_id: "5c967e32d2e79f4afc43fdef",
+    			timestamp: "..."
+    		},
+    		json: true
+        };
+        
+        var options2 = {
+    		method: 'POST',
+    		uri: base_url + 'removeCart',
+    		body: {
+    			user_id: "5c967e32d2e79f4afc43fdef",
+    			timestamp: "..."
+    		},
+    		json: true
+    	};
+
+    	request(options, function(err, response, body){
+            expect(response.statusCode).to.equal(200);
+            request.get(base_url + 'cart', function(err, response, body){
+	            expect(response.body).to.not.equal('[]');
+	            var body = JSON.parse(response.body);
+	            request.get(base_url + 'cart/' + body[0]._id, function(err, response, body){
+		            expect(response.statusCode).to.equal(200);
+		            var body = JSON.parse(response.body);
+		            done()
+		        });
+	        });
+        });
+    });
+});
+
 describe('Assistance Requests Tests', function(){
 
 	beforeEach(() => { //Before each test we empty the database
@@ -202,7 +485,7 @@ describe('Assistance Requests Tests', function(){
         });
     });
 
-    /*it('should successfully get order from /assistanceRequests after creating request', function(done){
+    it('should successfully get order from /assistanceRequests after creating request', function(done){
             
         var options = {
     		method: 'POST',
@@ -247,5 +530,5 @@ describe('Assistance Requests Tests', function(){
 		        });
 	        });
         });
-    });*/
+    });
 });
