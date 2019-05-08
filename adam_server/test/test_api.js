@@ -3,6 +3,8 @@ var request = require('request');
 
 var base_url = 'http://52.39.140.122/api/';
 
+// Alex wrote all the unit tests
+
 describe('Endpoints Status Tests', function(){
     
     it('should return status code 200 from /users endpoint', function(done){
