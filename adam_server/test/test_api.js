@@ -195,8 +195,12 @@ describe('Admin Console Menu Tests', function(){
     		method: 'POST',
     		uri: base_url + 'addItem',
     		body: {
-    			user_id: "5c967e32d2e79f4afc43fdef",
-    			timestamp: "..."
+                name: "Food Item",
+                description: "",
+                price: 1,
+                vegetarian: "Red Meat",
+                drink: "No",
+                healthy: "Yes"
     		},
     		json: true
     	};
@@ -213,8 +217,12 @@ describe('Admin Console Menu Tests', function(){
     		method: 'POST',
     		uri: base_url + 'addItem',
     		body: {
-    			user_id: "5c967e32d2e79f4afc43fdef",
-    			timestamp: "..."
+                name: "Food Item",
+                description: "",
+                price: 1,
+                vegetarian: "Red Meat",
+                drink: "No",
+                healthy: "Yes"
     		},
     		json: true
     	};
@@ -234,8 +242,12 @@ describe('Admin Console Menu Tests', function(){
     		method: 'POST',
     		uri: base_url + 'addItem',
     		body: {
-    			user_id: "5c967e32d2e79f4afc43fdef",
-    			timestamp: "..."
+                name: "Food Item",
+                description: "",
+                price: 1,
+                vegetarian: "Red Meat",
+                drink: "No",
+                healthy: "Yes"
     		},
     		json: true
         };
@@ -245,7 +257,6 @@ describe('Admin Console Menu Tests', function(){
     		uri: base_url + 'removeItem',
     		body: {
     			id_: "5c967e32d2e79f4afc43fdef",
-    			timestamp: "..."
     		},
     		json: true
     	};
@@ -286,8 +297,10 @@ describe('Admin Console User Tests', function(){
             method: 'POST',
             uri: base_url + 'addUser',
             body: {
-                user_id: "5c967e32d2e79f4afc43fdef",
-                timestamp: "..."
+                name: "Name",
+                password: "123456",
+                first_name: "First",
+                last_name: "Last"
             },
             json: true
         };
@@ -304,8 +317,10 @@ describe('Admin Console User Tests', function(){
             method: 'POST',
             uri: base_url + 'addUser',
             body: {
-                user_id: "5c967e32d2e79f4afc43fdef",
-                timestamp: "..."
+                name: "Name",
+                password: "123456",
+                first_name: "First",
+                last_name: "Last"
             },
             json: true
         };
@@ -325,8 +340,10 @@ describe('Admin Console User Tests', function(){
             method: 'POST',
             uri: base_url + 'addUser',
             body: {
-                user_id: "5c967e32d2e79f4afc43fdef",
-                timestamp: "..."
+                name: "Name",
+                password: "123456",
+                first_name: "First",
+                last_name: "Last"
             },
             json: true
         };
@@ -336,7 +353,6 @@ describe('Admin Console User Tests', function(){
             uri: base_url + 'removeUser',
             body: {
                 user_id: "5c967e32d2e79f4afc43fdef",
-                timestamp: "..."
             },
             json: true
         };
@@ -377,7 +393,7 @@ describe('Cart Tests', function(){
     		method: 'POST',
     		uri: base_url + 'addCart',
     		body: {
-    			user_id: "5c967e32d2e79f4afc43fdef",
+                menu_item: "7adf8788asdf77as7fd7887"
     			timestamp: "..."
     		},
     		json: true
@@ -395,7 +411,7 @@ describe('Cart Tests', function(){
     		method: 'POST',
     		uri: base_url + 'addCart',
     		body: {
-    			user_id: "5c967e32d2e79f4afc43fdef",
+                menu_item: "7adf8788asdf77as7fd7887"
     			timestamp: "..."
     		},
     		json: true
@@ -416,7 +432,7 @@ describe('Cart Tests', function(){
     		method: 'POST',
     		uri: base_url + 'addCart',
     		body: {
-    			user_id: "5c967e32d2e79f4afc43fdef",
+                menu_item: "7adf8788asdf77as7fd7887"
     			timestamp: "..."
     		},
     		json: true
@@ -426,8 +442,7 @@ describe('Cart Tests', function(){
     		method: 'POST',
     		uri: base_url + 'removeCart',
     		body: {
-    			user_id: "5c967e32d2e79f4afc43fdef",
-    			timestamp: "..."
+    			id: "5c967e32d2e79f4afc43fdef",
     		},
     		json: true
     	};
